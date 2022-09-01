@@ -1,0 +1,83 @@
+.profile {
+    display: grid;
+    grid-template-columns: 1fr 1fr 2.5fr;
+    grid-template-rows: 1fr 0.25fr 0.75fr 0.75fr 1.75fr;
+    grid-template-areas: 
+        "pic desc fav"
+        "follow revs fav"
+        "following recrev recrev"
+        "followers recrev recrev"
+        "list list list" ;
+    gap: 0.5rem;
+}
+
+@media only screen and (max-width:768px) {
+    .profile {
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: 0.75fr 0.2fr 0.2fr 1fr 1fr 1fr;
+        grid-template-areas: 
+            "pic desc desc"
+            "follow follow follow"
+            "following followers revs"
+            "fav fav fav"
+            "recrev recrev recrev"
+            "list list list" ;
+        gap: 0.3rem;
+    }
+
+    .hidden {
+        display: none;
+    }
+}
+
+.profile > div {
+    border: 2px solid black;
+    border-radius: 1rem;
+    padding: 0.75rem;
+}
+
+.pic {
+    display: flex;
+    grid-area: pic;
+    justify-content: center;
+    align-items: center;
+    height: 175px;
+}
+
+.pic img {
+    max-width: 100%;
+    max-width: 100%;
+}
+
+.desc {
+    grid-area: desc;
+}
+
+.favorite {
+    grid-area: fav;
+}
+
+.follow {
+    grid-area: follow;
+}
+
+.reviews {
+    grid-area: revs;
+}
+
+.following {
+    grid-area: following;
+}
+
+.followers {
+    grid-area: followers;
+}
+
+.recentrev {
+    grid-area: recrev;
+}
+
+.list {
+    grid-area: list;
+}
