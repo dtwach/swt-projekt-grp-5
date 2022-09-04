@@ -1,0 +1,24 @@
+version: "3.9"
+services:
+  db:
+    image: mariadb
+    volumes:
+      - ./export.sql:/docker-entrypoint-initdb.d/export.sql
+      - swt_crp:/var/lib/mysql
+    environment:
+      MYSQL_DATABASE: swt_crp
+      MYSQL_USER: user
+      MARIADB_ALLOW_EMPTY_ROOT_PASSWORD: yes
+      MYSQL_PASSWORD: password
+    networks:
+      - dock
+  db-admin:
+    image: adminer:latest
+    ports:
+      - "8080:8080"
+    networks:
+      - dock
+volumes:
+  swt_crp:
+networks:
+  dock:
