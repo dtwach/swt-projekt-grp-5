@@ -1,4 +1,7 @@
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 // Überprüfen des Strings
 if (empty($_GET["search"])) {
     header('Location: searchbar.example.php?ms=empty');

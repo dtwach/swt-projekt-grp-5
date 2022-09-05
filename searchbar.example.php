@@ -1,3 +1,8 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
 <form action="search.example.php" method="GET">
     <input name="search" type="text" placeholder="Type here">
     <br>
