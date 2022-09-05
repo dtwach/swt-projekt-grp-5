@@ -12,7 +12,7 @@ if (isset($_POST['login_submit'])) {
         exit();
     } else {
         include 'dbcon.inc.php';
-        $stmt = $con->prepare("SELECT * FROM user WHERE name=?;");
+        $stmt = $con->prepare("SELECT * FROM user WHERE Username=?;");
         if (!$stmt) {
             header('Location: ../login.php?ms=db&name=' . $name);
             exit();
@@ -27,18 +27,15 @@ if (isset($_POST['login_submit'])) {
             header('Location: ../login.php?ms=notfound&true=' . $name);
             exit();
         } else {
-            $check = password_verify($password, $row['passwordhash']);
+            $check = password_verify($password, $row['PassHash']);
         }
 
         if (!$check) {
             header('Location: ../login.php?ms=wrong&name=' . $name);
             exit();
         } else {
-            $_SESSION['user'] = $row['name'];
-            $_SESSION['id'] = $row['id'];
-            if (!is_null($row['active_training'])) {
-                $_SESSION['tid'] = $row['active_training'];
-            }
+            $_SESSION['user'] = $row['Username'];
+            $_SESSION['id'] = $row['ID'];
             header('Location: ../index.php');
         }
         $stmt->close();

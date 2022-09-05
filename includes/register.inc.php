@@ -19,7 +19,7 @@ if (isset($_POST['register_submit'])) {
         header('Location: ../register.php?ms=even&name=' . $name);
         exit();
     } else {
-        $stmt = $con->prepare("SELECT * FROM user WHERE name=?;");
+        $stmt = $con->prepare("SELECT * FROM user WHERE Username=?;");
         if (!$stmt) {
             header('Location: ../register.php?ms=db&name=' . $name);
             exit();
@@ -33,28 +33,28 @@ if (isset($_POST['register_submit'])) {
             exit();
         } else {
             $stmt->close();
-            $stmt = $con->prepare("INSERT INTO user (name, passwordhash, time) VALUES (?, ?, ?);");
+            $stmt = $con->prepare("INSERT INTO user (Username, PassHash, Rolle) VALUES (?, ?, ?);");
             if (!$stmt) {
                 header('Location: ../register.php?ms=db&name=' . $name);
                 exit();
             }
+            $test = 2;
             $passwordhash = password_hash($password, PASSWORD_DEFAULT);
-            $timestamp = date('Y-m-d H:i:s');
-            $stmt->bind_param('sss', $name, $passwordhash, $timestamp);
+            $stmt->bind_param('ssi', $name, $passwordhash, $test);
             $stmt->execute();
             if (!$stmt) {
                 header('Location: ../register.php?ms=fail&name=' . $name);
                 exit();
             }
             $stmt->close();
-            $stmt = $con->prepare("SELECT * FROM user WHERE name=?;");
+            $stmt = $con->prepare("SELECT * FROM user WHERE Username=?;");
             $stmt->bind_param('s', $name);
             $stmt->execute();
             $result = $stmt->get_result()->fetch_assoc();
-            $stmt->close();
             $_SESSION['user'] = $name;
-            $_SESSION['id'] = $result['id'];
+            $_SESSION['id'] = $result['ID'];
             header('Location: ../index.php');
+            exit();
         }
     }
     $stmt->close();

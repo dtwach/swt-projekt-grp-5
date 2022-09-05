@@ -1,6 +1,6 @@
 -- MariaDB dump 10.19  Distrib 10.4.24-MariaDB, for Win64 (AMD64)
 --
--- Host: localhost    Database: crp_test
+-- Host: localhost    Database: swt_projekt
 -- ------------------------------------------------------
 -- Server version	10.4.24-MariaDB
 
@@ -29,10 +29,8 @@ CREATE TABLE `content` (
   `Kategorie` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
   KEY `FK_kategorie` (`Kategorie`),
-  CONSTRAINT `FK_kategorie` FOREIGN KEY (`Kategorie`) REFERENCES `kategorie` (`ID`),
-  CONSTRAINT `content_ibfk_1` FOREIGN KEY (`ID`) REFERENCES `review` (`Content`),
-  CONSTRAINT `kategoriefk` FOREIGN KEY (`Kategorie`) REFERENCES `kategorie` (`ID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+  CONSTRAINT `FK_kategorie` FOREIGN KEY (`Kategorie`) REFERENCES `kategorie` (`ID`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -41,6 +39,7 @@ CREATE TABLE `content` (
 
 LOCK TABLES `content` WRITE;
 /*!40000 ALTER TABLE `content` DISABLE KEYS */;
+INSERT INTO `content` VALUES (5,'John Wick',NULL,2),(6,'John Wick 2',NULL,2),(7,'John Wick 3',NULL,2),(8,'Hunter X Hunter',NULL,3),(9,'Breaking Bad',NULL,3);
 /*!40000 ALTER TABLE `content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -138,7 +137,7 @@ CREATE TABLE `rolle` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-
+INSERT INTO `rolle` VALUES (1, 'Moderator'), (2, 'User');
 --
 -- Dumping data for table `rolle`
 --
@@ -238,4 +237,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-08-29 19:40:53
+-- Dump completed on 2022-09-05 13:09:36

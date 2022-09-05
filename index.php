@@ -10,19 +10,5 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
 </head>
 <body>
-    <div class="login text-center">
-        <h1 class="mb-4">Login</h1>
-        <form class="text-center mb-2" action="" method="post">
-            <div class="mb-3">
-                <input class="form-control" type="text" id="name" required placeholder="Name">
-            </div> 
-            <div class="mb-3">
-                <input class="form-control" type="password" id="password" required placeholder="Passwort">
-            </div>     
-            <input class="btn btn-primary w-50" id="login_submit" type="submit" value="Login">        
-        </form>
-        <a href="register.php">Registrieren</a>
-        <a href="profile.php">Profil</a>
-    </div>    
 </body>
 </html>
