@@ -14,7 +14,13 @@
         <h1 class="mb-4">Login</h1>
         <form class="text-center mb-2" action="includes/login.inc.php" method="post">
             <div class="mb-3">
-                <input class="form-control" type="text" name="name" required placeholder="Name">
+                <?php
+                    if (!isset($_GET['name'])) {
+                        echo ' <input class="form-control" type="text" name="name" required placeholder="Name">';
+                    } else {
+                        echo ' <input class="form-control" type="text" name="name" value="' . $_GET['name'] . '" required placeholder="Name">';
+                    }
+                ?>
             </div> 
             <div class="mb-3">
                 <input class="form-control" type="password" name="password" required placeholder="Passwort">
@@ -23,6 +29,28 @@
         </form>
         <a href="register.php">Registrieren</a>
         <a href="profile.php">Profil</a>
+        <div class="row">
+            <?php
+            // Fehlermeldungen
+            isset($_GET['ms']) ? $message = $_GET['ms'] : $message = '';
+            if ($message !== '') {
+                switch ($message) {
+                    case 'empty':
+                        echo '<col-md-auto>Eingabefelder sind unvollständig</col-md-auto>';
+                        break;
+                    case 'db';
+                        echo '<col-md-auto>Fehler an der Datenbank. Bitte versuchen Sie es später erneut</col-md-auto>';
+                        break;
+                    case 'notfound';
+                        echo '<col-md-auto>Benutzer ' . $_GET['name'] . ' ist nicht vorhanden</col-md-auto>';
+                        break;
+                    case 'wrong':
+                        echo '<col-md-auto>Aktuelles Passwort ist falsch<p>';
+                        break;
+                }
+            }
+            ?>            
+        </div>
     </div>    
 </body>
 </html>

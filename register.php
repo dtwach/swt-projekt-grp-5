@@ -14,7 +14,13 @@
         <h1 class="mb-4">Registrierung</h1>
         <form class="text-center mb-2" action="includes/register.inc.php" method="post">
             <div class="mb-3">
-                <input class="form-control" type="text" name="name" required placeholder="Name">
+                <?php
+                    if (!isset($_GET['name'])) {
+                        echo ' <input class="form-control" type="text" name="name" required placeholder="Name">';
+                    } else {
+                        echo ' <input class="form-control" type="text" name="name" value="' . $_GET['name'] . '" required placeholder="Name">';
+                    }
+                ?>
             </div> 
             <div class="mb-3">
                 <input class="form-control" type="password" name="password" required placeholder="Passwort">
@@ -25,6 +31,31 @@
             <input class="btn btn-primary w-50" name="register_submit"  type="submit" value="Registrieren">
         </form>
         <a href="index.php">Login</a>
+        <div class="row">
+            <?php
+            // Fehlermeldungen
+                isset($_GET['ms']) ? $message = $_GET['ms'] : $message = '';
+                if ($message !== '') {
+                    switch ($message) {
+                        case 'empty':
+                            echo '<p>Eingabefelder sind unvollständig</p>';
+                            break;
+                        case 'even':
+                            echo '<p>Passwort stimmt nicht überein</p>';
+                            break;
+                        case 'db';
+                            echo '<p>Fehler an der Datenbank. Bitte versuchen Sie es später erneut</p>';
+                            break;
+                        case 'taken';
+                            echo '<p>Benutzer ist vergeben </p>';
+                            break;
+                        case 'fail';
+                            echo '<p>Bitte versuchen Sie es später erneut</p>';
+                            break;
+                    }
+                }
+            ?>          
+        </div>
     </div>
 </body>
 </html>

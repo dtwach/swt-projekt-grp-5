@@ -23,8 +23,8 @@ if (isset($_POST['login_submit'])) {
         $result = $stmt->get_result();
         $row = $result->fetch_assoc();
 
-        if (!$stmt) {
-            header('Location: ../login.php?ms=notfound&true=' . $name);
+        if (!isset($row)) {
+            header('Location: ../login.php?ms=notfound&name=' . $name);
             exit();
         } else {
             $check = password_verify($password, $row['PassHash']);
