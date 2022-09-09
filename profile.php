@@ -1,3 +1,10 @@
+<?php
+if(!isset($_SESSION)) 
+{ 
+    session_start(); 
+} 
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +34,15 @@
             <h4 class="mb-0">Follow</h4>
         </button>
         <div class="reviews text-center">
-            <h4 class="mb-0">Reviews: 200</h4>
+                <?php
+                    require 'includes/dbcon.inc.php';
+                    $stmt = $con->prepare("SELECT COUNT(Content) FROM review WHERE User=?;");
+                    $stmt->bind_param('i', $_SESSION['id']);
+                    $stmt->execute();            
+                    $result = $stmt->get_result();
+                    $row = $result->fetch_array()[0];
+                    echo '<h4 class="mb-0">Reviews: ' . $row . '</h4>';      
+                ?>
         </div>
         <div class="following text-center text-md-start">
             <h4 class="mb-0">following: 8</h4>
@@ -46,10 +61,48 @@
             </ul>
         </div>
         <div class="recentrev">
-            <span class="d-flex justify-content-between">
-                <h3>Letzte Reviews</h3>
-                <a href="">Alle Reviews</a>
-            </span>
+
+            <div class="container">
+                <div class="row">
+                    <div class="col-6">
+                        <h3>Letzte Reviews</h3>
+                    </div>
+                    <div class="col-6 text-end">
+                        <a href="">Alle Reviews</a>
+                    </div>
+                    <?php
+                        require 'includes/dbcon.inc.php';
+                        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel FROM review as r
+                        JOIN content as c on c.ID = r.Content WHERE User=? ORDER BY r.Timestamp LIMIT 2;");
+                        $stmt->bind_param('i', $_SESSION['id']);
+                        $stmt->execute();            
+                        $result = $stmt->get_result();
+                        $data = $result->fetch_all();                    
+                        foreach ($data as $item){
+                            echo'
+                            <div class="col-6">
+                                <div class="panel panel-primary">
+                                    <div class="card">
+                                    <div class="row no-gutters">
+                                        <div class="col-auto text-center">
+                                            <h4 class="card-title">' . $item[2] . '</h4>                                
+                                        </div>
+                                        <div>Rating: ' . $item[1] . '</div>
+                                        <div class="col">
+                                        <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">
+                                            <p class="card-text truncate-max-3lines">' . $item[0] . '</p>
+                                        </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                                </div>
+                            </div>
+                            ';
+                        }
+                    ?>
+                </div>
+            </div>
+       
         </div>
         <div class="list">wunschliste</div>
     </div>    

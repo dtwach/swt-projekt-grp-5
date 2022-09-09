@@ -39,7 +39,6 @@ CREATE TABLE `content` (
 
 LOCK TABLES `content` WRITE;
 /*!40000 ALTER TABLE `content` DISABLE KEYS */;
-INSERT INTO `content` VALUES (5,'John Wick',NULL,2),(6,'John Wick 2',NULL,2),(7,'John Wick 3',NULL,2),(8,'Hunter X Hunter',NULL,3),(9,'Breaking Bad',NULL,3);
 /*!40000 ALTER TABLE `content` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -91,7 +90,6 @@ CREATE TABLE `kategorie` (
 
 LOCK TABLES `kategorie` WRITE;
 /*!40000 ALTER TABLE `kategorie` DISABLE KEYS */;
-INSERT INTO `kategorie` VALUES (1,'Videospiel'),(2,'Film'),(3,'Serie'),(4,'Buch'),(5,'Musik');
 /*!40000 ALTER TABLE `kategorie` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,8 +107,8 @@ CREATE TABLE `review` (
   `Bewertung` decimal(3,1) NOT NULL,
   `Timestamp` datetime NOT NULL,
   PRIMARY KEY (`User`,`Content`),
-  UNIQUE KEY `User` (`User`),
-  UNIQUE KEY `Content` (`Content`),
+  -- UNIQUE KEY `User` (`User`),
+  -- UNIQUE KEY `Content` (`Content`),
   CONSTRAINT `review_ibfk_1` FOREIGN KEY (`User`) REFERENCES `user` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -137,7 +135,6 @@ CREATE TABLE `rolle` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 /*!40101 SET character_set_client = @saved_cs_client */;
-INSERT INTO `rolle` VALUES (1, 'Moderator'), (2, 'User');
 --
 -- Dumping data for table `rolle`
 --
@@ -238,3 +235,9 @@ UNLOCK TABLES;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
 -- Dump completed on 2022-09-05 13:09:36
+INSERT INTO `rolle` VALUES (1, 'Moderator'), (2, 'User');
+INSERT INTO `user` VALUES (1000, 'tester', '$2y$10$qZQ3luz0Wm6AQu94Jet.QOedYkwzAkACm1lfWdYOg5RdbXMlvA4Dm', 2);
+INSERT INTO `kategorie` VALUES (1,'Videospiel'),(2,'Film'),(3,'Serie'),(4,'Buch'),(5,'Musik');
+INSERT INTO `content` VALUES (5,'John Wick',NULL,2),(6,'John Wick 2',NULL,2),(7,'John Wick 3',NULL,2),(8,'Hunter X Hunter',NULL,3),(9,'Breaking Bad',NULL,3);
+SET time_zone = 'UTC';
+INSERT INTO `review` VALUES (1000, 5, 'Tolle Sache', 5, '2019-03-10 02:55:05'), (1000, 7, 'Schwach', 2, '2019-03-10 02:55:05'), (1000, 9, 'Klasse', 9, '2019-03-10 02:55:05');
