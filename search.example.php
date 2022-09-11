@@ -2,13 +2,18 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+if (isset($_SERVER['HTTP_REFERER'])) {
+    $bits = explode('?', $_SERVER['HTTP_REFERER']);
+    $redirect = $bits[0];
+}
+
 // Überprüfen des Strings
 if (empty($_GET["search"])) {
-    header('Location: searchbar.example.php?ms=empty');
+    header('Location: ' . $redirect . '?ms=searchempty');
     exit();
 }
 if (strlen($_GET["search"]) <= 2) {
-    header('Location: searchbar.example.php?ms=short');
+    header('Location: ' . $redirect . '?ms=searchshort');
     exit();
 }
 include './includes/search.inc.php';
