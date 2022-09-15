@@ -61,8 +61,7 @@ if(!isset($_SESSION))
             </ul>
         </div>
         <div class="recentrev">
-
-            <div class="container">
+            <div class="container h-100">
                 <div class="row">
                     <div class="col-6">
                         <h3>Letzte Reviews</h3>
@@ -80,22 +79,12 @@ if(!isset($_SESSION))
                         $data = $result->fetch_all();                    
                         foreach ($data as $item){
                             echo'
-                            <div class="col-6">
-                                <div class="panel panel-primary">
-                                    <div class="card">
-                                    <div class="row no-gutters">
-                                        <div class="col-auto text-center">
-                                            <h4 class="card-title">' . $item[2] . '</h4>                                
-                                        </div>
-                                        <div>Rating: ' . $item[1] . '</div>
-                                        <div class="col">
-                                        <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">
-                                            <p class="card-text truncate-max-3lines">' . $item[0] . '</p>
-                                        </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                                </div>
+                            <div class="col-12 col-lg-6 col-xl-6 col-md-6" >
+                                <div class="row">                               
+                                    <h4 class="col-6">' . $item[2] . '</h4>     
+                                    <div class="col-6 text-end">Rating: ' . $item[1] . '</div>
+                                    <div class="col-12">' . $item[0] . '</div>
+                                </div>                            
                             </div>
                             ';
                         }
