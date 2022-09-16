@@ -1,4 +1,7 @@
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 function get_search_results($query)
 {
     $query = "%" . $query . "%";

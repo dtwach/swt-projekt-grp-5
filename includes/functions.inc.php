@@ -1,4 +1,7 @@
 <?php
+if (!isset($_SESSION)) {
+    session_start();
+}
 function searchErrorMs()
 {
     isset($_GET['ms']) ? $message = $_GET['ms'] : $message = '';

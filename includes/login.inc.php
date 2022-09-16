@@ -1,8 +1,7 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
+if (!isset($_SESSION)) {
+    session_start();
+}
 if (isset($_POST['login_submit'])) {
     require 'dbcon.inc.php';
     $name = $_POST['name'];

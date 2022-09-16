@@ -1,3 +1,8 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -47,7 +52,7 @@
                 // Fehlermeldungen
                 searchErrorMs()
                 ?>
-                <form class="d-flex me-5" role="search" action="search.example.php" method="GET">
+                <form class="d-flex me-5" role="search" action="search.php" method="GET">
                     <input class="form-control me-2" name="search" type="search" placeholder="Search..."
                         aria-label="Search">
                     <button class="btn btn-outline-success" type="submit">Search</button>
@@ -92,7 +97,7 @@
                     // Fehlermeldungen
                     searchErrorMs()
                     ?>
-                    <form class="d-flex" role="search" action="search.example.php" method="GET">
+                    <form class="d-flex" role="search" action="search.php" method="GET">
                         <input class="form-control me-2" type="search" name="search" placeholder="Search"
                             aria-label="Search">
                         <button id="submit " class="btn btn-outline-success" type="submit">Search</button>

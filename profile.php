@@ -1,12 +1,12 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
+if (!isset($_SESSION)) {
+    session_start();
+}
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -14,13 +14,20 @@ if(!isset($_SESSION))
     <title>Profil Content-Review-Plattform</title>
     <link href="css/style.css" rel="stylesheet">
     <link href="css/profilegrid.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+    </script>
+    <?php
+    include './navbar.php';
+    ?>
 </head>
+
 <body>
     <div class="container">
         <h2>Username</h2>
-    </div>   
+    </div>
     <div class="container profile">
         <div class="pic p-1">
             <!-- img? -->
@@ -34,15 +41,15 @@ if(!isset($_SESSION))
             <h4 class="mb-0">Follow</h4>
         </button>
         <div class="reviews text-center">
-                <?php
-                    require 'includes/dbcon.inc.php';
-                    $stmt = $con->prepare("SELECT COUNT(Content) FROM review WHERE User=?;");
-                    $stmt->bind_param('i', $_SESSION['id']);
-                    $stmt->execute();            
-                    $result = $stmt->get_result();
-                    $row = $result->fetch_array()[0];
-                    echo '<h4 class="mb-0">Reviews: ' . $row . '</h4>';      
-                ?>
+            <?php
+            require 'includes/dbcon.inc.php';
+            $stmt = $con->prepare("SELECT COUNT(Content) FROM review WHERE User=?;");
+            $stmt->bind_param('i', $_SESSION['id']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_array()[0];
+            echo '<h4 class="mb-0">Reviews: ' . $row . '</h4>';
+            ?>
         </div>
         <div class="following text-center text-md-start">
             <h4 class="mb-0">following: 8</h4>
@@ -70,15 +77,15 @@ if(!isset($_SESSION))
                         <a href="">Alle Reviews</a>
                     </div>
                     <?php
-                        require 'includes/dbcon.inc.php';
-                        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel FROM review as r
+                    require 'includes/dbcon.inc.php';
+                    $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel FROM review as r
                         JOIN content as c on c.ID = r.Content WHERE User=? ORDER BY r.Timestamp LIMIT 2;");
-                        $stmt->bind_param('i', $_SESSION['id']);
-                        $stmt->execute();            
-                        $result = $stmt->get_result();
-                        $data = $result->fetch_all();                    
-                        foreach ($data as $item){
-                            echo'
+                    $stmt->bind_param('i', $_SESSION['id']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $data = $result->fetch_all();
+                    foreach ($data as $item) {
+                        echo '
                             <div class="col-12 col-lg-6 col-xl-6 col-md-6" >
                                 <div class="row">                               
                                     <h4 class="col-6">' . $item[2] . '</h4>     
@@ -87,13 +94,14 @@ if(!isset($_SESSION))
                                 </div>                            
                             </div>
                             ';
-                        }
+                    }
                     ?>
                 </div>
             </div>
-       
+
         </div>
         <div class="list">wunschliste</div>
-    </div>    
+    </div>
 </body>
+
 </html>

@@ -1,8 +1,7 @@
 <?php
-if(!isset($_SESSION)) 
-{ 
-    session_start(); 
-} 
+if (!isset($_SESSION)) {
+    session_start();
+}
 if (isset($_POST['register_submit'])) {
     require 'dbcon.inc.php';
     $name = htmlspecialchars($_POST['name']);
