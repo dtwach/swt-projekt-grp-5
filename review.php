@@ -23,8 +23,8 @@
             <div class="col-sm-6 d-flex align-items-center justify-content-sm-end mb-3">
                 <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" alt="" class="img">
                 <span class="m-3 order-sm-first">
-                    <p class="mb-1 d-flex justify-content-sm-end">Von:</p>
-                    <p class="d-flex justify-content-sm-end">Username</p>
+                    <p class="mb-1 d-flex justify-content-sm-end">Zu:</p>
+                    <p class="d-flex justify-content-sm-end">Content</p>
                 </span>
             </div>
         </div>
