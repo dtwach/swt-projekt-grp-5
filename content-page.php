@@ -1,3 +1,8 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,10 +18,10 @@
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
     <?php
-  include './navbar.php';
-  ?>
+    include './navbar.php';
+    ?>
 </head>
-    
+
 <body>
     <div class="text-center p-sm-4 pt-2">
         <!-- TODO ADD REVIEW MODAL -->
@@ -52,23 +57,24 @@
                 <div class="text-start">Lorem ipsum dolor sit amet consectetur,
                     adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
                     necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
-                    nesciunt labore repudiandae sapiente aspernatur! Numquam provident sunt ab. Laudantium fuga, odit quae
-                                        necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
+                    nesciunt labore repudiandae sapiente aspernatur! Numquam provident sunt ab. Laudantium fuga, odit
+                    quae
+                    necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
                 </div>
 
                 <div class="d-flex justify-content-evenly pt-4 px-4">
-                        <button class="px-2 rounded-4 border bg-light" data-bs-toggle="modal"
-                         data-bs-target="#addReveiwModal">
-                            Review erstellen
-                        </button>
-                        <button class="p-3 rounded-4 border bg-light">
-                            in die Watchliste
-                        </button>
+                    <button class="px-2 rounded-4 border bg-light" data-bs-toggle="modal"
+                        data-bs-target="#addReveiwModal">
+                        Review erstellen
+                    </button>
+                    <button class="p-3 rounded-4 border bg-light">
+                        in die Watchliste
+                    </button>
                 </div>
             </div>
 
         </div>
-        <br/>
+        <br />
 
 
         <div class="d-flex justify-content-between">
@@ -84,12 +90,13 @@
                         <div class="row no-gutters">
                             <div class="d-flex px-3 justify-content-between">
                                 <div class="d-flex ">
-                                    <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" alt="Logo" width="24" height="20" class="rounded-4">
+                                    <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
+                                        alt="Logo" width="24" height="20" class="rounded-4">
                                     <h6 class="text-start card-title">User-xyz-abc</h6>
                                 </div>
                                 <h6 class="card-title">Rating: 7.2</h6>
                             </div>
-                            
+
                             <div class="col">
                                 <div class="card-block px-2 mx-1" style="max-height: 130px; text-align: justify;">
                                     <p class="card-text truncate-max-5lines">Lorem ipsum dolor sit amet consectetur,
@@ -107,4 +114,5 @@
 
     </div>
 </body>
+
 </html>
