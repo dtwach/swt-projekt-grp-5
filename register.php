@@ -40,7 +40,7 @@ if (!isset($_SESSION)) {
             </div>
             <input class="btn btn-primary w-50" name="register_submit" type="submit" value="Registrieren">
         </form>
-        <a href="index.php">Login</a>
+        <a href="login.php">Login</a>
         <div class="row">
             <?php
             // Fehlermeldungen
