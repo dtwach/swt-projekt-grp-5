@@ -1,6 +1,6 @@
 <?php
 if (!isset($_SESSION)) {
-  session_start();
+    session_start();
 }
 ?>
 <!DOCTYPE html>
@@ -18,8 +18,8 @@ if (!isset($_SESSION)) {
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
     <?php
-  include './navbar.php';
-  ?>
+    include './navbar.php';
+    ?>
 </head>
 
 <body>
