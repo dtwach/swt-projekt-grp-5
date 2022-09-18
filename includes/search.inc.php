@@ -8,7 +8,7 @@ function get_search_results($query)
     include 'dbcon.inc.php';
     $stmt = $con->prepare("SELECT 
     c.ID,c.Titel,c.Beschreibung,c.Kategorie,
-    k.ID,k.Kategoriebezeichnung
+    k.ID,k.Kategoriebezeichnung,c.Bild
      FROM content AS c, kategorie AS k
      WHERE c.Titel LIKE ?
      and c.Kategorie = k.ID;");

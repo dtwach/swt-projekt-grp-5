@@ -107,6 +107,7 @@ if (!isset($_SESSION)) {
             ?>
 
         </div>
+    </div>
 
 </body>
 

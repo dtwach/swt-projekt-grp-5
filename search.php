@@ -50,24 +50,52 @@ if (isset($_SERVER['HTTP_REFERER'])) {
 </head>
 
 <body>
-    <?php
+    <div class="container">
+        <div class="row">
+            <?php
 
-    include './includes/search.inc.php';
-    if (isset($_GET["search"])) {
-        $search_result = get_search_results(htmlspecialchars($_GET["search"]));
+            include './includes/search.inc.php';
+            if (isset($_GET["search"])) {
+                $search_result = get_search_results(htmlspecialchars($_GET["search"]));
 
-        while ($row_search = $search_result->fetch_array()) {
-            echo "ID: " . $row_search[0];
-            echo "<br>Titel: " . $row_search["Titel"];
-            echo "<br>Beschreibung: " . $row_search["Beschreibung"];
-            echo "<br>Kategorie ID: " . $row_search["Kategorie"];
-            echo "<br>Kategorie Name: " . $row_search["Kategoriebezeichnung"];
-            echo "<br><br>";
-        }
-    } else {
-        echo 'Keine Suche!';
-    }
-    ?>
+                while ($row_search = $search_result->fetch_array()) {
+                    echo '
+                <div class="col-sm-4 mb-3">
+                <div class="panel panel-primary">
+                    <div class="card">
+                        <div class="row no-gutters">
+                            <div class="col-auto text-center">
+                                <a href="content.php?id=' . $row_search["ID"] . '"><h4 class="card-title">' . $row_search["Titel"] . '</h4>';
+                    if ($row_search['Bild'] == NULL) {
+                        echo '<img src="./img/content_ph.jpg"
+                                    class="img-fluid" alt="">';
+                    } else {
+                        echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row_search['Bild']) . '"/>';
+                    }
+                    echo '
+                            </a></div>
+                            <div class="col">
+                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
+                    if ($row_search['Beschreibung'] == NULL) {
+                        echo '<p class="card-text truncate-max-3lines">Keine Beschreibung vorhanden!</p>';
+                    } else {
+                        echo '<p class="card-text truncate-max-3lines">' . $row_search["Beschreibung"] . '</p>';
+                    }
+                    echo '               
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>';
+                    echo "<br><br>";
+                }
+            } else {
+                echo 'Keine Suche!';
+            }
+            ?>
+        </div>
+    </div>
 </body>
 
 </html>
