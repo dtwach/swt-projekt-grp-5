@@ -78,7 +78,7 @@ if (!isset($_SESSION)) {
                     </div>
                     <?php
                     require 'includes/dbcon.inc.php';
-                    $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel FROM review as r
+                    $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, r.User, r.Content FROM review as r
                         JOIN content as c on c.ID = r.Content WHERE User=? ORDER BY r.Timestamp LIMIT 2;");
                     $stmt->bind_param('i', $_SESSION['id']);
                     $stmt->execute();
@@ -88,7 +88,9 @@ if (!isset($_SESSION)) {
                         echo '
                             <div class="col-12 col-lg-6 col-xl-6 col-md-6" >
                                 <div class="row">                               
-                                    <h4 class="col-6">' . $item[2] . '</h4>     
+                                    <a class="col-6" href="review.php?uid=' . $item[3] . '&cid=' . $item[4] . '">
+                                        <h4 >' . $item[2] . '</h4>     
+                                    </a>
                                     <div class="col-6 text-end">Rating: ' . $item[1] . '</div>
                                     <div class="col-12">' . $item[0] . '</div>
                                 </div>                            
