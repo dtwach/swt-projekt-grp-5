@@ -94,6 +94,7 @@ CREATE TABLE `user` (
   `ID` int(11) NOT NULL AUTO_INCREMENT,
   `Username` varchar(30) NOT NULL,
   `PassHash` varchar(255) NOT NULL,
+  `Beschreibung` varchar(512) DEFAULT NULL,
   `Bild` mediumblob DEFAULT NULL,
   `Rolle` int(11) NOT NULL,
   PRIMARY KEY (`ID`),
@@ -102,7 +103,8 @@ CREATE TABLE `user` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 INSERT INTO `user` (`ID`, `Username`, `PassHash`, `Bild`, `Rolle`) VALUES
-(1000,	'tester',	'$2y$10$qZQ3luz0Wm6AQu94Jet.QOedYkwzAkACm1lfWdYOg5RdbXMlvA4Dm',	NULL,	2);
+(1000,	'tester',	'$2y$10$qZQ3luz0Wm6AQu94Jet.QOedYkwzAkACm1lfWdYOg5RdbXMlvA4Dm',	NULL,	2),
+(1001,	'tester2',	'$2y$10$qZQ3luz0Wm6AQu94Jet.QOedYkwzAkACm1lfWdYOg5RdbXMlvA4Dm',	NULL,	2);
 
 DROP TABLE IF EXISTS `watchlist`;
 CREATE TABLE `watchlist` (

@@ -5,6 +5,9 @@ if (!isset($_SESSION)) {
 if (!isset($_SESSION["id"])) {
     header('Location: /login.php');
 }
+if (!isset($_GET["id"])) {
+    header('Location: /profile.php?id=' . $_SESSION["id"]);
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,19 +33,38 @@ if (!isset($_SESSION["id"])) {
 <body>
     <div class="container">
         <?php
-        echo "<h2>" . $_SESSION["user"] . "</h2>";
+        require 'includes/dbcon.inc.php';
+        $stmt = $con->prepare("SELECT Username FROM user WHERE ID=?;");
+        $stmt->bind_param('i', $_GET["id"]);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $row = $result->fetch_array()[0];
+        echo '<h2>' . $row . '</h2>';
         ?>
     </div>
     <div class="container profile">
         <div class="pic p-1">
-            <!-- img? -->
+            <?php
+            require 'includes/dbcon.inc.php';
+            $stmt = $con->prepare("SELECT Bild FROM user WHERE ID=?;");
+            $stmt->bind_param('i', $_GET["id"]);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_array()[0];
+            if ($row == NULL) {
+                echo '<img height="250px" width="150px" src="./img/profil_ph.png"
+                            class="img-fluid" alt="">';
+            } else {
+                echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
+            }
+            ?>
         </div>
         <div class="desc">
             <h3>Beschreibung</h3>
             <?php
             require 'includes/dbcon.inc.php';
             $stmt = $con->prepare("SELECT Beschreibung FROM user WHERE ID=?;");
-            $stmt->bind_param('i', $_SESSION['id']);
+            $stmt->bind_param('i', $_GET["id"]);
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_array()[0];
@@ -57,7 +79,7 @@ if (!isset($_SESSION["id"])) {
             <?php
             require 'includes/dbcon.inc.php';
             $stmt = $con->prepare("SELECT COUNT(Content) FROM review WHERE User=?;");
-            $stmt->bind_param('i', $_SESSION['id']);
+            $stmt->bind_param('i', $_GET["id"]);
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_array()[0];
@@ -93,7 +115,7 @@ if (!isset($_SESSION["id"])) {
                     require 'includes/dbcon.inc.php';
                     $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, r.User, r.Content FROM review as r
                         JOIN content as c on c.ID = r.Content WHERE User=? ORDER BY r.Timestamp LIMIT 2;");
-                    $stmt->bind_param('i', $_SESSION['id']);
+                    $stmt->bind_param('i', $_GET["id"]);
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $data = $result->fetch_all();
