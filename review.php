@@ -22,36 +22,59 @@ if (!isset($_SESSION)) {
 </head>
 
 <body>
-    <div class="container-lg p-4">
-        <h1 class="text-center">Review</h1>
-        <div class="row">
-            <div class="col-sm-6 d-flex align-items-center mb-3">
-                <img src="" alt="" class="img">
-                <span class="m-3">
-                    <p class="mb-1">Von:</p>
-                    <p>Username</p>
-                </span>
+    <?php
+        if (!isset($_GET['uid']) && !isset($_GET['cid'])){
+            header('Location: /index.php');
+        }
+        require 'includes/dbcon.inc.php';
+        $user_id = htmlspecialchars($_GET['uid']);
+        $content_id = htmlspecialchars($_GET['cid']);
+        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, u.Username
+            FROM review as r
+            JOIN content as c on c.ID = r.Content 
+            JOIN user as u on r.User = u.ID
+            WHERE r.User=? AND r.Content=?
+            ");
+        $stmt->bind_param('ii', $user_id, $content_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data = $result->fetch_assoc();
+        
+        if (!isset($data)){
+            echo '
+            <div class="container-lg p-4">
+                <h1 class="text-center mt-4">  Keine Einträge gefunden!</h1>
             </div>
-            <div class="col-sm-6 d-flex align-items-center justify-content-sm-end mb-3">
-                <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                    alt="" class="img">
-                <span class="m-3 order-sm-first">
-                    <p class="mb-1 d-flex justify-content-sm-end">Zu:</p>
-                    <p class="d-flex justify-content-sm-end">Content</p>
-                </span>
-            </div>
-        </div>
-        <div class="border rounded">
-            <h4 class="text-center m-2">Rating 9/10</h4>
-            <p class="mx-4">Lorem ipsum dolor sit amet consectetur adipisicing elit. Repellendus nesciunt repellat fuga,
-                enim nobis debitis facere ad molestias nam ab nemo atque quaerat officia cumque provident consequuntur
-                eaque sed velit ut rerum assumenda? Ipsa suscipit quam consequatur laboriosam aut nihil, illum a
-                officiis dolores dolor deserunt quisquam quas sit rerum eligendi quae nisi, ea eveniet magni ab deleniti
-                porro. Culpa minus dolorum placeat et ab. Ullam eligendi omnis ab inventore saepe nisi explicabo alias
-                facilis fugit expedita, est iure culpa non dolorem sed delectus impedit. Temporibus veniam molestiae in
-                soluta! Nostrum exercitationem recusandae dolorem, dolorum corporis a amet hic laudantium?</p>
-        </div>
-    </div>
+            ';
+        } else {
+            echo'
+                <div class="container-lg p-4">
+                    <h1 class="text-center">Review</h1>
+                    <div class="row">
+                        <div class="col-sm-6 d-flex align-items-center mb-3">
+                            <img src="" alt="" class="img">
+                            <span class="m-3">
+                                <p class="mb-1">Von:</p>
+                                <p>' . $data['Username'] . '</p>
+                            </span>
+                        </div>
+                        <div class="col-sm-6 d-flex align-items-center justify-content-sm-end mb-3">
+                            <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
+                                alt="" class="img">
+                            <span class="m-3 order-sm-first">
+                                <p class="mb-1 d-flex justify-content-sm-end">Zu:</p>
+                                <p class="d-flex justify-content-sm-end">Content</p>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="border rounded">
+                        <h4 class="text-center m-2">Rating ' . intval($data['Bewertung']) . '/10</h4>
+                        <p class="mx-4">' . $data['Inhalt'] . '</p>
+                    </div>
+                </div>
+            ';
+            }
+    ?>
 </body>
 
 </html>
