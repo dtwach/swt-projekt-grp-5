@@ -70,7 +70,7 @@ if (!isset($_SESSION)) {
         <div class="row">
             <?php
             require 'includes/dbcon.inc.php';
-            $stmt = $con->prepare("SELECT c.ID,c.Titel,c.Beschreibung,c.Kategorie FROM content AS c;");
+            $stmt = $con->prepare("SELECT c.ID,c.Titel,c.Beschreibung,c.Kategorie,c.Bild FROM content AS c;");
             $stmt->execute();
             $result = $stmt->get_result();
             while ($row = $result->fetch_array()) {
@@ -80,13 +80,23 @@ if (!isset($_SESSION)) {
                     <div class="card">
                         <div class="row no-gutters">
                             <div class="col-auto text-center">
-                                <h4 class="card-title">' . $row["Titel"] . '</h4>
-                                <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                    class="img-fluid" alt="">
-                            </div>
+                                <a href="content.php?id=' . $row["ID"] . '"><h4 class="card-title">' . $row["Titel"] . '</h4>';
+                if ($row['Bild'] == NULL) {
+                    echo '<img src="./img/content_ph.jpg"
+                                    class="img-fluid" alt="">';
+                } else {
+                    echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row['Bild']) . '"/>';
+                }
+                echo '
+                            </a></div>
                             <div class="col">
-                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">
-                                    <p class="card-text truncate-max-3lines">' . $row["Beschreibung"] . '</p>
+                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
+                if ($row['Beschreibung'] == NULL) {
+                    echo '<p class="card-text truncate-max-3lines">Keine Beschreibung vorhanden!</p>';
+                } else {
+                    echo '<p class="card-text truncate-max-3lines">' . $row["Beschreibung"] . '</p>';
+                }
+                echo '               
                                 </div>
                             </div>
                         </div>
