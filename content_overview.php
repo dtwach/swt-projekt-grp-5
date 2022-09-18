@@ -68,148 +68,35 @@ if (!isset($_SESSION)) {
         </div>
 
         <div class="row">
-
-            <div class="col-sm-4 mb-3">
+            <?php
+            require 'includes/dbcon.inc.php';
+            $stmt = $con->prepare("SELECT c.ID,c.Titel,c.Beschreibung,c.Kategorie FROM content AS c;");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            while ($row = $result->fetch_array()) {
+                echo '
+                <div class="col-sm-4 mb-3">
                 <div class="panel panel-primary">
                     <div class="card">
                         <div class="row no-gutters">
                             <div class="col-auto text-center">
-                                <h4 class="card-title">Title</h4>
+                                <h4 class="card-title">' . $row["Titel"] . '</h4>
                                 <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
                                     class="img-fluid" alt="">
                             </div>
                             <div class="col">
                                 <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">
-                                    <p class="card-text truncate-max-3lines">Lorem ipsum dolor sit amet consectetur,
-                                        adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                        necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
-                                        nesciunt labore repudiandae sapiente aspernatur!</p>
+                                    <p class="card-text truncate-max-3lines">' . $row["Beschreibung"] . '</p>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div class="col-sm-4 mb-3">
-                <div class="panel panel-primary">
-                    <div class="card">
-                        <div class="row no-gutters">
-                            <div class="col-auto text-center">
-                                <h4 class="card-title">Title</h4>
-                                <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                    class="img-fluid" alt="">
-                            </div>
-                            <div class="col">
-                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">
-                                    <p class="card-text truncate-max-3lines">Lorem ipsum dolor sit amet consectetur,
-                                        adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                        necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
-                                        nesciunt labore repudiandae sapiente aspernatur!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4 mb-3">
-                <div class="panel panel-primary">
-                    <div class="card">
-                        <div class="row no-gutters">
-                            <div class="col-auto text-center">
-                                <h4 class="card-title">Title</h4>
-                                <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                    class="img-fluid" alt="">
-                            </div>
-                            <div class="col">
-                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">
-                                    <p class="card-text truncate-max-3lines">Lorem ipsum dolor sit amet consectetur,
-                                        adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                        necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
-                                        nesciunt labore repudiandae sapiente aspernatur!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+            </div>';
+            }
+            ?>
 
         </div>
-
-        <div class="row mt-5 mb-2">
-
-            <div class="col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="card">
-                        <div class="row no-gutters">
-                            <div class="col-auto text-center">
-                                <h4 class="card-title">Title</h4>
-                                <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                    class="img-fluid" alt="">
-                            </div>
-                            <div class="col">
-                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">
-                                    <p class="card-text truncate-max-3lines">Lorem ipsum dolor sit amet consectetur,
-                                        adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                        necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
-                                        nesciunt labore repudiandae sapiente aspernatur!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="card">
-                        <div class="row no-gutters">
-                            <div class="col-auto text-center">
-                                <h4 class="card-title">Title</h4>
-                                <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                    class="img-fluid" alt="">
-                            </div>
-                            <div class="col">
-                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">
-                                    <p class="card-text truncate-max-3lines">Lorem ipsum dolor sit amet consectetur,
-                                        adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                        necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
-                                        nesciunt labore repudiandae sapiente aspernatur!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <div class="col-sm-4">
-                <div class="panel panel-primary">
-                    <div class="card">
-                        <div class="row no-gutters">
-                            <div class="col-auto text-center">
-                                <h4 class="card-title">Title</h4>
-                                <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                    class="img-fluid" alt="">
-                            </div>
-                            <div class="col">
-                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">
-                                    <p class="card-text truncate-max-3lines">Lorem ipsum dolor sit amet consectetur,
-                                        adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                        necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
-                                        nesciunt labore repudiandae sapiente aspernatur!</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-    </div><br>
-
-
-
 
 </body>
 
