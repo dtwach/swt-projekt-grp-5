@@ -2,6 +2,9 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+if (!isset($_SESSION["id"])) {
+    header('Location: /login.php');
+}
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +29,9 @@ if (!isset($_SESSION)) {
 
 <body>
     <div class="container">
-        <h2>Username</h2>
+        <?php
+        echo "<h2>" . $_SESSION["user"] . "</h2>";
+        ?>
     </div>
     <div class="container profile">
         <div class="pic p-1">
@@ -34,7 +39,15 @@ if (!isset($_SESSION)) {
         </div>
         <div class="desc">
             <h3>Beschreibung</h3>
-            <p>...</p>
+            <?php
+            require 'includes/dbcon.inc.php';
+            $stmt = $con->prepare("SELECT Beschreibung FROM user WHERE ID=?;");
+            $stmt->bind_param('i', $_SESSION['id']);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_array()[0];
+            echo '<p>' . $row . '</p>';
+            ?>
         </div>
         <div class="favorite">content</div>
         <button class="btn btn-primary follow">
