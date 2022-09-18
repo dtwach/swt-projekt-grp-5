@@ -23,7 +23,7 @@ if (!isset($_SESSION)) {
     ?>
     <nav class="navbar navbar-expand-lg">
         <div class="container-fluid">
-            <a class="navbar-brand" href="#">
+            <a class="navbar-brand" href="index.php">
                 <!-- icons -->
                 <svg xmlns="http://www.w3.org/2000/svg" width="30" height="26" fill="currentColor"
                     class="bi bi-controller" viewBox="0 0 16 16">
@@ -60,14 +60,33 @@ if (!isset($_SESSION)) {
 
                 <div class="d-flex">
                     <span class="align-middle me-2">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                            class="bi bi-person-circle" viewBox="0 0 16 16">
-                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                            <path fill-rule="evenodd"
-                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                        </svg>
+                        <?php
+                        if (isset($_SESSION['id'])) {
+                            echo "<a href='profile.php'>";
+                        } else {
+                            echo "<a href='login.php'>";
+                        }
+                        ?>
+                        <a href="profile.php">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                                class="bi bi-person-circle" viewBox="0 0 16 16">
+                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                                <path fill-rule="evenodd"
+                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                            </svg>
+                        </a>
                     </span>
-                    <button>Login</button>
+                    <?php
+                    if (isset($_SESSION['id'])) {
+                        echo "<a href='./includes/logout.inc.php'>
+                        <button>Logout</button>
+                    </a>";
+                    } else {
+                        echo "<a href='login.php'>
+                            <button>Login</button>
+                        </a>";
+                    }
+                    ?>
                 </div>
             </div>
 
@@ -82,13 +101,13 @@ if (!isset($_SESSION)) {
                 <div class="offcanvas-body">
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="index.php">
                                 <p>Home</p>
                             </a>
                         </li>
                         <!-- Conditional Element (existiert nur wenn user sich eingeloggt hat), darf aber gelöscht werden wenn es zu overkill ist -->
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="profile.php">
                                 <p>Profile</p>
                             </a>
                         </li>
@@ -105,7 +124,7 @@ if (!isset($_SESSION)) {
                     <!-- Nochmal Conditional (ob user eingeloggt ist oder noch nicht, login oder logout) -->
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mt-3">
                         <li class="nav-item">
-                            <a class="nav-link active" href="#">
+                            <a class="nav-link active" href="login.php">
                                 <h6>Login</h6>
                             </a>
                         </li>
