@@ -42,7 +42,7 @@ if (!isset($_GET["id"])) {
         echo '<h2>' . $row . '</h2>';
         ?>
     </div>
-    <div class="container profile">
+    <div class="container profile mb-2">
         <div class="pic p-1">
             <?php
             require 'includes/dbcon.inc.php';
@@ -87,7 +87,15 @@ if (!isset($_GET["id"])) {
             ?>
         </div>
         <div class="following text-center text-md-start">
-            <h4 class="mb-0">following: 8</h4>
+            <h4 class="mb-0">following: <?php
+                                        require 'includes/dbcon.inc.php';
+                                        $stmt = $con->prepare("SELECT COUNT(folger) FROM folgeliste WHERE folger=?;");
+                                        $stmt->bind_param('i', $_GET["id"]);
+                                        $stmt->execute();
+                                        $result = $stmt->get_result();
+                                        $row = $result->fetch_array()[0];
+                                        echo $row;
+                                        ?></h4>
             <ul class="list-unstyled hidden">
                 <li>user 1</li>
                 <li>user 2</li>
@@ -95,7 +103,15 @@ if (!isset($_GET["id"])) {
             </ul>
         </div>
         <div class="followers text-center text-md-start">
-            <h4 class="mb-0">followers: 8</h4>
+            <h4 class="mb-0">followers: <?php
+                                        require 'includes/dbcon.inc.php';
+                                        $stmt = $con->prepare("SELECT COUNT(gefolgt) FROM folgeliste WHERE gefolgt=?;");
+                                        $stmt->bind_param('i', $_GET["id"]);
+                                        $stmt->execute();
+                                        $result = $stmt->get_result();
+                                        $row = $result->fetch_array()[0];
+                                        echo $row;
+                                        ?></h4>
             <ul class="list-unstyled hidden">
                 <li>user 1</li>
                 <li>user 2</li>
