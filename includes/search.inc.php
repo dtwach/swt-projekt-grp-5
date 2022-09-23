@@ -13,7 +13,8 @@ function get_search_results($query)
         k.ID,k.Kategoriebezeichnung,c.Bild
          FROM content AS c, kategorie AS k
          WHERE k.Kategoriebezeichnung LIKE ?
-         and c.Kategorie = k.ID;");
+         and c.Kategorie = k.ID
+         ORDER by c.Titel ASC;");
     } else {
         $query = "%" . htmlspecialchars($query) . "%";
         $stmt = $con->prepare("SELECT 
@@ -21,7 +22,8 @@ function get_search_results($query)
         k.ID,k.Kategoriebezeichnung,c.Bild
          FROM content AS c, kategorie AS k
          WHERE c.Titel LIKE ?
-         and c.Kategorie = k.ID;");
+         and c.Kategorie = k.ID
+         ORDER by c.Titel ASC;");
     }
     $stmt->bind_param('s', $query);
     $stmt->execute();

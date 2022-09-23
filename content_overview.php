@@ -72,6 +72,7 @@ if (!isset($_SESSION)) {
             require 'includes/dbcon.inc.php';
             $stmt = $con->prepare("SELECT c.ID,c.Titel,c.Beschreibung,c.Kategorie,c.Bild,k.Kategoriebezeichnung FROM content AS c
             JOIN kategorie as k on k.ID = c.Kategorie
+            ORDER by c.Titel ASC
             ;");
             $stmt->execute();
             $result = $stmt->get_result();
