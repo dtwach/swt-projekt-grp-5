@@ -61,42 +61,45 @@ if (isset($_SERVER['HTTP_REFERER'])) {
             include './includes/search.inc.php';
             if (isset($_GET["search"])) {
                 $search_result = get_search_results(htmlspecialchars($_GET["search"]));
-
-                while ($row_search = $search_result->fetch_array()) {
-                    echo '
+                if ($search_result->num_rows == 0) {
+                    echo '<h2>Keine Einträge Gefunden!</h2>';
+                } else {
+                    while ($row_search = $search_result->fetch_array()) {
+                        echo '
                 <div class="col-sm-4 mb-3">
                 <div class="panel panel-primary">
                     <div class="card">
                         <div class="row no-gutters">
                             <div class="col-auto text-center">
                                 <a href="content.php?id=' . $row_search["ID"] . '"><h4 class="card-title">' . $row_search["Titel"] . '</h4>';
-                    if ($row_search['Bild'] == NULL) {
-                        echo '<img src="./img/content_ph.jpg"
+                        if ($row_search['Bild'] == NULL) {
+                            echo '<img src="./img/content_ph.jpg"
                                     class="img-fluid" alt="">';
-                    } else {
-                        echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row_search['Bild']) . '"/>';
-                    }
-                    echo '
+                        } else {
+                            echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row_search['Bild']) . '"/>';
+                        }
+                        echo '
                             </a></div>
                             <div class="col">';
-                    echo 'Kategorie:  <a href="search.php?search=category:' . $row_search["Kategoriebezeichnung"] . '">' . $row_search["Kategoriebezeichnung"] . '</a>';
-                    echo '<div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
-                    if ($row_search['Beschreibung'] == NULL) {
-                        echo '<p class="card-text truncate-max-3lines">Keine Beschreibung vorhanden!</p>';
-                    } else {
-                        echo '<p class="card-text truncate-max-3lines">' . $row_search["Beschreibung"] . '</p>';
-                    }
-                    echo '               
+                        echo 'Kategorie:  <a href="search.php?search=category:' . $row_search["Kategoriebezeichnung"] . '">' . $row_search["Kategoriebezeichnung"] . '</a>';
+                        echo '<div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
+                        if ($row_search['Beschreibung'] == NULL) {
+                            echo '<p class="card-text truncate-max-3lines">Keine Beschreibung vorhanden!</p>';
+                        } else {
+                            echo '<p class="card-text truncate-max-3lines">' . $row_search["Beschreibung"] . '</p>';
+                        }
+                        echo '               
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>';
-                    echo "<br><br>";
+                        echo "<br><br>";
+                    }
                 }
             } else {
-                echo 'Keine Suche!';
+                echo '<h2>Keine Suchparameter übergeben!</h2>';
             }
             ?>
         </div>
