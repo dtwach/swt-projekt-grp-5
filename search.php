@@ -23,11 +23,11 @@ if (isset($_SERVER['HTTP_REFERER'])) {
             $redirect = $rm_and[0];
         }
         if (empty($_GET["search"])) {
-            header('Location: ' . $redirect . '&ms=searchempty');
+            header('Location: ' . $redirect . '?ms=searchempty');
             exit();
         }
         if (strlen($_GET["search"]) <= 2) {
-            header('Location: ' . $redirect . '&ms=searchshort');
+            header('Location: ' . $redirect . '?ms=searchshort');
             exit();
         }
     }
