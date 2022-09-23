@@ -71,7 +71,44 @@ if (!isset($_GET["id"])) {
             echo '<p>' . $row . '</p>';
             ?>
         </div>
-        <div class="favorite">content</div>
+        <div class="favorite">
+            <nav>
+                <div class="nav nav-tabs nav-fill" role="tablist">
+                    <p class="m-2">Favorit: </p>
+    
+                    <button class="nav-link active" id="fav-film-tab" data-bs-toggle="tab" data-bs-target="#fav-film" aria-selected="true">Filme</button>
+    
+                    <button class="nav-link" id="fav-series-tab" data-bs-toggle="tab" data-bs-target="#fav-series" aria-selected="false">Serien</button>
+                    
+                    <button class="nav-link" id="fav-game-tab" data-bs-toggle="tab" data-bs-target="#fav-game" aria-selected="false">Videospiele</button>
+    
+                    <button class="nav-link" id="fav-music-tab" data-bs-toggle="tab" data-bs-target="#fav-music" aria-selected="false">Musik</button>
+
+                    <button class="nav-link" id="fav-book-tab" data-bs-toggle="tab" data-bs-target="#fav-book" aria-selected="false">Bücher</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="fav-film" role="tabpanel" aria-labelledby="fav-film-tab">
+                    Film Content
+                </div>
+    
+                <div class="tab-pane fade" id="fav-series" role="tabpanel" aria-labelledby="fav-series-tab">
+                    Serien Content
+                </div>
+    
+                <div class="tab-pane fade" id="fav-game" role="tabpanel" aria-labelledby="fav-game-tab">
+                    Videspiele Content
+                </div>
+    
+                <div class="tab-pane fade" id="fav-music" role="tabpanel" aria-labelledby="fav-music-tab">
+                    Musik Content
+                </div>
+
+                <div class="tab-pane fade" id="fav-book" role="tabpanel" aria-labelledby="fav-book-tab">
+                    Buch Content
+                </div>
+            </div>
+        </div>
         <button class="btn btn-primary follow">
             <h4 class="mb-0">Follow</h4>
         </button>
@@ -151,9 +188,85 @@ if (!isset($_GET["id"])) {
                     ?>
                 </div>
             </div>
-
         </div>
-        <div class="list">wunschliste</div>
+        <div class="list">
+            <nav>
+                <div class="nav nav-tabs nav-fill" role="tablist">
+                    <p class="m-2">Wunschliste: </p>
+    
+                    <button class="nav-link active" id="list-film-tab" data-bs-toggle="tab" data-bs-target="#list-film" aria-selected="true">Filme</button>
+    
+                    <button class="nav-link" id="list-series-tab" data-bs-toggle="tab" data-bs-target="#list-series" aria-selected="false">Serien</button>
+                    
+                    <button class="nav-link" id="list-game-tab" data-bs-toggle="tab" data-bs-target="#list-game" aria-selected="false">Videospiele</button>
+    
+                    <button class="nav-link" id="list-music-tab" data-bs-toggle="tab" data-bs-target="#list-music" aria-selected="false">Musik</button>
+
+                    <button class="nav-link" id="list-book-tab" data-bs-toggle="tab" data-bs-target="#list-book" aria-selected="false">Bücher</button>
+                </div>
+            </nav>
+            <div class="tab-content" id="nav-tabContent">
+                <div class="tab-pane fade show active" id="list-film" role="tabpanel" aria-labelledby="list-film-tab">
+                    <div class="row mt-2">
+                        <?php
+                            for($i = 1; $i <= 9; $i++) {
+                                echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Film Content '.$i.'</p>
+                                        </div>';
+                            }
+                        ?>                          
+                    </div>
+                </div>
+    
+                <div class="tab-pane fade" id="list-series" role="tabpanel" aria-labelledby="list-series-tab">
+                    <div class="row mt-2">
+                        <?php
+                            for($i = 1; $i <= 7; $i++) {
+                                echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Serien Content '.$i.'</p>
+                                        </div>';
+                            }
+                        ?>                          
+                    </div>
+                </div>                    
+    
+                <div class="tab-pane fade" id="list-game" role="tabpanel" aria-labelledby="list-game-tab">
+                    <div class="row mt-2">
+                        <?php
+                            for($i = 1; $i <= 10; $i++) {
+                                echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Videospiel Content '.$i.'</p>
+                                        </div>';
+                            }
+                        ?>                          
+                    </div>
+                </div>
+    
+                <div class="tab-pane fade" id="list-music" role="tabpanel" aria-labelledby="list-music-tab">
+                    <div class="row mt-2">
+                        <?php
+                            for($i = 1; $i <= 9; $i++) {
+                                echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Musik Content '.$i.'</p>
+                                        </div>';
+                            }
+                        ?>                          
+                    </div>
+                </div>
+
+                <div class="tab-pane fade" id="list-book" role="tabpanel" aria-labelledby="list-book-tab">
+                    <div class="row mt-2">
+                        <?php
+                            for($i = 1; $i <= 4; $i++) {
+                                echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Buch Content '.$i.'</p>
+                                        </div>';
+                            }
+                        ?>                          
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </body>
 
