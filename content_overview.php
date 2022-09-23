@@ -70,10 +70,13 @@ if (!isset($_SESSION)) {
         <div class="row">
             <?php
             require 'includes/dbcon.inc.php';
-            $stmt = $con->prepare("SELECT c.ID,c.Titel,c.Beschreibung,c.Kategorie,c.Bild FROM content AS c;");
+            $stmt = $con->prepare("SELECT c.ID,c.Titel,c.Beschreibung,c.Kategorie,c.Bild,k.Kategoriebezeichnung FROM content AS c
+            JOIN kategorie as k on k.ID = c.Kategorie
+            ;");
             $stmt->execute();
             $result = $stmt->get_result();
             while ($row = $result->fetch_array()) {
+
                 echo '
                 <div class="col-sm-4 mb-3">
                 <div class="panel panel-primary">
@@ -89,8 +92,9 @@ if (!isset($_SESSION)) {
                 }
                 echo '
                             </a></div>
-                            <div class="col">
-                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
+                            <div class="col">';
+                echo 'Kategorie:  <a href="search.php?search=category:' . $row["Kategoriebezeichnung"] . '">' . $row["Kategoriebezeichnung"] . '</a>';
+                echo '<div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
                 if ($row['Beschreibung'] == NULL) {
                     echo '<p class="card-text truncate-max-3lines">Keine Beschreibung vorhanden!</p>';
                 } else {

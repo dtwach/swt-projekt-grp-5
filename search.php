@@ -78,8 +78,9 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                     }
                     echo '
                             </a></div>
-                            <div class="col">
-                                <div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
+                            <div class="col">';
+                    echo 'Kategorie:  <a href="search.php?search=category:' . $row_search["Kategoriebezeichnung"] . '">' . $row_search["Kategoriebezeichnung"] . '</a>';
+                    echo '<div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
                     if ($row_search['Beschreibung'] == NULL) {
                         echo '<p class="card-text truncate-max-3lines">Keine Beschreibung vorhanden!</p>';
                     } else {
