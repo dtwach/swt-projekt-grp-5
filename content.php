@@ -98,8 +98,8 @@ if (!isset($_GET['id'])) {
             <br />
     
             <div class="d-flex justify-content-between">
-                <a href="#" class="p-3">Bild ändern </a>
-                <a href="#" class="p-3">Beschreibung ändern</a>
+                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern </a>
+                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeDescModal">Beschreibung ändern</a>
             </div>
     
             <div class="row">
@@ -158,13 +158,13 @@ if (!isset($_GET['id'])) {
     
 
 
-        <!-- modal -->
+        <!-- add review modal -->
         <div class="modal fade" id="addReveiwModal" aria-labelledby="addReviewLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <!-- Modal Inhalt -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="addReviewLabel">Add New Review</h4>
+                        <h4 class="modal-title" id="addReviewLabel">Neues Review hinzufügen</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -173,7 +173,7 @@ if (!isset($_GET['id'])) {
                         <form action="/page.php">
                             <div class="text-start my-1">
                                 <label class="fw-bold" for="reviewRating">Bewertung</label>
-                                <input type="number" step="0.1" min="1" max="10" class="form-control w-25 px-3" id="reviewRating"
+                                <input type="number" min="1" max="10" class="form-control w-25 px-3" id="reviewRating"
                                     placeholder="1 - 10" name="reviewRating">
                                 
                             </div>
@@ -186,8 +186,67 @@ if (!isset($_GET['id'])) {
                     </div>
                     <div class="modal-footer gap-2">
                         <button type="button" class="btn btn-default btn-outline-danger"
-                            data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Finish</button>
+                            data-bs-dismiss="modal">Abbrechen</button>
+                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Fertig</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+         <!-- change image modal -->
+         <div class="modal fade" id="changeImgModal" aria-labelledby="addReviewLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <!-- Modal Inhalt -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addReviewLabel">Bild von {contentTitle} ändern</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form action="/page.php">
+
+                            <div class="text-start my-1 pt-1">
+                                <label class="fw-bold" for="reviewText">wähle ein neues Bild aus</label>
+                                <input class="form-control" type="file" accept="image/png, image/gif, image/jpeg" id="contentImg">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer gap-2">
+                        <button type="button" class="btn btn-default btn-outline-danger"
+                            data-bs-dismiss="modal">Abbrechen</button>
+                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Fertig</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- description change modal -->
+        <div class="modal fade" id="changeDescModal" aria-labelledby="addReviewLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <!-- Modal Inhalt -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addReviewLabel">Beschreibung von {contentTitle} ändern</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form action="/page.php">
+                            <div class="text-start my-1 pt-1">
+                                <label class="fw-bold" for="reviewText">Neue Beschreibung</label>
+                                <textarea type="text" class="form-control text-start" id="reviewText"
+                                    placeholder="Enter Review" name="reviewText" style="height:250px;"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer gap-2">
+                        <button type="button" class="btn btn-default btn-outline-danger"
+                            data-bs-dismiss="modal">Abbrechen</button>
+                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Fertig</button>
                     </div>
                 </div>
             </div>
