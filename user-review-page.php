@@ -1,3 +1,7 @@
+<?php
+if (!isset($_SESSION)) {
+    session_start();
+} ?>
 <!DOCTYPE html>
 
 <head>
@@ -19,113 +23,63 @@
 <body>
 
     <div class="text-center p-sm-4 pt-3">
-        <h4>Username</h4>
-        <div class="container">
-            <h4 class="text-center py-3">Alle Reviews:</h4>
-            <div class="row row-cols-1 row-cols-md-2 g-2 g-lg-3">
+        <?php
+            require 'includes/dbcon.inc.php';
+            $user_id = (isset($_GET['id'])) ? $_GET['id'] : $_SESSION['id'];
+            $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, c.Bild, u.Username
+            FROM review as r
+            JOIN content as c on c.ID = r.Content 
+            JOIN user as u on u.ID = r.User
+            WHERE r.User=? 
+            ORDER BY r.Timestamp 
+            LIMIT 50;
+            ");
+            $stmt->bind_param('i', $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $item = $result->fetch_assoc();
+            echo'
+                <h4>' . $item['Username'] . '</h4>
+                <div class="container">
+                    <h4 class="text-center py-3">Alle Reviews:</h4>
+                    <div class="row row-cols-1 row-cols-md-2 g-2 g-lg-3">
+                    ';
+                $result->data_seek(0);
 
-            <!-- Single Review from user -->
-                <div class="col mb-3">
-                    <div class="panel panel-primary">
-                        <div class="card">
-                            <div class="row">
-                                <div class="d-flex px-4 justify-content-between">
-                                    <div class="d-flex ">
-                                        <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                            alt="Logo" width="24" height="20" class="rounded-4">
-                                        <h6 class="text-start card-title">Content-xyz-abc</h6>
-                                    </div>
-                                    <h6 class="card-title">Rating: 7.2</h6>
-                                </div>
+                if($result->num_rows == 0){
+                    echo'<h5 class=" mt-5 text-center">Keine Reviews vorhanden' . "\u{1F625}" . '</h5>';
+                }
 
-                                <div class="col">
-                                    <div class="card-block px-2 mx-1" style="text-align: justify;">
-                                        <p class="card-text">Lorem ipsum dolor sit amet consectetur,
-                                            adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                            necessitatibus recusandae perferendis eius harum.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            <!-- End of single Review from user -->
-
-                <div class="col mb-3">
-                    <div class="panel panel-primary">
-                        <div class="card">
-                            <div class="row">
-                                <div class="d-flex px-4 justify-content-between">
-                                    <div class="d-flex ">
-                                        <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                            alt="Logo" width="24" height="20" class="rounded-4">
-                                        <h6 class="text-start card-title">Content-xyz-abc</h6>
-                                    </div>
-                                    <h6 class="card-title">Rating: 7.2</h6>
-                                </div>
-
-                                <div class="col">
-                                    <div class="card-block px-2 mx-1" style="text-align: justify;">
-                                        <p class="card-text">Lorem ipsum dolor sit amet consectetur,
-                                            adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                            necessitatibus recusandae perferendis eius harum.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col mb-3">
-                    <div class="panel panel-primary">
-                        <div class="card">
-                            <div class="row">
-                                <div class="d-flex px-4 justify-content-between">
-                                    <div class="d-flex ">
-                                        <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                            alt="Logo" width="24" height="20" class="rounded-4">
-                                        <h6 class="text-start card-title">Content-xyz-abc</h6>
-                                    </div>
-                                    <h6 class="card-title">Rating: 7.2</h6>
-                                </div>
-
-                                <div class="col">
-                                    <div class="card-block px-2 mx-1" style="text-align: justify;">
-                                        <p class="card-text">Lorem ipsum dolor sit amet consectetur,
-                                            adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                            necessitatibus recusandae perferendis eius harum.</p>
+                while($item = $result->fetch_assoc()){
+                    $picture = (is_null($item['Bild'])) ? "https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" : 
+                    "data:image/jpeg;base64," + base64_encode($item['Bild'])  ;
+                    echo'
+                        <div class="col mb-3">
+                            <div class="panel panel-primary">
+                                <div class="card">
+                                    <div class="row">
+                                        <div class="d-flex px-4 justify-content-between">
+                                            <div class="d-flex ">
+                                                <img src="' . $picture . '"
+                                                    alt="Logo" width="24" height="20" class="rounded-4">
+                                                <h6 class="text-start card-title">' . $item['Titel'] . '</h6>
+                                            </div>
+                                            <h6 class="card-title">Rating: ' . intval($item['Bewertung']) . '</h6>
+                                        </div>
+        
+                                        <div class="col">
+                                            <div class="card-block px-2 mx-1" style="text-align: justify;">
+                                                <p class="card-text">' . $item['Inhalt'] . '</p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
+                    ';
 
-                <div class="col mb-3">
-                    <div class="panel panel-primary">
-                        <div class="card">
-                            <div class="row">
-                                <div class="d-flex px-4 justify-content-between">
-                                    <div class="d-flex ">
-                                        <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                                            alt="Logo" width="24" height="20" class="rounded-4">
-                                        <h6 class="text-start card-title">Content-xyz-abc</h6>
-                                    </div>
-                                    <h6 class="card-title">Rating: 7.2</h6>
-                                </div>
-
-                                <div class="col">
-                                    <div class="card-block px-2 mx-1" style="text-align: justify;">
-                                        <p class="card-text">Lorem ipsum dolor sit amet consectetur,
-                                            adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                                            necessitatibus recusandae perferendis eius harum.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
+                }
+                ?>
             </div>
         </div>
     </div>
