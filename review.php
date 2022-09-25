@@ -43,7 +43,7 @@ if (!isset($_SESSION)) {
         if (!isset($data)){
             echo '
             <div class="container-lg p-4">
-                <h1 class="text-center mt-4">  Keine Einträge gefunden!</h1>
+                <h1 class="text-center mt-4">  Keine Reviews gefunden!</h1>
             </div>
             ';
         } else {

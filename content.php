@@ -2,6 +2,9 @@
 if (!isset($_SESSION)) {
     session_start();
 }
+if (!isset($_GET['id'])) {
+    header('Location: ./content_overview.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
