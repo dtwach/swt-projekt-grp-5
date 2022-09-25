@@ -68,6 +68,7 @@ CREATE TABLE `review` (
 INSERT INTO `review` (`User`, `Content`, `Inhalt`, `Bewertung`, `Timestamp`) VALUES
 (1000,	1,	'Tolle Sache',	5.0,	'2019-03-10 02:55:05'),
 (1000,	3,	'Schwach',	2.0,	'2019-03-10 02:55:05'),
+(1001,	3,	'Richtig toll',	6.0,	'2019-03-10 02:58:05'),
 (1000,	5,	'Klasse',	9.0,	'2019-03-10 02:55:05');
 
 DROP TABLE IF EXISTS `rolle`;
