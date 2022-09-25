@@ -1,7 +1,11 @@
 <?php
 if (!isset($_SESSION)) {
     session_start();
-} ?>
+}
+if (!isset($_GET['uid']) && !isset($_GET['cid'])){
+    header('Location: /index.php');
+}
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,13 +27,11 @@ if (!isset($_SESSION)) {
 
 <body>
     <?php
-        if (!isset($_GET['uid']) && !isset($_GET['cid'])){
-            header('Location: /index.php');
-        }
+        
         require 'includes/dbcon.inc.php';
         $user_id = htmlspecialchars($_GET['uid']);
         $content_id = htmlspecialchars($_GET['cid']);
-        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, u.Username
+        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, u.Username, c.Bild as Content_Picture, u.Bild as User_Picture
             FROM review as r
             JOIN content as c on c.ID = r.Content 
             JOIN user as u on r.User = u.ID
@@ -47,19 +49,23 @@ if (!isset($_SESSION)) {
             </div>
             ';
         } else {
+            $picture = (!isset($data['Content_Picture'])) ? "https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" : 
+                    "data:image/jpeg;base64," + base64_encode($data['Content_Picture']);
+
+            $user_picture = (!isset($data['User_Picture'])) ? "./img/profil_ph.png" : 'data:image/jpeg;base64,' . base64_encode($row);
             echo'
                 <div class="container-lg p-4">
                     <h1 class="text-center">Review</h1>
                     <div class="row">
                         <div class="col-sm-6 d-flex align-items-center mb-3">
-                            <img src="" alt="" class="img">
+                            <img src="' . $user_picture .'" alt="" class="img">
                             <span class="m-3">
                                 <p class="mb-1">Von:</p>
                                 <p>' . $data['Username'] . '</p>
                             </span>
                         </div>
                         <div class="col-sm-6 d-flex align-items-center justify-content-sm-end mb-3">
-                            <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
+                            <img src="' . $picture . '"
                                 alt="" class="img">
                             <span class="m-3 order-sm-first">
                                 <p class="mb-1 d-flex justify-content-sm-end">Zu:</p>

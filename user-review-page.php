@@ -26,7 +26,7 @@ if (!isset($_SESSION)) {
         <?php
             require 'includes/dbcon.inc.php';
             $user_id = (isset($_GET['id'])) ? $_GET['id'] : $_SESSION['id'];
-            $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, c.Bild, u.Username
+            $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, c.Bild, u.Username, u.Bild
             FROM review as r
             JOIN content as c on c.ID = r.Content 
             JOIN user as u on u.ID = r.User
@@ -38,7 +38,14 @@ if (!isset($_SESSION)) {
             $stmt->execute();
             $result = $stmt->get_result();
             $item = $result->fetch_assoc();
+            if (isset($item)) {
+                echo '<img height="250px" width="150px" src="./img/profil_ph.png"
+                            class="img-fluid" alt="">';
+            } else {
+                echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
+            }
             echo'
+            
                 <h4>' . $item['Username'] . '</h4>
                 <div class="container">
                     <h4 class="text-center py-3">Alle Reviews:</h4>
@@ -47,7 +54,7 @@ if (!isset($_SESSION)) {
                 $result->data_seek(0);
 
                 if($result->num_rows == 0){
-                    echo'<h5 class=" mt-5 text-center">Keine Reviews vorhanden' . "\u{1F625}" . '</h5>';
+                    echo'<h5 class=" mt-5 text-center">Noch keine Review verfasst' . "\u{1F625}" . '</h5>';
                 }
 
                 while($item = $result->fetch_assoc()){
