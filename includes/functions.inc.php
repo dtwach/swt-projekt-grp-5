@@ -8,10 +8,10 @@ function searchErrorMs()
     if ($message !== '') {
         switch ($message) {
             case 'searchempty':
-                echo '<a class="text-decoration-none me-5 text-body">Suche ist leer!</a>';
+                echo '<a class="text-decoration-none me-5 text-body">❌Suche ist leer!❌</a>';
                 break;
             case 'searchshort':
-                echo '<a class="text-decoration-none me-5 text-body">Mindestens 3 Zeichen eingeben!</a>';
+                echo '<a class="text-decoration-none me-5 text-body">❌Mindestens 3 Zeichen eingeben!❌</a>';
                 break;
         }
     }
