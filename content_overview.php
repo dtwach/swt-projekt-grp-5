@@ -61,7 +61,7 @@ if (!isset($_SESSION)) {
                     <div class="modal-footer gap-2">
                         <button type="button" class="btn btn-default btn-outline-danger"
                             data-bs-dismiss="modal">Abbrechen</button>
-                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Erstellen</button>
+                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Fertig</button>
                     </div>
                 </div>
             </div>
