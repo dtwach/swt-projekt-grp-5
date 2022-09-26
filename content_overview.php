@@ -26,7 +26,7 @@ if (!isset($_SESSION)) {
 
     <div class="container">
         <button type="button" class="btn btn-info btn-lg my-2" data-bs-toggle="modal"
-            data-bs-target="#addContentModal">Add New Content</button>
+            data-bs-target="#addContentModal">Neues Content hinzufügen</button>
 
         <!-- Modal -->
         <div class="modal fade" id="addContentModal" aria-labelledby="addContentLabel" aria-hidden="true">
@@ -34,7 +34,7 @@ if (!isset($_SESSION)) {
                 <!-- Modal Inhalt -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="addContentLabel">Add New Content</h4>
+                        <h4 class="modal-title" id="addContentLabel">Neues Content hinzufügen</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -43,25 +43,25 @@ if (!isset($_SESSION)) {
 
                         <form action="/page.php">
                             <div class="form-group my-3">
-                                <label for="contentName">Content Name</label>
+                                <label for="contentName">Titel</label>
                                 <input type="text" class="form-control" id="contentName"
                                     placeholder="Enter content name" name="contentName">
                             </div>
                             <div class="form-group my-3">
-                                <label for="contentDescription">Content description</label>
+                                <label for="contentDescription">Beschreibung</label>
                                 <input type="text" class="form-control" id="contentDescription"
                                     placeholder="Enter description" name="contentDescription">
                             </div>
                             <div class="form-group my-3">
-                                <label for="contentImg" class="form-label">Content Image</label>
+                                <label for="contentImg" class="form-label">Contentbild</label>
                                 <input class="form-control" type="file" id="contentImg">
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer gap-2">
                         <button type="button" class="btn btn-default btn-outline-danger"
-                            data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Finish</button>
+                            data-bs-dismiss="modal">Abbrechen</button>
+                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Fertig</button>
                     </div>
                 </div>
             </div>
