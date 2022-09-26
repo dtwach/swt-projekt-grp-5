@@ -37,7 +37,6 @@ if (!isset($_SESSION)) {
             <input class="btn btn-primary w-50" name="login_submit" type="submit" value="Login">
         </form>
         <a href="register.php">Registrieren</a>
-        <a href="profile.php">Profil</a>
         <div class="row">
             <?php
             // Fehlermeldungen

@@ -20,6 +20,7 @@ if (!isset($_GET['uid']) && !isset($_GET['cid'])){
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
+    <script src="js/review.js" defer></script>
     <?php
     include './navbar.php';
     ?>
@@ -31,7 +32,7 @@ if (!isset($_GET['uid']) && !isset($_GET['cid'])){
         require 'includes/dbcon.inc.php';
         $user_id = htmlspecialchars($_GET['uid']);
         $content_id = htmlspecialchars($_GET['cid']);
-        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, u.Username, c.Bild as Content_Picture, u.Bild as User_Picture
+        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, u.Username, c.Bild as Content_Picture, u.Bild as User_Picture, r.User, r.Content
             FROM review as r
             JOIN content as c on c.ID = r.Content 
             JOIN user as u on r.User = u.ID
@@ -49,7 +50,7 @@ if (!isset($_GET['uid']) && !isset($_GET['cid'])){
             </div>
             ';
         } else {
-            $picture = (!isset($data['Content_Picture'])) ? "https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" : 
+            $content_picture = (!isset($data['Content_Picture'])) ? "https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" : 
                     "data:image/jpeg;base64," + base64_encode($data['Content_Picture']);
 
             $user_picture = (!isset($data['User_Picture'])) ? "./img/profil_ph.png" : 'data:image/jpeg;base64,' . base64_encode($row);
@@ -58,14 +59,14 @@ if (!isset($_GET['uid']) && !isset($_GET['cid'])){
                     <h1 class="text-center">Review</h1>
                     <div class="row">
                         <div class="col-sm-6 d-flex align-items-center mb-3">
-                            <img src="' . $user_picture .'" alt="" class="img">
+                            <img id="user_picture" name="' . $data['User'] . '" src="' . $user_picture .'" alt="" class="img">
                             <span class="m-3">
                                 <p class="mb-1">Von:</p>
                                 <p>' . $data['Username'] . '</p>
                             </span>
                         </div>
                         <div class="col-sm-6 d-flex align-items-center justify-content-sm-end mb-3">
-                            <img src="' . $picture . '"
+                            <img id="content_picture" name="' . $data['Content'] . '" src="' . $content_picture . '"
                                 alt="" class="img">
                             <span class="m-3 order-sm-first">
                                 <p class="mb-1 d-flex justify-content-sm-end">Zu:</p>

@@ -106,7 +106,7 @@ if (!isset($_GET['id'])) {
                 <?php
                 require 'includes/dbcon.inc.php';
                 $content_id = $_GET['id'];
-                $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, u.Username, c.Bild
+                $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, u.Username, c.Bild, r.User
                 FROM review as r
                 JOIN content as c on c.ID = r.Content 
                 JOIN user as u on u.ID = r.user
@@ -134,7 +134,9 @@ if (!isset($_GET['id'])) {
                                             <div class="d-flex ">
                                                 <img src="' . $picture . '"
                                                     alt="Logo" width="24" height="20" class="rounded-4">
-                                                <h6 class="text-start card-title">' . $item['Username'] . '</h6>
+                                                <a href="/profile.php?id=' . $item['User'] . '">
+                                                    <h6 class="text-start card-title">' . $item['Username'] . '</h6>
+                                                </a>
                                             </div>
                                             <h6 class="card-title">' . $item['Bewertung'] . '</h6>
                                         </div>

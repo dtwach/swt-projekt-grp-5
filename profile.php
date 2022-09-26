@@ -18,7 +18,6 @@ if (!isset($_GET["id"])) {
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Content-Review-Plattform</title>
-    <link href="css/style.css" rel="stylesheet">
     <link href="css/profilegrid.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
@@ -31,7 +30,7 @@ if (!isset($_GET["id"])) {
 </head>
 
 <body>
-    <div class="container">
+    <div class="container-xl">
         <?php
         require 'includes/dbcon.inc.php';
         $stmt = $con->prepare("SELECT Username FROM user WHERE ID=?;");
@@ -42,7 +41,7 @@ if (!isset($_GET["id"])) {
         echo '<h2>' . $row . '</h2>';
         ?>
     </div>
-    <div class="container profile mb-2">
+    <div class="container-xl profile mb-2">
         <div class="pic p-1">
             <?php
             require 'includes/dbcon.inc.php';
@@ -71,48 +70,10 @@ if (!isset($_GET["id"])) {
             echo '<p>' . $row . '</p>';
             ?>
         </div>
-        <div class="favorite">
-            <nav>
-                <div class="nav nav-tabs nav-fill" role="tablist">
-                    <p class="m-2">Favorit: </p>
-    
-                    <button class="nav-link active" id="fav-film-tab" data-bs-toggle="tab" data-bs-target="#fav-film" aria-selected="true">Filme</button>
-    
-                    <button class="nav-link" id="fav-series-tab" data-bs-toggle="tab" data-bs-target="#fav-series" aria-selected="false">Serien</button>
-                    
-                    <button class="nav-link" id="fav-game-tab" data-bs-toggle="tab" data-bs-target="#fav-game" aria-selected="false">Videospiele</button>
-    
-                    <button class="nav-link" id="fav-music-tab" data-bs-toggle="tab" data-bs-target="#fav-music" aria-selected="false">Musik</button>
-
-                    <button class="nav-link" id="fav-book-tab" data-bs-toggle="tab" data-bs-target="#fav-book" aria-selected="false">Bücher</button>
-                </div>
-            </nav>
-            <div class="tab-content" id="nav-tabContent">
-                <div class="tab-pane fade show active" id="fav-film" role="tabpanel" aria-labelledby="fav-film-tab">
-                    Film Content
-                </div>
-    
-                <div class="tab-pane fade" id="fav-series" role="tabpanel" aria-labelledby="fav-series-tab">
-                    Serien Content
-                </div>
-    
-                <div class="tab-pane fade" id="fav-game" role="tabpanel" aria-labelledby="fav-game-tab">
-                    Videspiele Content
-                </div>
-    
-                <div class="tab-pane fade" id="fav-music" role="tabpanel" aria-labelledby="fav-music-tab">
-                    Musik Content
-                </div>
-
-                <div class="tab-pane fade" id="fav-book" role="tabpanel" aria-labelledby="fav-book-tab">
-                    Buch Content
-                </div>
-            </div>
-        </div>
         <button class="btn btn-primary follow">
             <h4 class="mb-0">Follow</h4>
         </button>
-        <div class="reviews text-center">
+        <div class="reviews text-center d-md-flex justify-content-center align-items-center">
             <?php
             require 'includes/dbcon.inc.php';
             $stmt = $con->prepare("SELECT COUNT(Content) FROM review WHERE User=?;");

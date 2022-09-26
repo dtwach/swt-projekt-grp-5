@@ -1,10 +1,16 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .profile {
     display: grid;
-    grid-template-columns: 1fr 1fr 2.5fr;
+    grid-template-columns: 1fr 2.5fr 0.75fr;
     grid-template-rows: 1fr 0.25fr 0.75fr 0.75fr 1.75fr;
     grid-template-areas: 
-        "pic desc fav"
-        "follow revs fav"
+        "pic desc revs"
+        "follow desc revs"
         "following recrev recrev"
         "followers recrev recrev"
         "list list list" ;
@@ -15,12 +21,11 @@
     .profile {
         display: grid;
         grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: 0.75fr 0.2fr 0.2fr 1fr 1fr 1fr;
+        grid-template-rows: 0.75fr 0.2fr 0.2fr 1fr 1fr;
         grid-template-areas: 
             "pic desc desc"
             "follow follow follow"
             "following followers revs"
-            "fav fav fav"
             "recrev recrev recrev"
             "list list list" ;
         gap: 0.3rem;
