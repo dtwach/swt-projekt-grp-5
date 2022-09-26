@@ -95,7 +95,6 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                     </div>
                 </div>
             </div>';
-                        echo "<br><br>";
                     }
                 }
             } else {
