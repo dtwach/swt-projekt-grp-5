@@ -58,7 +58,7 @@ if (!isset($_GET["id"])) {
             }
             ?>
         </div>
-        <div class="desc">
+        <div class="desc p-3">
             <h3>Beschreibung</h3>
             <?php
             require 'includes/dbcon.inc.php';
@@ -73,7 +73,7 @@ if (!isset($_GET["id"])) {
         <button class="btn btn-primary follow">
             <h4 class="mb-0">Follow</h4>
         </button>
-        <div class="reviews text-center d-md-flex justify-content-center align-items-center">
+        <div class="reviews text-center d-md-flex justify-content-center align-items-center p-3">
             <?php
             require 'includes/dbcon.inc.php';
             $stmt = $con->prepare("SELECT COUNT(Content) FROM review WHERE User=?;");
@@ -84,7 +84,7 @@ if (!isset($_GET["id"])) {
             echo '<h4 class="mb-0">Reviews: ' . $row . '</h4>';
             ?>
         </div>
-        <div class="following text-center text-md-start">
+        <div class="following text-center text-md-start p-3">
             <h4 class="mb-0">following: <?php
                                         require 'includes/dbcon.inc.php';
                                         $stmt = $con->prepare("SELECT COUNT(folger) FROM folgeliste WHERE folger=?;");
@@ -100,7 +100,7 @@ if (!isset($_GET["id"])) {
                 <li>user 3</li>
             </ul>
         </div>
-        <div class="followers text-center text-md-start">
+        <div class="followers text-center text-md-start p-3">
             <h4 class="mb-0">followers: <?php
                                         require 'includes/dbcon.inc.php';
                                         $stmt = $con->prepare("SELECT COUNT(gefolgt) FROM folgeliste WHERE gefolgt=?;");
@@ -116,7 +116,7 @@ if (!isset($_GET["id"])) {
                 <li>user 3</li>
             </ul>
         </div>
-        <div class="recentrev">
+        <div class="recentrev p-3">
             <div class="container h-100">
                 <div class="row">
                     <div class="col-6">
@@ -150,7 +150,7 @@ if (!isset($_GET["id"])) {
                 </div>
             </div>
         </div>
-        <div class="list">
+        <div class="list p-3">
             <nav>
                 <div class="nav nav-tabs nav-fill" role="tablist">
                     <p class="m-2">Wunschliste: </p>
