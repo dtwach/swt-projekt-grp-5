@@ -44,7 +44,7 @@ if (!isset($_SESSION)) {
                     <div class="modal-body">
                         <!-- Name, description, image(file picker) -->
 
-                        <form action="includes/create_content.inc.php" id="form1" method="POST">
+                        <form action="includes/create_content.inc.php" id="form1" method="POST" enctype="multipart/form-data">
                             <div class="form-group my-3">
                                 <label for="contentName">Titel</label>
                                 <input type="text" class="form-control" id="contentName"
@@ -57,7 +57,7 @@ if (!isset($_SESSION)) {
                             </div>
                             <div class="form-group my-3">
                                 <label for="contentImg" class="form-label">Contentbild</label>
-                                <input class="form-control" type="file" name="contentImg">
+                                <input class="form-control" type="file" id="contentImg" name="contentImg" accept=".jpg, .jpeg, .png">
                             </div>
                             <div class="form-group my-3">
                             <label for="content_kategorie">Kategorie:</label>
@@ -106,7 +106,7 @@ if (!isset($_SESSION)) {
                     echo '<img src="./img/content_ph.jpg"
                                     class="img-fluid" alt="">';
                 } else {
-                    echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row['Bild']) . '"/>';
+                    echo '<img class="picture img-fluid" src="data:image/jpeg;base64,' . base64_encode($row['Bild']) . '"/>';
                 }
                 echo '
                             </a></div>
