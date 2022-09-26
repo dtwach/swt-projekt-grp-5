@@ -25,12 +25,15 @@ if (!isset($_SESSION)) {
 <body>
 
     <div class="container">
-        <button type="button" class="btn btn-info btn-lg my-2" data-bs-toggle="modal"
+        <?php
+        if (!isset($_SESSION['id'])) {
+        } else {
+            echo '<button type="button" class="btn btn-info btn-lg my-2" data-bs-toggle="modal"
             data-bs-target="#addContentModal">Neues Content hinzufügen</button>
 
         <!-- Modal -->
         <div class="modal fade" id="addContentModal" aria-labelledby="addContentLabel" aria-hidden="true">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <!-- Modal Inhalt -->
                 <div class="modal-content">
                     <div class="modal-header">
@@ -41,11 +44,11 @@ if (!isset($_SESSION)) {
                     <div class="modal-body">
                         <!-- Name, description, image(file picker) -->
 
-                        <form action="/page.php">
+                        <form action="includes/create_content.inc.php" id="form1" method="POST">
                             <div class="form-group my-3">
                                 <label for="contentName">Titel</label>
                                 <input type="text" class="form-control" id="contentName"
-                                    placeholder="Enter content name" name="contentName">
+                                    placeholder="Enter content name" name="name_content">
                             </div>
                             <div class="form-group my-3">
                                 <label for="contentDescription">Beschreibung</label>
@@ -54,18 +57,32 @@ if (!isset($_SESSION)) {
                             </div>
                             <div class="form-group my-3">
                                 <label for="contentImg" class="form-label">Contentbild</label>
-                                <input class="form-control" type="file" id="contentImg">
+                                <input class="form-control" type="file" name="contentImg">
+                            </div>
+                            <div class="form-group my-3">
+                            <label for="content_kategorie">Kategorie:</label>
+                            <select class="form-select" id="kategorie_select" name="kategorie_select">
+                              <option value="1">Videospiel</option>
+                              <option value="2">Film</option>
+                              <option value="3">Serie</option>
+                              <option value="4">Buch</option>
+                              <option value="5">Musik</option>
+                              </select>
                             </div>
                         </form>
                     </div>
                     <div class="modal-footer gap-2">
                         <button type="button" class="btn btn-default btn-outline-danger"
                             data-bs-dismiss="modal">Abbrechen</button>
-                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Fertig</button>
+                        <button type="submit" form="form1" name="content_submit" class="btn btn-outline-success"
+                            data-bs-dismiss="modal">Fertig</button>
                     </div>
                 </div>
             </div>
-        </div>
+        </div>';
+        }
+        ?>
+
 
         <div class="row">
             <?php
