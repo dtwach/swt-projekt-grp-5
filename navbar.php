@@ -53,9 +53,9 @@ if (!isset($_SESSION)) {
                 searchErrorMs()
                 ?>
                 <form class="d-flex me-5" role="search" action="search.php" method="GET">
-                    <input class="form-control me-2" name="search" type="search" placeholder="Search..."
+                    <input class="form-control me-2" name="search" type="search" placeholder="Suche..."
                         aria-label="Search">
-                    <button class="btn btn-outline-success" type="submit">Search</button>
+                    <button class="btn btn-outline-success" type="submit">Suche</button>
                 </form>
 
                 <div class="d-flex">
