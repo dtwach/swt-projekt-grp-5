@@ -29,10 +29,12 @@ if (!isset($_SESSION)) {
         if (!isset($_SESSION['id'])) {
         } else {
             require 'includes/dbcon.inc.php';
+            $user_id = $_SESSION['id'];
             $stmt = $con->prepare("SELECT 
                 u.Rolle
                 FROM user AS u
-                WHERE u.ID = " . $_SESSION['id'] . ";");
+                WHERE u.ID = ?;");
+            $stmt->bind_param('i', $user_id);
             $stmt->execute();
             $result = $stmt->get_result();
             $data_main = $result->fetch_assoc();
