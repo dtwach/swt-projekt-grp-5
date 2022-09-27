@@ -2,7 +2,7 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-if (!isset($_GET['uid']) && !isset($_GET['cid'])){
+if (!isset($_GET['uid']) && !isset($_GET['cid'])) {
     header('Location: /index.php');
 }
 ?>
@@ -28,38 +28,38 @@ if (!isset($_GET['uid']) && !isset($_GET['cid'])){
 
 <body>
     <?php
-        
-        require 'includes/dbcon.inc.php';
-        $user_id = htmlspecialchars($_GET['uid']);
-        $content_id = htmlspecialchars($_GET['cid']);
-        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, u.Username, c.Bild as Content_Picture, u.Bild as User_Picture, r.User, r.Content
+
+    require 'includes/dbcon.inc.php';
+    $user_id = htmlspecialchars($_GET['uid']);
+    $content_id = htmlspecialchars($_GET['cid']);
+    $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, u.Username, c.Bild as Content_Picture, u.Bild as User_Picture, r.User, r.Content
             FROM review as r
             JOIN content as c on c.ID = r.Content 
             JOIN user as u on r.User = u.ID
             WHERE r.User=? AND r.Content=?
             ");
-        $stmt->bind_param('ii', $user_id, $content_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $data = $result->fetch_assoc();
-        
-        if (!isset($data)){
-            echo '
+    $stmt->bind_param('ii', $user_id, $content_id);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    $data = $result->fetch_assoc();
+
+    if (!isset($data)) {
+        echo '
             <div class="container-lg p-4">
                 <h1 class="text-center mt-4">  Keine Reviews gefunden!</h1>
             </div>
             ';
-        } else {
-            $content_picture = (!isset($data['Content_Picture'])) ? "https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" : 
-                    "data:image/jpeg;base64," + base64_encode($data['Content_Picture']);
+    } else {
+        $content_picture = (!isset($data['Content_Picture'])) ? "./img/content_ph.jpg" :
+            "data:image/jpeg;base64," + base64_encode($data['Content_Picture']);
 
-            $user_picture = (!isset($data['User_Picture'])) ? "./img/profil_ph.png" : 'data:image/jpeg;base64,' . base64_encode($row);
-            echo'
+        $user_picture = (!isset($data['User_Picture'])) ? "./img/profil_ph.png" : 'data:image/jpeg;base64,' . base64_encode($row);
+        echo '
                 <div class="container-lg p-4">
                     <h1 class="text-center">Review</h1>
                     <div class="row">
                         <div class="col-sm-6 d-flex align-items-center mb-3">
-                            <img id="user_picture" name="' . $data['User'] . '" src="' . $user_picture .'" alt="" class="img">
+                            <img id="user_picture" name="' . $data['User'] . '" src="' . $user_picture . '" alt="" class="img">
                             <span class="m-3">
                                 <p class="mb-1">Von:</p>
                                 <p>' . $data['Username'] . '</p>
@@ -70,7 +70,7 @@ if (!isset($_GET['uid']) && !isset($_GET['cid'])){
                                 alt="" class="img">
                             <span class="m-3 order-sm-first">
                                 <p class="mb-1 d-flex justify-content-sm-end">Zu:</p>
-                                <p class="d-flex justify-content-sm-end">Content</p>
+                                <p class="d-flex justify-content-sm-end">' . $data['titel'] . '</p>
                             </span>
                         </div>
                     </div>
@@ -80,7 +80,7 @@ if (!isset($_GET['uid']) && !isset($_GET['cid'])){
                     </div>
                 </div>
             ';
-            }
+    }
     ?>
 </body>
 
