@@ -67,12 +67,19 @@ if (!isset($_GET["id"])) {
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_array()[0];
-            echo '<p>' . $row . '</p>';
+            if (!isset($row)) {
+                echo " <p> Keine Beschreibung vorhanden!</p>";
+            } else {
+                echo "<p>" . $row . "</p>";
+            }
             ?>
         </div>
-        <button class="btn btn-primary follow">
-            <h4 class="mb-0">Follow</h4>
-        </button>
+        <form action="includes/follow.inc.php" method="POST">
+            <input type="hidden" name="gefolgtid" id="gefolgtid" value="<?php echo $_GET['id'] ?>" />
+            <button class="btn btn-primary follow w-100" type="submit" name="follow_submit">
+                <h4 class="mb-0">Folge User</h4>
+            </button>
+        </form>
         <div class="reviews text-center d-md-flex justify-content-center align-items-center p-3">
             <?php
             require 'includes/dbcon.inc.php';
@@ -85,35 +92,63 @@ if (!isset($_GET["id"])) {
             ?>
         </div>
         <div class="following text-center text-md-start p-3">
-            <h4 class="mb-0">following: <?php
-                                        require 'includes/dbcon.inc.php';
-                                        $stmt = $con->prepare("SELECT COUNT(folger) FROM folgeliste WHERE folger=?;");
-                                        $stmt->bind_param('i', $_GET["id"]);
-                                        $stmt->execute();
-                                        $result = $stmt->get_result();
-                                        $row = $result->fetch_array()[0];
-                                        echo $row;
-                                        ?></h4>
+            <h4 class="mb-0">following:
+                <?php
+                require 'includes/dbcon.inc.php';
+                $stmt = $con->prepare("SELECT COUNT(folger) as folgt FROM folgeliste WHERE folger=?;");
+                $stmt->bind_param('i', $_GET["id"]);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                echo $row['folgt'];
+                ?></h4>
             <ul class="list-unstyled hidden">
-                <li>user 1</li>
-                <li>user 2</li>
-                <li>user 3</li>
+                <?php
+                require 'includes/dbcon.inc.php';
+                $stmt = $con->prepare("SELECT f.gefolgt,u.Username,u.ID 
+                FROM folgeliste as f 
+                JOIN user as u on u.ID = f.gefolgt
+                WHERE folger=?;");
+                $stmt->bind_param('i', $_GET["id"]);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                if (!isset($row['gefolgt'])) {
+                    echo "<li> Dieser User folgt niemandem! </li>";
+                } else {
+                    echo "<li><a href='profile.php?id=" . $row['ID'] . "'> " . $row['Username'] . "</a></li>";
+                }
+                ?>
             </ul>
         </div>
         <div class="followers text-center text-md-start p-3">
-            <h4 class="mb-0">followers: <?php
-                                        require 'includes/dbcon.inc.php';
-                                        $stmt = $con->prepare("SELECT COUNT(gefolgt) FROM folgeliste WHERE gefolgt=?;");
-                                        $stmt->bind_param('i', $_GET["id"]);
-                                        $stmt->execute();
-                                        $result = $stmt->get_result();
-                                        $row = $result->fetch_array()[0];
-                                        echo $row;
-                                        ?></h4>
+            <h4 class="mb-0">followers:
+                <?php
+                require 'includes/dbcon.inc.php';
+                $stmt = $con->prepare("SELECT COUNT(gefolgt) as follower FROM folgeliste WHERE gefolgt=?;");
+                $stmt->bind_param('i', $_GET["id"]);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                echo $row['follower'];
+                ?></h4>
             <ul class="list-unstyled hidden">
-                <li>user 1</li>
-                <li>user 2</li>
-                <li>user 3</li>
+                <?php
+                require 'includes/dbcon.inc.php';
+                $stmt = $con->prepare("SELECT f.folger,u.Username,u.ID 
+                FROM folgeliste as f 
+                JOIN user as u on u.ID = f.folger 
+                WHERE gefolgt=?;");
+                $stmt->bind_param('i', $_GET["id"]);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_assoc();
+                if (!isset($row['folger'])) {
+                    echo "<li> Niemand folgt diesem User! </li>";
+                } else {
+                    echo "<li><a href='profile.php?id=" . $row['ID'] . "'> " . $row['Username'] . "</a></li>";
+                }
+                ?>
             </ul>
         </div>
         <div class="recentrev p-3">
@@ -154,76 +189,81 @@ if (!isset($_GET["id"])) {
             <nav>
                 <div class="nav nav-tabs nav-fill" role="tablist">
                     <p class="m-2">Wunschliste: </p>
-    
-                    <button class="nav-link active" id="list-film-tab" data-bs-toggle="tab" data-bs-target="#list-film" aria-selected="true">Filme</button>
-    
-                    <button class="nav-link" id="list-series-tab" data-bs-toggle="tab" data-bs-target="#list-series" aria-selected="false">Serien</button>
-                    
-                    <button class="nav-link" id="list-game-tab" data-bs-toggle="tab" data-bs-target="#list-game" aria-selected="false">Videospiele</button>
-    
-                    <button class="nav-link" id="list-music-tab" data-bs-toggle="tab" data-bs-target="#list-music" aria-selected="false">Musik</button>
 
-                    <button class="nav-link" id="list-book-tab" data-bs-toggle="tab" data-bs-target="#list-book" aria-selected="false">Bücher</button>
+                    <button class="nav-link active" id="list-film-tab" data-bs-toggle="tab" data-bs-target="#list-film"
+                        aria-selected="true">Filme</button>
+
+                    <button class="nav-link" id="list-series-tab" data-bs-toggle="tab" data-bs-target="#list-series"
+                        aria-selected="false">Serien</button>
+
+                    <button class="nav-link" id="list-game-tab" data-bs-toggle="tab" data-bs-target="#list-game"
+                        aria-selected="false">Videospiele</button>
+
+                    <button class="nav-link" id="list-music-tab" data-bs-toggle="tab" data-bs-target="#list-music"
+                        aria-selected="false">Musik</button>
+
+                    <button class="nav-link" id="list-book-tab" data-bs-toggle="tab" data-bs-target="#list-book"
+                        aria-selected="false">Bücher</button>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
                 <div class="tab-pane fade show active" id="list-film" role="tabpanel" aria-labelledby="list-film-tab">
                     <div class="row mt-2">
                         <?php
-                            for($i = 1; $i <= 9; $i++) {
-                                echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Film Content '.$i.'</p>
+                        for ($i = 1; $i <= 9; $i++) {
+                            echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Film Content ' . $i . '</p>
                                         </div>';
-                            }
-                        ?>                          
+                        }
+                        ?>
                     </div>
                 </div>
-    
+
                 <div class="tab-pane fade" id="list-series" role="tabpanel" aria-labelledby="list-series-tab">
                     <div class="row mt-2">
                         <?php
-                            for($i = 1; $i <= 7; $i++) {
-                                echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Serien Content '.$i.'</p>
+                        for ($i = 1; $i <= 7; $i++) {
+                            echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Serien Content ' . $i . '</p>
                                         </div>';
-                            }
-                        ?>                          
+                        }
+                        ?>
                     </div>
-                </div>                    
-    
+                </div>
+
                 <div class="tab-pane fade" id="list-game" role="tabpanel" aria-labelledby="list-game-tab">
                     <div class="row mt-2">
                         <?php
-                            for($i = 1; $i <= 10; $i++) {
-                                echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Videospiel Content '.$i.'</p>
+                        for ($i = 1; $i <= 10; $i++) {
+                            echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Videospiel Content ' . $i . '</p>
                                         </div>';
-                            }
-                        ?>                          
+                        }
+                        ?>
                     </div>
                 </div>
-    
+
                 <div class="tab-pane fade" id="list-music" role="tabpanel" aria-labelledby="list-music-tab">
                     <div class="row mt-2">
                         <?php
-                            for($i = 1; $i <= 9; $i++) {
-                                echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Musik Content '.$i.'</p>
+                        for ($i = 1; $i <= 9; $i++) {
+                            echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Musik Content ' . $i . '</p>
                                         </div>';
-                            }
-                        ?>                          
+                        }
+                        ?>
                     </div>
                 </div>
 
                 <div class="tab-pane fade" id="list-book" role="tabpanel" aria-labelledby="list-book-tab">
                     <div class="row mt-2">
                         <?php
-                            for($i = 1; $i <= 4; $i++) {
-                                echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Buch Content '.$i.'</p>
+                        for ($i = 1; $i <= 4; $i++) {
+                            echo '  <div class="col-4 col-sm-2 text-center">
+                                            <p>Buch Content ' . $i . '</p>
                                         </div>';
-                            }
-                        ?>                          
+                        }
+                        ?>
                     </div>
                 </div>
             </div>

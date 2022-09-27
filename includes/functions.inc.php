@@ -34,6 +34,12 @@ function searchErrorMs()
             case 'success':
                 echo '<a class="text-decoration-none me-5 text-body">✅Erfolgreich!✅</a>';
                 break;
+            case 'sameid':
+                echo '<a class="text-decoration-none me-5 text-body">❌Du Kannst dir selbst nicht Folgen!❌</a>';
+                break;
+            case 'alreadyfollowed':
+                echo '<a class="text-decoration-none me-5 text-body">❌Du folgst dem User bereits!❌</a>';
+                break;
         }
     }
 }
