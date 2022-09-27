@@ -210,11 +210,9 @@ if (!isset($_GET["id"])) {
                 <div class="tab-pane fade show active" id="list-film" role="tabpanel" aria-labelledby="list-film-tab">
                     <div class="row mt-2">
                         <?php
-                        for ($i = 1; $i <= 9; $i++) {
-                            echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Film Content ' . $i . '</p>
-                                        </div>';
-                        }
+                        include_once './includes/showwatchlist.inc.php';
+                        $kategorie = 2;
+                        showWatchlist($kategorie);
                         ?>
                     </div>
                 </div>
@@ -222,11 +220,8 @@ if (!isset($_GET["id"])) {
                 <div class="tab-pane fade" id="list-series" role="tabpanel" aria-labelledby="list-series-tab">
                     <div class="row mt-2">
                         <?php
-                        for ($i = 1; $i <= 7; $i++) {
-                            echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Serien Content ' . $i . '</p>
-                                        </div>';
-                        }
+                        $kategorie = 3;
+                        showWatchlist($kategorie);
                         ?>
                     </div>
                 </div>
@@ -234,11 +229,8 @@ if (!isset($_GET["id"])) {
                 <div class="tab-pane fade" id="list-game" role="tabpanel" aria-labelledby="list-game-tab">
                     <div class="row mt-2">
                         <?php
-                        for ($i = 1; $i <= 10; $i++) {
-                            echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Videospiel Content ' . $i . '</p>
-                                        </div>';
-                        }
+                        $kategorie = 1;
+                        showWatchlist($kategorie);
                         ?>
                     </div>
                 </div>
@@ -246,11 +238,8 @@ if (!isset($_GET["id"])) {
                 <div class="tab-pane fade" id="list-music" role="tabpanel" aria-labelledby="list-music-tab">
                     <div class="row mt-2">
                         <?php
-                        for ($i = 1; $i <= 9; $i++) {
-                            echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Musik Content ' . $i . '</p>
-                                        </div>';
-                        }
+                        $kategorie = 5;
+                        showWatchlist($kategorie);
                         ?>
                     </div>
                 </div>
@@ -258,11 +247,8 @@ if (!isset($_GET["id"])) {
                 <div class="tab-pane fade" id="list-book" role="tabpanel" aria-labelledby="list-book-tab">
                     <div class="row mt-2">
                         <?php
-                        for ($i = 1; $i <= 4; $i++) {
-                            echo '  <div class="col-4 col-sm-2 text-center">
-                                            <p>Buch Content ' . $i . '</p>
-                                        </div>';
-                        }
+                        $kategorie = 4;
+                        showWatchlist($kategorie);
                         ?>
                     </div>
                 </div>
