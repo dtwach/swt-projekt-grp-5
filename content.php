@@ -28,85 +28,110 @@ if (!isset($_GET['id'])) {
 </head>
 
 <body>
-   
-        
-        <div class="text-center p-sm-4 pt-2">
-            <!-- TODO ADD REVIEW MODAL -->
-            <h4>Content Title</h4>
-            <div class="row row-cols-1 row-cols-md-2 g-2 g-lg-3">
-                <div class="col col-md-5">
-                    <img src="https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg"
-                        class="img-fluid rounded" alt="">
-                </div>
-                <div class="col col-md-7">
-                    <div class="row row-cols-2 row-cols-lg-3">
-                        <div class="col">
-                            <div class="row row-cols-2 row-cols-lg-1">
-                                <p class="text-end text-lg-start">Kategorie:</p>
-                                <p class="text-start">${kategorie}</p>
-                            </div>
-                        </div>
-    
-                        <div class="col">
-                            <div class="row row-cols-2 row-cols-lg-1">
-                                <p class="text-end text-lg-start">Rating:</p>
-                                <p class="text-start">${rating}</p>
-                            </div>
-                        </div>
-    
-                        <div class="col">
-                            <div class="row row-cols-2 row-cols-lg-1">
-                                <p class="text-end text-lg-start">Bewertung:</p>
+
+
+    <div class="text-center p-sm-4 pt-2">
+        <!-- TODO ADD REVIEW MODAL -->
+        <h4>
+            <?php
+            require 'includes/dbcon.inc.php';
+            $content_id = $_GET['id'];
+            $stmt = $con->prepare("SELECT 
+                c.ID,c.Titel,c.Beschreibung,c.Kategorie,
+                k.ID,k.Kategoriebezeichnung,c.Bild
+                FROM content AS c, kategorie AS k
+                WHERE c.ID = ?
+                and c.Kategorie = k.ID;");
+            $stmt->bind_param('i', $content_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $data_main = $result->fetch_assoc();
+            if (is_null($data_main['Titel'])) {
+                echo 'Keine Beschreibung Vorhanden!';
+            } else echo $data_main['Titel'];
+            ?>
+        </h4>
+        <div class="row row-cols-1 row-cols-md-2 g-2 g-lg-3">
+            <div class="col col-md-4">
+                <?php
+                if ($data_main['Bild'] == NULL) {
+                    echo '<img src="./img/content_ph.jpg"
+                                    class="img-fluid" alt="">';
+                } else {
+                    echo '<img class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($data_main['Bild']) . '"/>';
+                }
+                ?>
+            </div>
+            <div class="col col-md-8">
+                <div class="row row-cols-2 row-cols-lg-3">
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-lg-1">
+                            <p class="text-end text-lg-start">Kategorie:</p>
+                            <p class="text-start">
                                 <?php
                                 require 'includes/dbcon.inc.php';
                                 $content_id = $_GET['id'];
-                                $stmt = $con->prepare("SELECT AVG ( Bewertung ) as Bewertung
+                                if (is_null($data_main['Kategoriebezeichnung'])) {
+                                    echo 'Keine Beschreibung Vorhanden!';
+                                } else echo $data_main['Kategoriebezeichnung'];
+                                ?>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="row row-cols-2 row-cols-lg-1">
+                            <p class="text-end text-lg-start">Bewertung:</p>
+                            <?php
+                            require 'includes/dbcon.inc.php';
+                            $content_id = $_GET['id'];
+                            $stmt = $con->prepare("SELECT AVG ( Bewertung ) as Bewertung
                                 FROM review
                                 WHERE Content=?
                                 ");
-                                $stmt->bind_param('i', $content_id);
-                                $stmt->execute();
-                                $result = $stmt->get_result();
-                                $data = $result->fetch_assoc();
-                                if(is_null($data['Bewertung'])){
-                                    echo '<p class="text-start">Keine</p>';
-                                } else echo'<p class="text-start">' . sprintf("%.2f", $data['Bewertung']) . '</p>';                          
-                                ?>
-                            </div>
+                            $stmt->bind_param('i', $content_id);
+                            $stmt->execute();
+                            $result = $stmt->get_result();
+                            $data = $result->fetch_assoc();
+                            if (is_null($data['Bewertung'])) {
+                                echo '<p class="text-start">Keine</p>';
+                            } else echo '<p class="text-start">' . sprintf("%.2f", $data['Bewertung']) . '</p>';
+                            ?>
                         </div>
                     </div>
-                    <div class="text-start">Lorem ipsum dolor sit amet consectetur,
-                        adipisicing elit. Numquam provident sunt ab. Laudantium fuga, odit quae
-                        necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
-                        nesciunt labore repudiandae sapiente aspernatur! Numquam provident sunt ab. Laudantium fuga, odit
-                        quae
-                        necessitatibus recusandae perferendis eius harum. Ipsum ut magni corrupti,
-                    </div>
-    
-                    <div class="d-flex justify-content-evenly pt-4 px-4">
-                        <button class="px-2 rounded-4 border bg-light" data-bs-toggle="modal"
-                            data-bs-target="#addReveiwModal">
-                            Review erstellen
-                        </button>
-                        <button class="p-3 rounded-4 border bg-light">
-                            in die Watchliste
-                        </button>
-                    </div>
                 </div>
-    
+                <div class="text-start">
+                    <?php
+                    require 'includes/dbcon.inc.php';
+                    if (is_null($data_main['Beschreibung'])) {
+                        echo 'Keine Beschreibung Vorhanden!';
+                    } else echo $data_main['Beschreibung'];
+                    ?>
+                </div>
+
+                <div class="d-flex justify-content-evenly pt-4 px-4">
+                    <button class="px-2 rounded-4 border bg-light" data-bs-toggle="modal"
+                        data-bs-target="#addReveiwModal">
+                        Review erstellen
+                    </button>
+                    <button class="p-3 rounded-4 border bg-light">
+                        in die Watchliste
+                    </button>
+                </div>
             </div>
-            <br />
-    
-            <div class="d-flex justify-content-between">
-                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern </a>
-                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeDescModal">Beschreibung ändern</a>
-            </div>
-    
-            <div class="row">
-                <?php
-                require 'includes/dbcon.inc.php';
-                $content_id = $_GET['id'];
-                $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, u.Username, c.Bild, r.User
+
+        </div>
+        <br />
+
+        <div class="d-flex justify-content-between">
+            <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern </a>
+            <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeDescModal">Beschreibung ändern</a>
+        </div>
+
+        <div class="row">
+            <?php
+            require 'includes/dbcon.inc.php';
+            $content_id = $_GET['id'];
+            $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, u.Username, c.Bild, r.User
                 FROM review as r
                 JOIN content as c on c.ID = r.Content 
                 JOIN user as u on u.ID = r.user
@@ -114,18 +139,18 @@ if (!isset($_GET['id'])) {
                 ORDER BY r.Timestamp 
                 LIMIT 50;
                 ");
-                $stmt->bind_param('i', $content_id);
-                $stmt->execute();
-                $result = $stmt->get_result();
+            $stmt->bind_param('i', $content_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
 
-                if($result->num_rows == 0){
-                    echo'<h5 class=" mt-5 text-center">Keine Reviews vorhanden' . "\u{1F625}" . '</h5>';
-                }
+            if ($result->num_rows == 0) {
+                echo '<h5 class=" mt-5 text-center">Keine Reviews vorhanden' . "\u{1F625}" . '</h5>';
+            }
 
-                while($item = $result->fetch_assoc()){
-                    $picture = (is_null($item['Bild'])) ? "https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" : 
-                    "data:image/jpeg;base64," + base64_encode($item['Bild'])  ;
-                    echo'
+            while ($item = $result->fetch_assoc()) {
+                $picture = (is_null($item['Bild'])) ? "https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" :
+                    "data:image/jpeg;base64," + base64_encode($item['Bild']);
+                echo '
                         <div class="col-sm-4 mb-3">
                             <div class="panel panel-primary">
                                 <div class="card">
@@ -152,14 +177,9 @@ if (!isset($_GET['id'])) {
                         </div>
                     
                     ';
-
-                }
-                ?>
-    
-            </div>
-    
-
-
+            }
+            ?>
+        </div>
         <!-- add review modal -->
         <div class="modal fade" id="addReveiwModal" aria-labelledby="addReviewLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
@@ -177,7 +197,7 @@ if (!isset($_GET['id'])) {
                                 <label class="fw-bold" for="reviewRating">Bewertung</label>
                                 <input type="number" min="1" max="10" class="form-control w-25 px-3" id="reviewRating"
                                     placeholder="1 - 10" name="reviewRating">
-                                
+
                             </div>
                             <div class="text-start my-1 pt-1">
                                 <label class="fw-bold" for="reviewText">Review</label>
@@ -195,13 +215,18 @@ if (!isset($_GET['id'])) {
             </div>
         </div>
 
-         <!-- change image modal -->
-         <div class="modal fade" id="changeImgModal" aria-labelledby="addReviewLabel" aria-hidden="true">
+        <!-- change image modal -->
+        <div class="modal fade" id="changeImgModal" aria-labelledby="addReviewLabel" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">
                 <!-- Modal Inhalt -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="addReviewLabel">Bild von {contentTitle} ändern</h4>
+                        <h4 class="modal-title" id="addReviewLabel">Bild von
+                            <?php
+                            if (is_null($data_main['Titel'])) {
+                                echo 'Kein Titel Vorhanden!';
+                            } else echo $data_main['Titel'];
+                            ?> ändern</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -211,7 +236,8 @@ if (!isset($_GET['id'])) {
 
                             <div class="text-start my-1 pt-1">
                                 <label class="fw-bold" for="reviewText">wähle ein neues Bild aus</label>
-                                <input class="form-control" type="file" accept="image/png, image/gif, image/jpeg" id="contentImg">
+                                <input class="form-control" type="file" accept="image/png, image/gif, image/jpeg"
+                                    id="contentImg">
                             </div>
                         </form>
                     </div>
@@ -231,7 +257,13 @@ if (!isset($_GET['id'])) {
                 <!-- Modal Inhalt -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="addReviewLabel">Beschreibung von {contentTitle} ändern</h4>
+                        <h4 class="modal-title" id="addReviewLabel">Beschreibung von
+                            <?php
+                            if (is_null($data_main['Titel'])) {
+                                echo 'Kein Titel Vorhanden!';
+                            } else echo $data_main['Titel'];
+                            ?>
+                            ändern</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
@@ -256,7 +288,7 @@ if (!isset($_GET['id'])) {
 
     </div>
 
-    
+
 </body>
 
 </html>
