@@ -134,7 +134,7 @@ if (!isset($_GET['id'])) {
             <?php
             require 'includes/dbcon.inc.php';
             $content_id = $_GET['id'];
-            $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, u.Username, c.Bild, r.User
+            $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, u.Username, u.Bild, r.User
                 FROM review as r
                 JOIN content as c on c.ID = r.Content 
                 JOIN user as u on u.ID = r.user
@@ -151,7 +151,7 @@ if (!isset($_GET['id'])) {
             }
 
             while ($item = $result->fetch_assoc()) {
-                $picture = (is_null($item['Bild'])) ? "https://image.shutterstock.com/image-vector/default-ui-image-placeholder-wireframes-600w-1037719192.jpg" :
+                $picture = (is_null($item['Bild'])) ? "./img/profil_ph.png" :
                     "data:image/jpeg;base64," + base64_encode($item['Bild']);
                 echo '
                         <div class="col-sm-4 mb-3">
