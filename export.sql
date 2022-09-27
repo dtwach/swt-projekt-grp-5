@@ -68,8 +68,8 @@ CREATE TABLE `review` (
 INSERT INTO `review` (`User`, `Content`, `Inhalt`, `Bewertung`, `Timestamp`) VALUES
 (1000,	1,	'Tolle Sache',	5.0,	'2019-03-10 02:55:05'),
 (1000,	3,	'Schwach',	2.0,	'2019-03-10 02:55:05'),
-(1001,	3,	'Richtig toll',	6.0,	'2019-03-10 02:58:05'),
-(1000,	5,	'Klasse',	9.0,	'2019-03-10 02:55:05');
+(1000,	5,	'Klasse',	9.0,	'2019-03-10 02:55:05'),
+(1001,	3,	'Richtig toll',	6.0,	'2019-03-10 02:58:05');
 
 DROP TABLE IF EXISTS `rolle`;
 CREATE TABLE `rolle` (
@@ -89,6 +89,8 @@ CREATE TABLE `status` (
   PRIMARY KEY (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+INSERT INTO `status` (`ID`, `Statusbezeichnung`) VALUES
+(1,	'toWatch');
 
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
@@ -103,9 +105,9 @@ CREATE TABLE `user` (
   CONSTRAINT `rollefk` FOREIGN KEY (`Rolle`) REFERENCES `rolle` (`ID`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
-INSERT INTO `user` (`ID`, `Username`, `PassHash`, `Bild`, `Rolle`) VALUES
-(1000,	'tester',	'$2y$10$qZQ3luz0Wm6AQu94Jet.QOedYkwzAkACm1lfWdYOg5RdbXMlvA4Dm',	NULL,	2),
-(1001,	'tester2',	'$2y$10$qZQ3luz0Wm6AQu94Jet.QOedYkwzAkACm1lfWdYOg5RdbXMlvA4Dm',	NULL,	2);
+INSERT INTO `user` (`ID`, `Username`, `PassHash`, `Beschreibung`, `Bild`, `Rolle`) VALUES
+(1000,	'tester',	'$2y$10$qZQ3luz0Wm6AQu94Jet.QOedYkwzAkACm1lfWdYOg5RdbXMlvA4Dm',	NULL,	NULL,	1),
+(1001,	'tester2',	'$2y$10$qZQ3luz0Wm6AQu94Jet.QOedYkwzAkACm1lfWdYOg5RdbXMlvA4Dm',	NULL,	NULL,	2);
 
 DROP TABLE IF EXISTS `watchlist`;
 CREATE TABLE `watchlist` (
@@ -123,4 +125,4 @@ CREATE TABLE `watchlist` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 
--- 2022-09-11 15:08:26
+-- 2022-09-27 18:25:30
