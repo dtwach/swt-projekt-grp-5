@@ -157,9 +157,7 @@ if (!isset($_GET["id"])) {
                     <div class="col-6">
                         <h3>Letzte Reviews</h3>
                     </div>
-                    <div class="col-6 text-end">
-                        <a href="">Alle Reviews</a>
-                    </div>
+                    
                     <?php
                     require 'includes/dbcon.inc.php';
                     $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, r.User, r.Content FROM review as r
@@ -168,6 +166,10 @@ if (!isset($_GET["id"])) {
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $data = $result->fetch_all();
+                    echo'
+                    <div class="col-6 text-end">
+                        <a href="/review.php?uid=' . $data[0][3] . '&cid=' . $data[0][4] . '">Alle Reviews</a>
+                    </div>';
                     foreach ($data as $item) {
                         echo '
                             <div class="col-12 col-lg-6 col-xl-6 col-md-6" >

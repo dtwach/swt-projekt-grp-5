@@ -2,7 +2,7 @@
 if (!isset($_SESSION)) {
     session_start();
 }
-if (!isset($_GET['uid']) && !isset($_GET['cid'])) {
+if (!isset($_GET['uid']) || !isset($_GET['cid'])) {
     header('Location: /index.php');
 }
 ?>
