@@ -76,7 +76,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                             echo '<img src="./img/content_ph.jpg"
                                     class="img-fluid" alt="">';
                         } else {
-                            echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row_search['Bild']) . '"/>';
+                            echo '<img class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($row_search['Bild']) . '"/>';
                         }
                         echo '
                             </a></div>
