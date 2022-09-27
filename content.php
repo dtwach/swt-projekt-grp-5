@@ -113,9 +113,12 @@ if (!isset($_GET['id'])) {
                         data-bs-target="#addReveiwModal">
                         Review erstellen
                     </button>
-                    <button class="p-3 rounded-4 border bg-light">
-                        in die Watchliste
-                    </button>
+                    <form action="includes/watchlist.inc.php" method="POST">
+                        <input type="hidden" name="contentid" id="contentid" value="<?php echo $_GET['id'] ?>" />
+                        <button class="p-3 rounded-4 border bg-light" type="submit" name="watchlist_submit">
+                            in die Watchliste
+                        </button>
+                    </form>
                 </div>
             </div>
 

@@ -40,6 +40,9 @@ function searchErrorMs()
             case 'alreadyfollowed':
                 echo '<a class="text-decoration-none me-5 text-body">❌Du folgst dem User bereits!❌</a>';
                 break;
+            case 'alreadywatchlisted':
+                echo '<a class="text-decoration-none me-5 text-body">❌Du hast den Content bereits in deiner Watchlist!❌</a>';
+                break;
         }
     }
 }
