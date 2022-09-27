@@ -28,7 +28,18 @@ if (!isset($_SESSION)) {
         <?php
         if (!isset($_SESSION['id'])) {
         } else {
-            echo '<button type="button" class="btn btn-info btn-lg my-2" data-bs-toggle="modal"
+            require 'includes/dbcon.inc.php';
+            $stmt = $con->prepare("SELECT 
+                u.Rolle
+                FROM user AS u
+                WHERE u.ID = " . $_SESSION['id'] . ";");
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $data_main = $result->fetch_assoc();
+            if ($data_main['Rolle'] == 1) {
+
+
+                echo '<button type="button" class="btn btn-info btn-lg my-2" data-bs-toggle="modal"
             data-bs-target="#addContentModal">Neues Content hinzufügen</button>
 
         <!-- Modal -->
@@ -80,6 +91,7 @@ if (!isset($_SESSION)) {
                 </div>
             </div>
         </div>';
+            }
         }
         ?>
 
