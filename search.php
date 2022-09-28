@@ -41,10 +41,8 @@ if (isset($_SERVER['HTTP_REFERER'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Suche</title>
     <link href="css/style.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
     <?php
     include './navbar.php';
@@ -72,9 +70,9 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                                 <a href="content.php?id=' . $row_search["ID"] . '"><h4 class="card-title">' . $row_search["Titel"] . '</h4>';
                         if ($row_search['Bild'] == NULL) {
                             echo '<img src="./img/content_ph.jpg"
-                                    class="img-fluid" alt="">';
+                                    class="img-fluid" height="400px" width="400px"alt="">';
                         } else {
-                            echo '<img class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($row_search['Bild']) . '"/>';
+                            echo '<img class="img-fluid" height="400px" width="400px" src="data:image/jpeg;base64,' . base64_encode($row_search['Bild']) . '"/>';
                         }
                         echo '
                             </a></div>
