@@ -73,7 +73,6 @@ if (!isset($_GET['id'])) {
                             <p class="text-start">
                                 <?php
                                 require 'includes/dbcon.inc.php';
-                                $content_id = $_GET['id'];
                                 if (is_null($data_main['Kategoriebezeichnung'])) {
                                     echo 'Keine Beschreibung Vorhanden!';
                                 } else echo $data_main['Kategoriebezeichnung'];
