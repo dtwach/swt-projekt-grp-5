@@ -60,23 +60,25 @@ if (!isset($_GET["id"])) {
         </div>
         <div class="desc p-3">
             <h3>Beschreibung</h3>
-            <?php
-            require 'includes/dbcon.inc.php';
-            $stmt = $con->prepare("SELECT Beschreibung FROM user WHERE ID=?;");
-            $stmt->bind_param('i', $_GET["id"]);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_array()[0];
-            if (!isset($row)) {
-                echo " <p> Keine Beschreibung vorhanden!</p>";
-            } else {
-                echo "<p>" . $row . "</p>";
-            }
-            ?>
+            <div class="text-start">
+                <?php
+                require 'includes/dbcon.inc.php';
+                $stmt = $con->prepare("SELECT Beschreibung FROM user WHERE ID=?;");
+                $stmt->bind_param('i', $_GET["id"]);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_array()[0];
+                if (!isset($row)) {
+                    echo " <p class='text-wrap text-break'> Keine Beschreibung vorhanden!</p>";
+                } else {
+                    echo "<p class='text-wrap text-break'>" . $row . "</p>";
+                }
+                ?>
+            </div>
             <?php
             if ($_GET['id'] == $_SESSION['id']) {
                 echo '
-                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern </a>
+                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern</a>
                 <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeDescModal">Beschreibung ändern</a>
                 ';
             }

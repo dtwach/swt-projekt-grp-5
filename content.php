@@ -100,12 +100,14 @@ if (!isset($_GET['id'])) {
                     </div>
                 </div>
                 <div class="text-start">
-                    <?php
-                    require 'includes/dbcon.inc.php';
-                    if (is_null($data_main['Beschreibung'])) {
-                        echo 'Keine Beschreibung Vorhanden!';
-                    } else echo $data_main['Beschreibung'];
-                    ?>
+                    <p class="text-wrap text-break">
+                        <?php
+                        require 'includes/dbcon.inc.php';
+                        if (is_null($data_main['Beschreibung'])) {
+                            echo 'Keine Beschreibung Vorhanden!';
+                        } else echo $data_main['Beschreibung'];
+                        ?>
+                    </p>
                 </div>
 
                 <div class="d-flex justify-content-evenly pt-4 px-4">
