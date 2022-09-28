@@ -69,10 +69,10 @@ if (empty($row)) {
             $result = $stmt->get_result();
             $row = $result->fetch_array()[0];
             if ($row == NULL) {
-                echo '<img height="250px" width="150px" src="./img/profil_ph.png"
-                 class="img-fluid" class="rounded-2" alt="">';
+                echo '<img height="150px" width="150px" src="./img/profil_ph.png"
+                 class="rounded-2 img-fluid" alt="">';
             } else {
-                echo '<img width="250px" height="150px"  class="img-fluid" class="rounded-2" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
+                echo '<img width="150px" height="150px"  class="rounded-2 img-fluid" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
             }
             ?>
         </div>
