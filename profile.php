@@ -84,12 +84,37 @@ if (!isset($_GET["id"])) {
             }
             ?>
         </div>
+
         <form action="includes/follow.inc.php" method="POST">
             <input type="hidden" name="gefolgtid" id="gefolgtid" value="<?php echo $_GET['id'] ?>" />
-            <button class="btn btn-primary follow w-100" type="submit" name="follow_submit">
-                <h4 class="mb-0">Folge User</h4>
-            </button>
+
+            <?php
+            require 'includes/dbcon.inc.php';
+            $stmt = $con->prepare("SELECT gefolgt,folger
+                FROM folgeliste as f 
+                WHERE folger=? and gefolgt=?;
+                ");
+            $stmt->bind_param('ii', $_SESSION["id"], $_GET["id"]);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            if (!isset($row)) {
+                echo '
+                    <button class="btn btn-primary follow w-100" type="submit" name="follow_submit">
+                    <h4 class="mb-0">Folge User</h4>
+                    </button>
+                ';
+            } else {
+                echo '
+                <button class="btn btn-danger follow w-100" type="submit" name="defollow_submit">
+                <h4 class="mb-0">Entfolge User</h4>
+                </button>
+                ';
+            }
+            ?>
         </form>
+
+
         <div class="reviews text-center d-md-flex justify-content-center align-items-center p-3">
             <?php
             require 'includes/dbcon.inc.php';
