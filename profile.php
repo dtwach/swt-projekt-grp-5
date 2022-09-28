@@ -8,6 +8,16 @@ if (!isset($_SESSION["id"])) {
 if (!isset($_GET["id"])) {
     header('Location: /profile.php?id=' . $_SESSION["id"]);
 }
+require 'includes/dbcon.inc.php';
+$stmt = $con->prepare("SELECT Username FROM user WHERE ID=?;");
+$stmt->bind_param('i', $_GET["id"]);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_array();
+if (empty($row)) {
+    header('Location: /profile.php?id=' . $_SESSION["id"]);
+    exit;
+}
 ?>
 
 <!DOCTYPE html>
@@ -30,6 +40,8 @@ if (!isset($_GET["id"])) {
 </head>
 
 <body>
+
+
     <div class="container-xl">
         <?php
         require 'includes/dbcon.inc.php';
@@ -54,7 +66,7 @@ if (!isset($_GET["id"])) {
                 echo '<img height="250px" width="150px" src="./img/profil_ph.png"
                             class="img-fluid" alt="">';
             } else {
-                echo '<img  width="250px" height="150px" class="rounded-2" class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
+                echo '<img width="250px" height="150px" class="rounded-2" class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
             }
             ?>
         </div>
@@ -200,21 +212,26 @@ if (!isset($_GET["id"])) {
                     $data = $result->fetch_all();
                     echo '
                     <div class="col-6 text-end">
-                        <a href="/user-review-page.php?cid=' . $data[0][4] . '">Alle Reviews</a>
+                        <a href="/user-review-page.php?id=' . $_GET["id"] . '">Alle Reviews</a>
                     </div>';
-                    foreach ($data as $item) {
-                        echo '
-                            <div class="col-12 col-lg-6 col-xl-6 col-md-6" >
-                                <div class="row">                               
-                                    <a class="col-6" href="review.php?uid=' . $item[3] . '&cid=' . $item[4] . '">
-                                        <h4 >' . $item[2] . '</h4>     
-                                    </a>
-                                    <div class="col-6 text-end">Rating: ' . $item[1] . '</div>
-                                    <div class="col-12">' . $item[0] . '</div>
-                                </div>                            
-                            </div>
-                            ';
+                    if (!empty($data)) {
+                        foreach ($data as $item) {
+                            echo '
+                                <div class="col-12 col-lg-6 col-xl-6 col-md-6" >
+                                    <div class="row">                               
+                                        <a class="col-6" href="review.php?uid=' . $item[3] . '&cid=' . $item[4] . '">
+                                            <h4 >' . $item[2] . '</h4>     
+                                        </a>
+                                        <div class="col-6 text-end">Rating: ' . $item[1] . '</div>
+                                        <div class="col-12">' . $item[0] . '</div>
+                                    </div>                            
+                                </div>
+                                ';
+                        }
+                    } else {
+                        echo 'Keine Reviews erstellt!';
                     }
+
                     ?>
                 </div>
             </div>
