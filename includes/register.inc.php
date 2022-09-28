@@ -37,9 +37,9 @@ if (isset($_POST['register_submit'])) {
                 header('Location: ../register.php?ms=db&name=' . $name);
                 exit();
             }
-            $test = 2;
+            $rolle = 1;
             $passwordhash = password_hash($password, PASSWORD_DEFAULT);
-            $stmt->bind_param('ssi', $name, $passwordhash, $test);
+            $stmt->bind_param('ssi', $name, $passwordhash, $rolle);
             $stmt->execute();
             if (!$stmt) {
                 header('Location: ../register.php?ms=fail&name=' . $name);
