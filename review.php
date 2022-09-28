@@ -51,9 +51,9 @@ if (!isset($_GET['uid']) || !isset($_GET['cid'])) {
             ';
     } else {
         $content_picture = (!isset($data['Content_Picture'])) ? "./img/content_ph.jpg" :
-            "data:image/jpeg;base64," + base64_encode($data['Content_Picture']);
+            "data:image/jpeg;base64," . base64_encode($data['Content_Picture']);
 
-        $user_picture = (!isset($data['User_Picture'])) ? "./img/profil_ph.png" : 'data:image/jpeg;base64,' . base64_encode($row);
+        $user_picture = (!isset($data['User_Picture'])) ? "./img/profil_ph.png" : 'data:image/jpeg;base64,' . base64_encode($data['User_Picture']);
         echo '
                 <div class="container-lg p-4">
                     <h1 class="text-center">Review</h1>
