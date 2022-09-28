@@ -156,7 +156,7 @@ if (!isset($_GET['id'])) {
             <?php
             require 'includes/dbcon.inc.php';
             $content_id = $_GET['id'];
-            $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, u.Username, u.Bild, r.User
+            $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, u.Username, u.Bild, r.User,r.Content
                 FROM review as r
                 JOIN content as c on c.ID = r.Content 
                 JOIN user as u on u.ID = r.user
@@ -193,7 +193,9 @@ if (!isset($_GET['id'])) {
             
                                         <div class="col">
                                             <div class="card-block px-2 mx-1" style="max-height: 130px; text-align: justify;">
+                                            <a class="text-decoration-none text-reset" href="/review.php?uid=' . $item['User'] . '&cid=' . $item['Content'] . '">
                                                 <p class="card-text truncate-max-5lines">' . $item['Inhalt'] . '</p>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
@@ -220,13 +222,13 @@ if (!isset($_GET['id'])) {
                         <form action="includes/create_review.inc.php" id="form1" method="post" name="review_submit">
                             <div class="text-start my-1">
                                 <label class="fw-bold" for="reviewRating">Bewertung</label>
-                            <input type="number" min="1" max="10" class="form-control w-25 px-3" name="reviewRating" id="reviewRating"
-                            placeholder="1 - 10" name="reviewRating">
+                                <input type="number" min="1" max="10" class="form-control w-25 px-3" name="reviewRating"
+                                    id="reviewRating" placeholder="1 - 10" name="reviewRating">
 
                             </div>
                             <div class="text-start my-1 pt-1">
                                 <label class="fw-bold" for="reviewText">Review</label>
-                                <textarea type="text" class="form-control text-start" name="reviewText" id="reviewText" 
+                                <textarea type="text" class="form-control text-start" name="reviewText" id="reviewText"
                                     placeholder="Gib dein Review an" name="reviewText" style="height:250px;"></textarea>
                             </div>
                         </form>
@@ -234,11 +236,11 @@ if (!isset($_GET['id'])) {
                     <div class="modal-footer gap-2">
                         <button type="button" class="btn btn-default btn-outline-danger"
                             data-bs-dismiss="modal">Abbrechen</button>
-                            <?php
-                            echo '<button type="submit" class="btn btn-outline-success" form="form1"
+                        <?php
+                        echo '<button type="submit" class="btn btn-outline-success" form="form1"
                             name="review_submit" value="' . $_GET['id'] . '" data-bs-dismiss="modal">Fertig</button>';
-                            ?>
-                  
+                        ?>
+
                     </div>
                 </div>
             </div>
