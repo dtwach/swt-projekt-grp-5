@@ -19,10 +19,8 @@ if (!isset($_GET["id"])) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Content-Review-Plattform</title>
     <link href="css/profilegrid.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
     <?php
     include './navbar.php';
@@ -75,14 +73,6 @@ if (!isset($_GET["id"])) {
                 }
                 ?>
             </div>
-            <?php
-            if ($_GET['id'] == $_SESSION['id']) {
-                echo '
-                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern</a>
-                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeDescModal">Beschreibung ändern</a>
-                ';
-            }
-            ?>
         </div>
 
         <form action="includes/follow.inc.php" method="POST">
@@ -98,7 +88,12 @@ if (!isset($_GET["id"])) {
             $stmt->execute();
             $result = $stmt->get_result();
             $row = $result->fetch_assoc();
-            if (!isset($row)) {
+            if ($_GET['id'] == $_SESSION['id']) {
+                echo '
+                <a href="pl-2" class="" data-bs-toggle="modal" data-bs-target="#changeImgModal"><button class="btn btn-primary" type="button"><h6 class="mt-1">Bild Ändern</h6></button></a>
+                <a href="" class="" data-bs-toggle="modal" data-bs-target="#changeDescModal"><button class="btn btn-primary" type="button"><h6 class="mt-1">Beschreibung ändern</h6></button></a>
+                ';
+            } else if (!isset($row)) {
                 echo '
                     <button class="btn btn-primary follow w-100" type="submit" name="follow_submit">
                     <h4 class="mb-0">Folge User</h4>
@@ -297,20 +292,15 @@ if (!isset($_GET["id"])) {
                 <div class="nav nav-tabs nav-fill" role="tablist">
                     <p class="m-2">Wunschliste: </p>
 
-                    <button class="nav-link active" id="list-film-tab" data-bs-toggle="tab" data-bs-target="#list-film"
-                        aria-selected="true">Filme</button>
+                    <button class="nav-link active" id="list-film-tab" data-bs-toggle="tab" data-bs-target="#list-film" aria-selected="true">Filme</button>
 
-                    <button class="nav-link" id="list-series-tab" data-bs-toggle="tab" data-bs-target="#list-series"
-                        aria-selected="false">Serien</button>
+                    <button class="nav-link" id="list-series-tab" data-bs-toggle="tab" data-bs-target="#list-series" aria-selected="false">Serien</button>
 
-                    <button class="nav-link" id="list-game-tab" data-bs-toggle="tab" data-bs-target="#list-game"
-                        aria-selected="false">Videospiele</button>
+                    <button class="nav-link" id="list-game-tab" data-bs-toggle="tab" data-bs-target="#list-game" aria-selected="false">Videospiele</button>
 
-                    <button class="nav-link" id="list-music-tab" data-bs-toggle="tab" data-bs-target="#list-music"
-                        aria-selected="false">Musik</button>
+                    <button class="nav-link" id="list-music-tab" data-bs-toggle="tab" data-bs-target="#list-music" aria-selected="false">Musik</button>
 
-                    <button class="nav-link" id="list-book-tab" data-bs-toggle="tab" data-bs-target="#list-book"
-                        aria-selected="false">Bücher</button>
+                    <button class="nav-link" id="list-book-tab" data-bs-toggle="tab" data-bs-target="#list-book" aria-selected="false">Bücher</button>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
