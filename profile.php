@@ -29,10 +29,8 @@ if (empty($row)) {
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profil Content-Review-Plattform</title>
     <link href="css/profilegrid.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
     </script>
     <?php
     include './navbar.php';
@@ -146,7 +144,7 @@ if (empty($row)) {
                 $row = $result->fetch_assoc();
                 echo $row['folgt'];
                 ?></h4>
-            <ul class="list-unstyled hidden">
+            <ul class="list-unstyled hidden" style="max-height: 50px;overflow-y:auto;">
                 <?php
                 require 'includes/dbcon.inc.php';
                 $stmt = $con->prepare("SELECT f.gefolgt,u.Username,u.ID 
@@ -156,11 +154,12 @@ if (empty($row)) {
                 $stmt->bind_param('i', $_GET["id"]);
                 $stmt->execute();
                 $result = $stmt->get_result();
-                $row = $result->fetch_assoc();
-                if (!isset($row['gefolgt'])) {
+                if ($result->num_rows == 0) {
                     echo "<li> Dieser User folgt niemandem! </li>";
                 } else {
-                    echo "<li><a href='profile.php?id=" . $row['ID'] . "'> " . $row['Username'] . "</a></li>";
+                    while ($item = $result->fetch_array()) {
+                        echo "<li><a href='profile.php?id=" . $item['ID'] . "'> " . $item['Username'] . "</a></li>";
+                    }
                 }
                 ?>
             </ul>
@@ -176,7 +175,7 @@ if (empty($row)) {
                 $row = $result->fetch_assoc();
                 echo $row['follower'];
                 ?></h4>
-            <ul class="list-unstyled hidden">
+            <ul class="list-unstyled hidden" style="max-height: 50px;overflow-y:auto;">
                 <?php
                 require 'includes/dbcon.inc.php';
                 $stmt = $con->prepare("SELECT f.folger,u.Username,u.ID 
@@ -186,11 +185,12 @@ if (empty($row)) {
                 $stmt->bind_param('i', $_GET["id"]);
                 $stmt->execute();
                 $result = $stmt->get_result();
-                $row = $result->fetch_assoc();
-                if (!isset($row['folger'])) {
+                if ($result->num_rows == 0) {
                     echo "<li> Niemand folgt diesem User! </li>";
                 } else {
-                    echo "<li><a href='profile.php?id=" . $row['ID'] . "'> " . $row['Username'] . "</a></li>";
+                    while ($item = $result->fetch_assoc()) {
+                        echo "<li><a href='profile.php?id=" . $item['ID'] . "'> " . $item['Username'] . "</a></li>";
+                    }
                 }
                 ?>
             </ul>
@@ -311,20 +311,15 @@ if (empty($row)) {
                 <div class="nav nav-tabs nav-fill" role="tablist">
                     <p class="m-2">Watchliste: </p>
 
-                    <button class="nav-link active" id="list-film-tab" data-bs-toggle="tab" data-bs-target="#list-film"
-                        aria-selected="true">Filme</button>
+                    <button class="nav-link active" id="list-film-tab" data-bs-toggle="tab" data-bs-target="#list-film" aria-selected="true">Filme</button>
 
-                    <button class="nav-link" id="list-series-tab" data-bs-toggle="tab" data-bs-target="#list-series"
-                        aria-selected="false">Serien</button>
+                    <button class="nav-link" id="list-series-tab" data-bs-toggle="tab" data-bs-target="#list-series" aria-selected="false">Serien</button>
 
-                    <button class="nav-link" id="list-game-tab" data-bs-toggle="tab" data-bs-target="#list-game"
-                        aria-selected="false">Videospiele</button>
+                    <button class="nav-link" id="list-game-tab" data-bs-toggle="tab" data-bs-target="#list-game" aria-selected="false">Videospiele</button>
 
-                    <button class="nav-link" id="list-music-tab" data-bs-toggle="tab" data-bs-target="#list-music"
-                        aria-selected="false">Musik</button>
+                    <button class="nav-link" id="list-music-tab" data-bs-toggle="tab" data-bs-target="#list-music" aria-selected="false">Musik</button>
 
-                    <button class="nav-link" id="list-book-tab" data-bs-toggle="tab" data-bs-target="#list-book"
-                        aria-selected="false">Bücher</button>
+                    <button class="nav-link" id="list-book-tab" data-bs-toggle="tab" data-bs-target="#list-book" aria-selected="false">Bücher</button>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">
