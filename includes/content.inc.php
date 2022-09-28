@@ -10,6 +10,10 @@ if (isset($_POST['descChange'])) {
     if (empty($newDesc)) {
         $newDesc = NULL;
     }
+    if (strlen($newDesc) > 510) {
+        header('Location: ../content.php?id=' . $changeid . '&ms=toolong');
+        exit;
+    }
     $stmt = $con->prepare("UPDATE content SET Beschreibung=? WHERE id=?");
     $stmt->bind_param('si', $newDesc, $changeid);
     $stmt->execute();

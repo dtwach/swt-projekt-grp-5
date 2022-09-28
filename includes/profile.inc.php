@@ -9,9 +9,14 @@ if (isset($_POST['descChange'])) {
     $newDesc = htmlspecialchars($_POST['descText']);
     if ($changeid != $id) {
         header('Location: ../profile.php?id=' . $changeid . '&ms=notsameuser');
+        exit;
     }
     if (empty($newDesc)) {
         $newDesc = NULL;
+    }
+    if (strlen($newDesc) > 510) {
+        header('Location: ../profile.php?id=' . $changeid . '&ms=toolong');
+        exit;
     }
     $stmt = $con->prepare("UPDATE user SET Beschreibung=? WHERE id=?");
     $stmt->bind_param('si', $newDesc, $changeid);
@@ -31,6 +36,7 @@ if (isset($_POST['imgChange'])) {
     $changeid = htmlspecialchars($_POST['userid']);
     if ($changeid != $id) {
         header('Location: ../profile.php?id=' . $changeid . '&ms=notsameuser');
+        exit;
     }
     if (!empty($_FILES['userImg'])) {
         $file = $_FILES['userImg'];

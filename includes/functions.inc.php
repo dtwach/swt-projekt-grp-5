@@ -46,6 +46,9 @@ function searchErrorMs()
             case 'notsameuser':
                 echo '<a class="text-decoration-none me-5 text-body">❌Das ist nicht dein User!❌</a>';
                 break;
+            case 'toolong':
+                echo '<a class="text-decoration-none me-5 text-body">❌Beschreibung ist zu Lang! Max: 510 Zeichen❌</a>';
+                break;
         }
     }
 }
