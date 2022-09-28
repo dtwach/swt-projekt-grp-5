@@ -126,8 +126,28 @@ if (!isset($_GET['id'])) {
         <br />
 
         <div class="d-flex justify-content-between">
-            <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern </a>
-            <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeDescModal">Beschreibung ändern</a>
+            <?php
+
+            if (!isset($_SESSION['id'])) {
+            } else {
+                require 'includes/dbcon.inc.php';
+                $user_id = $_SESSION['id'];
+                $stmt = $con->prepare("SELECT 
+                    u.Rolle
+                    FROM user AS u
+                    WHERE u.ID = ?;");
+                $stmt->bind_param('i', $user_id);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $data_main = $result->fetch_assoc();
+                if ($data_main['Rolle'] == 1) {
+                    echo '
+                    <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern </a>
+                    <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeDescModal">Beschreibung ändern</a>
+                    ';
+                }
+            }
+            ?>
         </div>
 
         <div class="row">
@@ -218,76 +238,88 @@ if (!isset($_GET['id'])) {
             </div>
         </div>
 
-        <!-- change image modal -->
-        <div class="modal fade" id="changeImgModal" aria-labelledby="addReviewLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <!-- Modal Inhalt -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="addReviewLabel">Bild von
-                            <?php
-                            if (is_null($data_main['Titel'])) {
-                                echo 'Kein Titel Vorhanden!';
-                            } else echo $data_main['Titel'];
-                            ?> ändern</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <form action="/page.php">
-
-                            <div class="text-start my-1 pt-1">
-                                <label class="fw-bold" for="reviewText">wähle ein neues Bild aus</label>
-                                <input class="form-control" type="file" accept="image/png, image/gif, image/jpeg"
-                                    id="contentImg">
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer gap-2">
-                        <button type="button" class="btn btn-default btn-outline-danger"
-                            data-bs-dismiss="modal">Abbrechen</button>
-                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Fertig</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-
-        <!-- description change modal -->
-        <div class="modal fade" id="changeDescModal" aria-labelledby="addReviewLabel" aria-hidden="true">
-            <div class="modal-dialog modal-lg modal-dialog-centered">
-                <!-- Modal Inhalt -->
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h4 class="modal-title" id="addReviewLabel">Beschreibung von
-                            <?php
-                            if (is_null($data_main['Titel'])) {
-                                echo 'Kein Titel Vorhanden!';
-                            } else echo $data_main['Titel'];
-                            ?>
-                            ändern</h4>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-
-                    <div class="modal-body">
-
-                        <form action="/page.php">
-                            <div class="text-start my-1 pt-1">
-                                <label class="fw-bold" for="reviewText">Neue Beschreibung</label>
-                                <textarea type="text" class="form-control text-start" id="reviewText"
-                                    placeholder="Enter Review" name="reviewText" style="height:250px;"></textarea>
-                            </div>
-                        </form>
-                    </div>
-                    <div class="modal-footer gap-2">
-                        <button type="button" class="btn btn-default btn-outline-danger"
-                            data-bs-dismiss="modal">Abbrechen</button>
-                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Fertig</button>
+        <?php
+        if (!isset($_SESSION['id'])) {
+        } else {
+            require 'includes/dbcon.inc.php';
+            $user_id = $_SESSION['id'];
+            $stmt = $con->prepare("SELECT 
+                u.Rolle
+                FROM user AS u
+                WHERE u.ID = ?;");
+            $stmt->bind_param('i', $user_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $data_main = $result->fetch_assoc();
+            if ($data_main['Rolle'] == 1) {
+                echo '
+            <!-- change image modal -->
+            <div class="modal fade" id="changeImgModal" aria-labelledby="addReviewLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <!-- Modal Inhalt -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="addReviewLabel">Bild Ändern</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+    
+                        <div class="modal-body">
+    
+                            <form action="includes/content.inc.php" id="formimg" method="POST"
+                                enctype="multipart/form-data">
+    
+                                <div class="text-start my-1 pt-1">
+                                    <input type="hidden" name="contentid" id="contentid" value="' . $_GET['id'] . '" />
+                                    <label class="fw-bold" for="contentImg">wähle ein neues Bild aus</label>
+                                    <input class="form-control" type="file" id="contentImg" name="contentImg"
+                                        accept=".jpg, .jpeg, .png">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer gap-2">
+                            <button type="button" class="btn btn-default btn-outline-danger"
+                                data-bs-dismiss="modal">Abbrechen</button>
+                            <button type="submit" form="formimg" name="imgChange" class="btn btn-outline-success"
+                                data-bs-dismiss="modal">Fertig</button>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
+    
+    
+            <!-- description change modal -->
+            <div class="modal fade" id="changeDescModal" aria-labelledby="addReviewLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <!-- Modal Inhalt -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="addReviewLabel">Beschreibung ändern</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+    
+                        <div class="modal-body">
+    
+                            <form action="includes/content.inc.php" id="formdesc" method="POST">
+                                <div class="text-start my-1 pt-1">
+                                    <input type="hidden" name="contentid" id="contentid" value="' . $_GET['id'] . '" />
+        <label class="fw-bold" for="reviewText">Neue Beschreibung</label>
+        <textarea type="text" class="form-control text-start" id="descText" placeholder="Neue Beschreibung"
+            name="descText" style="height:250px;"></textarea>
+    </div>
+    </form>
+    </div>
+    <div class="modal-footer gap-2">
+        <button type="button" class="btn btn-default btn-outline-danger" data-bs-dismiss="modal">Abbrechen</button>
+        <button type="submit" form="formdesc" name="descChange" class="btn btn-outline-success"
+            data-bs-dismiss="modal">Fertig</button>
+    </div>
+    </div>
+    </div>
+    </div>
+    ';
+            }
+        }
+        ?>
 
     </div>
 

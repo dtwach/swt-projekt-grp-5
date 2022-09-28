@@ -54,7 +54,7 @@ if (!isset($_GET["id"])) {
                 echo '<img height="250px" width="150px" src="./img/profil_ph.png"
                             class="img-fluid" alt="">';
             } else {
-                echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
+                echo '<img  height="250px" width="150px" class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
             }
             ?>
         </div>
@@ -71,6 +71,14 @@ if (!isset($_GET["id"])) {
                 echo " <p> Keine Beschreibung vorhanden!</p>";
             } else {
                 echo "<p>" . $row . "</p>";
+            }
+            ?>
+            <?php
+            if ($_GET['id'] == $_SESSION['id']) {
+                echo '
+                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern </a>
+                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeDescModal">Beschreibung ändern</a>
+                ';
             }
             ?>
         </div>
@@ -157,7 +165,7 @@ if (!isset($_GET["id"])) {
                     <div class="col-6">
                         <h3>Letzte Reviews</h3>
                     </div>
-                    
+
                     <?php
                     require 'includes/dbcon.inc.php';
                     $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, r.User, r.Content FROM review as r
@@ -166,7 +174,7 @@ if (!isset($_GET["id"])) {
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $data = $result->fetch_all();
-                    echo'
+                    echo '
                     <div class="col-6 text-end">
                         <a href="/review.php?uid=' . $data[0][3] . '&cid=' . $data[0][4] . '">Alle Reviews</a>
                     </div>';
@@ -187,6 +195,76 @@ if (!isset($_GET["id"])) {
                 </div>
             </div>
         </div>
+
+        <?php
+        if ($_GET['id'] == $_SESSION['id']) {
+            echo '
+            <!-- change image modal -->
+            <div class="modal fade" id="changeImgModal" aria-labelledby="addReviewLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <!-- Modal Inhalt -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="addReviewLabel">Bild Ändern</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+    
+                        <div class="modal-body">
+    
+                            <form action="includes/profile.inc.php" id="formimg" method="POST"
+                                enctype="multipart/form-data">
+    
+                                <div class="text-start my-1 pt-1">
+                                    <input type="hidden" name="userid" id="userid" value="' . $_GET['id'] . '" />
+                                    <label class="fw-bold" for="userImg">wähle ein neues Bild aus</label>
+                                    <input class="form-control" type="file" id="userImg" name="userImg"
+                                        accept=".jpg, .jpeg, .png">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer gap-2">
+                            <button type="button" class="btn btn-default btn-outline-danger"
+                                data-bs-dismiss="modal">Abbrechen</button>
+                            <button type="submit" form="formimg" name="imgChange" class="btn btn-outline-success"
+                                data-bs-dismiss="modal">Fertig</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <!-- description change modal -->
+            <div class="modal fade" id="changeDescModal" aria-labelledby="addReviewLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <!-- Modal Inhalt -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="addReviewLabel">Beschreibung ändern</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+    
+                        <div class="modal-body">
+    
+                            <form action="includes/profile.inc.php" id="formdesc" method="POST">
+                                <div class="text-start my-1 pt-1">
+                                    <input type="hidden" name="userid" id="userid" value="' . $_GET['id'] . '" />
+        <label class="fw-bold" for="reviewText">Neue Beschreibung</label>
+        <textarea type="text" class="form-control text-start" id="descText" placeholder="Neue Beschreibung"
+            name="descText" style="height:250px;"></textarea>
+    </div>
+    </form>
+    </div>
+    <div class="modal-footer gap-2">
+        <button type="button" class="btn btn-default btn-outline-danger" data-bs-dismiss="modal">Abbrechen</button>
+        <button type="submit" form="formdesc" name="descChange" class="btn btn-outline-success"
+            data-bs-dismiss="modal">Fertig</button>
+    </div>
+    </div>
+    </div>
+    </div>
+    ';
+        }
+        ?>
         <div class="list p-3">
             <nav>
                 <div class="nav nav-tabs nav-fill" role="tablist">

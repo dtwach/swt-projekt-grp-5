@@ -43,6 +43,9 @@ function searchErrorMs()
             case 'alreadywatchlisted':
                 echo '<a class="text-decoration-none me-5 text-body">❌Du hast den Content bereits in deiner Watchlist!❌</a>';
                 break;
+            case 'notsameuser':
+                echo '<a class="text-decoration-none me-5 text-body">❌Das ist nicht dein User!❌</a>';
+                break;
         }
     }
 }
