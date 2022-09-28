@@ -54,7 +54,7 @@ if (!isset($_GET["id"])) {
                 echo '<img height="250px" width="150px" src="./img/profil_ph.png"
                             class="img-fluid" alt="">';
             } else {
-                echo '<img  height="250px" width="150px" class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
+                echo '<img  width="250px" height="150px" class="rounded-2" class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
             }
             ?>
         </div>

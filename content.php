@@ -174,7 +174,7 @@ if (!isset($_GET['id'])) {
 
             while ($item = $result->fetch_assoc()) {
                 $picture = (is_null($item['Bild'])) ? "./img/profil_ph.png" :
-                    "data:image/jpeg;base64," + base64_encode($item['Bild']);
+                    "data:image/jpeg;base64," . base64_encode($item['Bild']);
                 echo '
                         <div class="col-sm-4 mb-3">
                             <div class="panel panel-primary">
