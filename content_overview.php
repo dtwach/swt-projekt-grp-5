@@ -118,9 +118,9 @@ if (!isset($_SESSION)) {
                                 <a href="content.php?id=' . $row["ID"] . '"><h4 class="card-title">' . $row["Titel"] . '</h4>';
                 if ($row['Bild'] == NULL) {
                     echo '<img src="./img/content_ph.jpg"
-                                    class="img-fluid" height="400px" width="400px" alt="">';
+                                    class="img-fluid rounded-2" height="400px" width="400px" alt="">';
                 } else {
-                    echo '<img height="400px" width="400px" class="picture img-fluid" src="data:image/jpeg;base64,' . base64_encode($row['Bild']) . '"/>';
+                    echo '<img height="400px" width="400px" class="img-fluid rounded-2" src="data:image/jpeg;base64,' . base64_encode($row['Bild']) . '"/>';
                 }
                 echo '
                             </a></div>

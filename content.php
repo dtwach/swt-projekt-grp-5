@@ -103,7 +103,7 @@ if (!isset($_GET['id'])) {
                     </div>
                 </div>
                 <div class="text-start">
-                    <p class="text-wrap text-break">
+                    <p class="truncate-max-5lines">
                         <?php
                         require 'includes/dbcon.inc.php';
                         if (is_null($data_main['Beschreibung'])) {
