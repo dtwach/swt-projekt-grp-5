@@ -16,7 +16,7 @@ function compare_id($r_id, $u_id)
     $stmt->execute();
     $result = $stmt->get_result()->fetch_assoc();
     if (isset($result)) {
-        header('Location: ../content.php?id=' . $r_id . '&ms=db');
+        header('Location: ../content.php?id=' . $r_id . '&ms=review');
         exit();
     }
     $stmt->close();

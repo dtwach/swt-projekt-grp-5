@@ -49,6 +49,9 @@ function searchErrorMs()
             case 'toolong':
                 echo '<a class="text-decoration-none me-5 text-body">❌Beschreibung ist zu Lang! Max: 510 Zeichen❌</a>';
                 break;
+            case 'review':
+                echo '<a class="text-decoration-none me-5 text-body">❌Zu diesem Content bereits ein Review erstellt!❌</a>';
+                break;
         }
     }
 }
