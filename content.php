@@ -118,12 +118,35 @@ if (!isset($_GET['id'])) {
                         data-bs-target="#addReveiwModal">
                         Review erstellen
                     </button>
-                    <form action="includes/watchlist.inc.php" method="POST">
-                        <input type="hidden" name="contentid" id="contentid" value="<?php echo $_GET['id'] ?>" />
+                    <?php
+                    include 'includes/dbcon.inc.php';
+                    $stmt = $con->prepare("SELECT * 
+                        FROM watchlist
+                        WHERE User=? and Content=?;");
+                    $stmt->bind_param('ii', $_SESSION['id'], $_GET['id']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    $stmt->close();
+                    if ($result->num_rows == 0) {
+                        echo '
+                        <form action="includes/watchlist.inc.php" method="POST">
+                        <input type="hidden" name="contentid" id="contentid" value="' . $_GET['id'] . '" />
                         <button class="p-3 rounded-4 border bg-light" type="submit" name="watchlist_submit">
-                            in die Watchliste
+                        in die Watchliste
                         </button>
-                    </form>
+                        </form>
+                    ';
+                    } else {
+                        echo '
+                        <form action="includes/watchlist.inc.php" method="POST">
+                        <input type="hidden" name="contentid" id="contentid" value="' . $_GET['id'] . '" />
+                        <button class="p-3 rounded-4 border bg-light" type="submit" name="watchlist_delete">
+                        Aus der Watchliste entfernen
+                        </button>
+                        </form>
+                    ';
+                    }
+                    ?>
                 </div>
             </div>
 

@@ -52,3 +52,29 @@ if (isset($_POST['watchlist_submit'])) {
     $stmt->close();
     $con->close();
 }
+if (isset($_POST['watchlist_delete'])) {
+    require 'dbcon.inc.php';
+    $name = $_SESSION['user'];
+    $id = $_SESSION['id'];
+    $content_id = htmlspecialchars($_POST['contentid']);
+    if (empty($content_id)) {
+        header('Location: ../content.php?id=' . $content_id . '&ms=empty');
+        exit();
+    }
+    $stmt = $con->prepare("DELETE FROM watchlist 
+    WHERE User=? and Content=?
+    ;");
+    if (!$stmt) {
+        header('Location: ../content.php?id=' . $content_id . '&ms=db');
+        exit();
+    }
+    $stmt->bind_param('ii', $id, $content_id,);
+    $stmt->execute();
+    if (!$stmt) {
+        header('Location: ../content.php?id=' . $content_id . '&ms=db');
+        exit();
+    }
+    header('Location: ../content.php?id=' . $content_id . '&ms=success');
+    $stmt->close();
+    $con->close();
+}
