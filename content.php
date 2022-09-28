@@ -195,16 +195,16 @@ if (!isset($_GET['id'])) {
 
                     <div class="modal-body">
 
-                        <form action="/page.php">
+                        <form action="includes/create_review.inc.php" id="form1" method="post" name="review_submit">
                             <div class="text-start my-1">
                                 <label class="fw-bold" for="reviewRating">Bewertung</label>
-                                <input type="number" min="1" max="10" class="form-control w-25 px-3" id="reviewRating"
-                                    placeholder="1 - 10" name="reviewRating">
+                            <input type="number" min="1" max="10" class="form-control w-25 px-3" name="reviewRating" id="reviewRating
+                            placeholder="1 - 10" name="reviewRating">
 
                             </div>
                             <div class="text-start my-1 pt-1">
                                 <label class="fw-bold" for="reviewText">Review</label>
-                                <textarea type="text" class="form-control text-start" id="reviewText"
+                                <textarea type="text" class="form-control text-start" name="reviewText" id="reviewText" 
                                     placeholder="Enter Review" name="reviewText" style="height:250px;"></textarea>
                             </div>
                         </form>
@@ -212,7 +212,11 @@ if (!isset($_GET['id'])) {
                     <div class="modal-footer gap-2">
                         <button type="button" class="btn btn-default btn-outline-danger"
                             data-bs-dismiss="modal">Abbrechen</button>
-                        <button type="button" class="btn btn-outline-success" data-bs-dismiss="modal">Fertig</button>
+                            <?php
+                            echo '<button type="submit" class="btn btn-outline-success" form="form1"
+                            name="review_submit" value="' . $_GET['id'] . '" data-bs-dismiss="modal">Fertig</button>';
+                            ?>
+                  
                     </div>
                 </div>
             </div>
