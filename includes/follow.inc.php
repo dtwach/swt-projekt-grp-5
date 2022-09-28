@@ -48,3 +48,33 @@ if (isset($_POST['follow_submit'])) {
     $stmt->close();
     $con->close();
 }
+if (isset($_POST['defollow_submit'])) {
+    require 'dbcon.inc.php';
+    $name = $_SESSION['user'];
+    $id = $_SESSION['id'];
+    $gefolgt_id = htmlspecialchars($_POST['gefolgtid']);
+    if (empty($gefolgt_id)) {
+        header('Location: ../profile.php?id=' . $gefolgt_id . '&ms=empty');
+        exit();
+    }
+    if ($gefolgt_id == $id) {
+        header('Location: ../profile.php?id=' . $gefolgt_id . '&ms=sameid');
+        exit();
+    }
+    $stmt = $con->prepare("DELETE FROM folgeliste 
+    WHERE folger=? and gefolgt=?
+    ;");
+    if (!$stmt) {
+        header('Location: ../profile.php?id=' . $gefolgt_id . '&ms=db');
+        exit();
+    }
+    $stmt->bind_param('ii', $id, $gefolgt_id);
+    $stmt->execute();
+    if (!$stmt) {
+        header('Location: ../profile.php?id=' . $gefolgt_id . '&ms=db');
+        exit();
+    }
+    header('Location: ../profile.php?id=' . $gefolgt_id . '&ms=success');
+    $stmt->close();
+    $con->close();
+}

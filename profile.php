@@ -54,32 +54,67 @@ if (!isset($_GET["id"])) {
                 echo '<img height="250px" width="150px" src="./img/profil_ph.png"
                             class="img-fluid" alt="">';
             } else {
-                echo '<img class="picture" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
+                echo '<img  height="250px" width="150px" class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($row) . '"/>';
             }
             ?>
         </div>
         <div class="desc p-3">
             <h3>Beschreibung</h3>
+            <div class="text-start">
+                <?php
+                require 'includes/dbcon.inc.php';
+                $stmt = $con->prepare("SELECT Beschreibung FROM user WHERE ID=?;");
+                $stmt->bind_param('i', $_GET["id"]);
+                $stmt->execute();
+                $result = $stmt->get_result();
+                $row = $result->fetch_array()[0];
+                if (!isset($row)) {
+                    echo " <p class='text-wrap text-break'> Keine Beschreibung vorhanden!</p>";
+                } else {
+                    echo "<p class='text-wrap text-break'>" . $row . "</p>";
+                }
+                ?>
+            </div>
             <?php
-            require 'includes/dbcon.inc.php';
-            $stmt = $con->prepare("SELECT Beschreibung FROM user WHERE ID=?;");
-            $stmt->bind_param('i', $_GET["id"]);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $row = $result->fetch_array()[0];
-            if (!isset($row)) {
-                echo " <p> Keine Beschreibung vorhanden!</p>";
-            } else {
-                echo "<p>" . $row . "</p>";
+            if ($_GET['id'] == $_SESSION['id']) {
+                echo '
+                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeImgModal">Bild ändern</a>
+                <a href="" class="p-3" data-bs-toggle="modal" data-bs-target="#changeDescModal">Beschreibung ändern</a>
+                ';
             }
             ?>
         </div>
+
         <form action="includes/follow.inc.php" method="POST">
             <input type="hidden" name="gefolgtid" id="gefolgtid" value="<?php echo $_GET['id'] ?>" />
-            <button class="btn btn-primary follow w-100" type="submit" name="follow_submit">
-                <h4 class="mb-0">Folge User</h4>
-            </button>
+
+            <?php
+            require 'includes/dbcon.inc.php';
+            $stmt = $con->prepare("SELECT gefolgt,folger
+                FROM folgeliste as f 
+                WHERE folger=? and gefolgt=?;
+                ");
+            $stmt->bind_param('ii', $_SESSION["id"], $_GET["id"]);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $row = $result->fetch_assoc();
+            if (!isset($row)) {
+                echo '
+                    <button class="btn btn-primary follow w-100" type="submit" name="follow_submit">
+                    <h4 class="mb-0">Folge User</h4>
+                    </button>
+                ';
+            } else {
+                echo '
+                <button class="btn btn-danger follow w-100" type="submit" name="defollow_submit">
+                <h4 class="mb-0">Entfolge User</h4>
+                </button>
+                ';
+            }
+            ?>
         </form>
+
+
         <div class="reviews text-center d-md-flex justify-content-center align-items-center p-3">
             <?php
             require 'includes/dbcon.inc.php';
@@ -157,7 +192,7 @@ if (!isset($_GET["id"])) {
                     <div class="col-6">
                         <h3>Letzte Reviews</h3>
                     </div>
-                    
+
                     <?php
                     require 'includes/dbcon.inc.php';
                     $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, r.User, r.Content FROM review as r
@@ -166,7 +201,7 @@ if (!isset($_GET["id"])) {
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $data = $result->fetch_all();
-                    echo'
+                    echo '
                     <div class="col-6 text-end">
                         <a href="/review.php?uid=' . $data[0][3] . '&cid=' . $data[0][4] . '">Alle Reviews</a>
                     </div>';
@@ -187,6 +222,76 @@ if (!isset($_GET["id"])) {
                 </div>
             </div>
         </div>
+
+        <?php
+        if ($_GET['id'] == $_SESSION['id']) {
+            echo '
+            <!-- change image modal -->
+            <div class="modal fade" id="changeImgModal" aria-labelledby="addReviewLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <!-- Modal Inhalt -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="addReviewLabel">Bild Ändern</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+    
+                        <div class="modal-body">
+    
+                            <form action="includes/profile.inc.php" id="formimg" method="POST"
+                                enctype="multipart/form-data">
+    
+                                <div class="text-start my-1 pt-1">
+                                    <input type="hidden" name="userid" id="userid" value="' . $_GET['id'] . '" />
+                                    <label class="fw-bold" for="userImg">wähle ein neues Bild aus</label>
+                                    <input class="form-control" type="file" id="userImg" name="userImg"
+                                        accept=".jpg, .jpeg, .png">
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer gap-2">
+                            <button type="button" class="btn btn-default btn-outline-danger"
+                                data-bs-dismiss="modal">Abbrechen</button>
+                            <button type="submit" form="formimg" name="imgChange" class="btn btn-outline-success"
+                                data-bs-dismiss="modal">Fertig</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+    
+            <!-- description change modal -->
+            <div class="modal fade" id="changeDescModal" aria-labelledby="addReviewLabel" aria-hidden="true">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <!-- Modal Inhalt -->
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title" id="addReviewLabel">Beschreibung ändern</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+    
+                        <div class="modal-body">
+    
+                            <form action="includes/profile.inc.php" id="formdesc" method="POST">
+                                <div class="text-start my-1 pt-1">
+                                    <input type="hidden" name="userid" id="userid" value="' . $_GET['id'] . '" />
+        <label class="fw-bold" for="reviewText">Neue Beschreibung</label>
+        <textarea type="text" class="form-control text-start" id="descText" placeholder="Neue Beschreibung"
+            name="descText" style="height:250px;"></textarea>
+    </div>
+    </form>
+    </div>
+    <div class="modal-footer gap-2">
+        <button type="button" class="btn btn-default btn-outline-danger" data-bs-dismiss="modal">Abbrechen</button>
+        <button type="submit" form="formdesc" name="descChange" class="btn btn-outline-success"
+            data-bs-dismiss="modal">Fertig</button>
+    </div>
+    </div>
+    </div>
+    </div>
+    ';
+        }
+        ?>
         <div class="list p-3">
             <nav>
                 <div class="nav nav-tabs nav-fill" role="tablist">

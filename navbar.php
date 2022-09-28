@@ -94,7 +94,7 @@ if (!isset($_SESSION)) {
             <div class="d-lg-none offcanvas offcanvas-end" tabindex="-1" id="navBurgerMenuContents"
                 aria-labelledby="offcanvasNavbarLabel">
                 <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Quick Access</h5>
+                    <h5 class="offcanvas-title" id="offcanvasNavbarLabel">Schnellzugriff</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
                 </div>
 
@@ -108,7 +108,7 @@ if (!isset($_SESSION)) {
                         <!-- Conditional Element (existiert nur wenn user sich eingeloggt hat), darf aber gelöscht werden wenn es zu overkill ist -->
                         <li class="nav-item">
                             <a class="nav-link active" href="profile.php">
-                                <p>Profile</p>
+                                <p>Mein Profil</p>
                             </a>
                         </li>
                     </ul>
@@ -117,16 +117,24 @@ if (!isset($_SESSION)) {
                     searchErrorMs()
                     ?>
                     <form class="d-flex" role="search" action="search.php" method="GET">
-                        <input class="form-control me-2" type="search" name="search" placeholder="Search"
+                        <input class="form-control me-2" type="search" name="search" placeholder="Suche.."
                             aria-label="Search">
-                        <button id="submit " class="btn btn-outline-success" type="submit">Search</button>
+                        <button id="submit " class="btn btn-outline-success" type="submit">Suchen</button>
                     </form>
                     <!-- Nochmal Conditional (ob user eingeloggt ist oder noch nicht, login oder logout) -->
                     <ul class="navbar-nav justify-content-end flex-grow-1 pe-3 mt-3">
                         <li class="nav-item">
-                            <a class="nav-link active" href="login.php">
-                                <h6>Login</h6>
-                            </a>
+                            <?php
+                            if (isset($_SESSION['id'])) {
+                                echo "<a class='nav-link active' href='./includes/logout.inc.php'>
+                                <h6 class='text-danger'>Logout</h6>
+                            </a>";
+                            } else {
+                                echo "<a class='nav-link active' href='login.php'>
+                                    <h6>Login</h6>
+                                </a>";
+                            }
+                            ?>                        
                         </li>
                     </ul>
                 </div>
