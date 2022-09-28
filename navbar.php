@@ -62,18 +62,17 @@ if (!isset($_SESSION)) {
                     <span class="align-middle me-2">
                         <?php
                         if (isset($_SESSION['id'])) {
-                            echo "<a href='profile.php'>";
+                            echo "<a href='profile.php?id=" . $_SESSION['id'] . "'>";
                         } else {
                             echo "<a href='login.php'>";
                         }
                         ?>
-                        <a href="profile.php">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
-                                class="bi bi-person-circle" viewBox="0 0 16 16">
-                                <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
-                                <path fill-rule="evenodd"
-                                    d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
-                            </svg>
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="currentColor"
+                            class="bi bi-person-circle" viewBox="0 0 16 16">
+                            <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z" />
+                            <path fill-rule="evenodd"
+                                d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z" />
+                        </svg>
                         </a>
                     </span>
                     <?php
@@ -107,8 +106,14 @@ if (!isset($_SESSION)) {
                         </li>
                         <!-- Conditional Element (existiert nur wenn user sich eingeloggt hat), darf aber gelöscht werden wenn es zu overkill ist -->
                         <li class="nav-item">
-                            <a class="nav-link active" href="profile.php">
-                                <p>Mein Profil</p>
+                            <?php
+                            if (isset($_SESSION['id'])) {
+                                echo "<a class='nav-link active' href='profile.php?id=" . $_SESSION['id'] . "'>";
+                            } else {
+                                echo "<a class='nav-link active' href='login.php'>";
+                            }
+                            ?>
+                            <p>Mein Profil</p>
                             </a>
                         </li>
                     </ul>
@@ -134,7 +139,7 @@ if (!isset($_SESSION)) {
                                     <h6>Login</h6>
                                 </a>";
                             }
-                            ?>                        
+                            ?>
                         </li>
                     </ul>
                 </div>
