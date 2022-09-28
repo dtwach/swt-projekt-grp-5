@@ -203,7 +203,7 @@ if (!isset($_GET["id"])) {
                     $data = $result->fetch_all();
                     echo '
                     <div class="col-6 text-end">
-                        <a href="/review.php?uid=' . $data[0][3] . '&cid=' . $data[0][4] . '">Alle Reviews</a>
+                        <a href="/user-review-page.php?cid=' . $data[0][4] . '">Alle Reviews</a>
                     </div>';
                     foreach ($data as $item) {
                         echo '
