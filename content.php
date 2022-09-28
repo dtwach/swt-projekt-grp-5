@@ -16,7 +16,24 @@ if (!isset($_GET['id'])) {
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Review: Content Title</title>
+    <title>Content:
+        <?php
+        require 'includes/dbcon.inc.php';
+        $content_id = $_GET['id'];
+        $stmt = $con->prepare("SELECT 
+                c.ID,c.Titel,c.Beschreibung,c.Kategorie,
+                k.ID,k.Kategoriebezeichnung,c.Bild
+                FROM content AS c, kategorie AS k
+                WHERE c.ID = ?
+                and c.Kategorie = k.ID;");
+        $stmt->bind_param('i', $content_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data_main = $result->fetch_assoc();
+        if (is_null($data_main['Titel'])) {
+            echo 'Kein Titel Vorhanden!';
+        } else echo $data_main['Titel'];
+        ?></title>
     <link href="css/content-page.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
         integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
@@ -37,20 +54,8 @@ if (!isset($_GET['id'])) {
         <!-- TODO ADD REVIEW MODAL -->
         <h4>
             <?php
-            require 'includes/dbcon.inc.php';
-            $content_id = $_GET['id'];
-            $stmt = $con->prepare("SELECT 
-                c.ID,c.Titel,c.Beschreibung,c.Kategorie,
-                k.ID,k.Kategoriebezeichnung,c.Bild
-                FROM content AS c, kategorie AS k
-                WHERE c.ID = ?
-                and c.Kategorie = k.ID;");
-            $stmt->bind_param('i', $content_id);
-            $stmt->execute();
-            $result = $stmt->get_result();
-            $data_main = $result->fetch_assoc();
             if (is_null($data_main['Titel'])) {
-                echo 'Keine Beschreibung Vorhanden!';
+                echo 'Kein Titel Vorhanden!';
             } else echo $data_main['Titel'];
             ?>
         </h4>
