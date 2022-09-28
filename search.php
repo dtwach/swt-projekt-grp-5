@@ -6,6 +6,8 @@ if (isset($_SERVER['HTTP_REFERER'])) {
     $bits = explode('?', $_SERVER['HTTP_REFERER']);
     $redirect = $bits[0];
     // Überprüfen des Strings
+    //var_dump($bits);
+    //var_dump($redirect);
     if (str_contains($redirect, '/search.php') and !isset($_GET["ms"])) {
         if (empty($_GET["search"])) {
             header('Location: /search.php?ms=searchempty');
@@ -16,6 +18,27 @@ if (isset($_SERVER['HTTP_REFERER'])) {
             exit();
         }
     } else if (str_contains($redirect, '/search.php')) {
+    } else if (!isset($bits[1])) {
+        $bits = explode('?', $_SERVER['HTTP_REFERER']);
+        $redirect = $bits[0];
+        if (empty($_GET["search"])) {
+            header('Location: ' . $redirect . '?ms=searchempty');
+            exit();
+        }
+        if (strlen($_GET["search"]) <= 2) {
+            header('Location: ' . $redirect . '?ms=searchshort');
+            exit();
+        }
+    } else if (str_starts_with($bits[1], 'ms=')) {
+        $redirect = $bits[0];
+        if (empty($_GET["search"])) {
+            header('Location: ' . $redirect . '?ms=searchempty');
+            exit();
+        }
+        if (strlen($_GET["search"]) <= 2) {
+            header('Location: ' . $redirect . '?ms=searchshort');
+            exit();
+        }
     } else {
         $redirect .= '?' . $bits[1];
         $rm_and = explode('&ms=', $_SERVER['HTTP_REFERER']);
