@@ -26,7 +26,7 @@ if (!isset($_SESSION)) {
         <?php
         require 'includes/dbcon.inc.php';
         $user_id = (isset($_GET['id'])) ? $_GET['id'] : $_SESSION['id'];
-        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, c.Bild, u.Username, u.Bild as userbild
+        $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.Titel, c.Bild, u.Username, u.Bild as userbild,r.User,r.Content
             FROM review as r
             JOIN content as c on c.ID = r.Content 
             JOIN user as u on u.ID = r.User
@@ -81,7 +81,9 @@ if (!isset($_SESSION)) {
         
                                         <div class="col">
                                             <div class="card-block px-2 mx-1" style="text-align: justify;">
+                                            <a class="text-decoration-none text-reset" href="/review.php?uid=' . $item['User'] . '&cid=' . $item['Content'] . '">
                                                 <p class="card-text">' . $item['Inhalt'] . '</p>
+                                                </a>
                                             </div>
                                         </div>
                                     </div>
