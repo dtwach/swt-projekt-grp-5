@@ -40,7 +40,7 @@ if (!isset($_SESSION)) {
 
 
                 echo '<button type="button" class="btn btn-info btn-lg my-2" data-bs-toggle="modal"
-            data-bs-target="#addContentModal">Neues Content hinzufügen</button>
+            data-bs-target="#addContentModal">Neuen Content hinzufügen</button>
 
         <!-- Modal -->
         <div class="modal fade" id="addContentModal" aria-labelledby="addContentLabel" aria-hidden="true">
@@ -48,7 +48,7 @@ if (!isset($_SESSION)) {
                 <!-- Modal Inhalt -->
                 <div class="modal-content">
                     <div class="modal-header">
-                        <h4 class="modal-title" id="addContentLabel">Neues Content hinzufügen</h4>
+                        <h4 class="modal-title" id="addContentLabel">Neuen Content hinzufügen</h4>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
 
