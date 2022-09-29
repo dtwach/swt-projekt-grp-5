@@ -108,22 +108,18 @@ if (!isset($_SESSION)) {
             $stmt->execute();
             $result = $stmt->get_result();
             while ($row = $result->fetch_array()) {
+                $picture = (is_null($row['Bild'])) ? "./img/content_ph.jpg" :
+                    "data:image/jpeg;base64," . base64_encode($row['Bild']);
 
                 echo '
-                <div class="col-sm-4 mb-3">
-                <div class="panel panel-primary">
-                    <div class="card">
-                        <div class="row no-gutters">
-                            <div class="col-auto text-center">
-                                <a href="content.php?id=' . $row["ID"] . '"><h4 class="card-title">' . $row["Titel"] . '</h4>';
-                if ($row['Bild'] == NULL) {
-                    echo '<img src="./img/content_ph.jpg"
-                                    class="img-fluid rounded-2" height="400px" width="400px" alt="">';
-                } else {
-                    echo '<img height="400px" width="400px" class="img-fluid rounded-2" src="data:image/jpeg;base64,' . base64_encode($row['Bild']) . '"/>';
-                }
-                echo '
-                            </a></div>
+                <div class="col-12 col-xl-4 col-lg-6  mb-3 mt-2 border" >
+                        <div class="row no-gutter">
+                            <a style="margin: 0 auto;"href="content.php?id=' . $row["ID"] . '">
+                                <h4 class="col-12 text-center">' . $row["Titel"] . '</h4>
+                                <div class="col-12 text-center" style="height: 300px;  margin: auto">
+                                    <img class="h-100" src="' . $picture . '" class="rounded-2" alt="">
+                                </div>
+                            </a>
                             <div class="col">';
                 echo 'Kategorie:  <a href="search.php?search=category:' . $row["Kategoriebezeichnung"] . '">' . $row["Kategoriebezeichnung"] . '</a>';
                 echo '<div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
@@ -136,9 +132,7 @@ if (!isset($_SESSION)) {
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>
-            </div>';
+                    </div>';
             }
             ?>
 
