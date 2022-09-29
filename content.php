@@ -60,13 +60,12 @@ if (!isset($_GET['id'])) {
             ?>
         </h4>
         <div class="row row-cols-1 row-cols-md-2 g-2 g-lg-3">
-            <div class="col col-md-4">
+            <div class="col col-md-4" style="height: 400px;  margin: auto">
                 <?php
                 if ($data_main['Bild'] == NULL) {
-                    echo '<img src="./img/content_ph.jpg"
-                                    class="img-fluid" alt="">';
+                    echo '<img style="object-fit: contain;width: 100%;height: 100%;" class="rounded-2" src="./img/content_ph.jpg" alt="">';
                 } else {
-                    echo '<img class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($data_main['Bild']) . '"/>';
+                    echo '<img style="object-fit: contain;width: 100%;height: 100%;" class="rounded-2" src="data:image/jpeg;base64,' . base64_encode($data_main['Bild']) . '"/>';
                 }
                 ?>
             </div>

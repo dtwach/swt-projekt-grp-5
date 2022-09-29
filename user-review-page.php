@@ -1,7 +1,18 @@
 <?php
 if (!isset($_SESSION)) {
     session_start();
-} ?>
+}
+require 'includes/dbcon.inc.php';
+$stmt = $con->prepare("SELECT Username FROM user WHERE ID=?;");
+$stmt->bind_param('i', $_GET["id"]);
+$stmt->execute();
+$result = $stmt->get_result();
+$row = $result->fetch_array();
+if (empty($row)) {
+    header('Location: /user-review-page.php?id=' . $_SESSION["id"]);
+    exit;
+}
+?>
 <!DOCTYPE html>
 
 <head>
@@ -22,7 +33,7 @@ if (!isset($_SESSION)) {
 
 <body>
 
-    <div class="text-center p-sm-4 pt-3">
+    <div class="text-center p-sm-4 pt-3" style="height: 300px; margin: auto">
         <?php
         require 'includes/dbcon.inc.php';
         $user_id = (isset($_GET['id'])) ? $_GET['id'] : $_SESSION['id'];
@@ -39,10 +50,10 @@ if (!isset($_SESSION)) {
         $result = $stmt->get_result();
         $item = $result->fetch_assoc();
         if (!isset($item['userbild'])) {
-            echo '<img width="250px" height="150px" class="rounded-2" class="img-fluid" src="./img/profil_ph.png"
+            echo '<img style="object-fit: contain;width: 100%;height: 100%;" class="rounded-2" src="./img/profil_ph.png"
                              alt="">';
         } else {
-            echo '<img width="250px" height="150px" class="rounded-2" class="img-fluid" src="data:image/jpeg;base64,' . base64_encode($item['userbild']) . '"/>';
+            echo '<img style="object-fit: contain;width: 100%;height: 100%;" class="rounded-2" src="data:image/jpeg;base64,' . base64_encode($item['userbild']) . '"/>';
         }
 
         require 'includes/dbcon.inc.php';

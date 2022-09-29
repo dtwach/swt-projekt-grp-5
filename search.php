@@ -86,37 +86,31 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                 if ($search_result->num_rows == 0) {
                     echo '<h2>Keine Einträge Gefunden!</h2>';
                 } else {
-                    while ($row_search = $search_result->fetch_array()) {
+                    while ($row = $search_result->fetch_array()) {
+                        $picture = (is_null($row['Bild'])) ? "./img/content_ph.jpg" : "data:image/jpeg;base64," . base64_encode($row['Bild']);
+
                         echo '
-                <div class="col-sm-4 mb-3">
-                <div class="panel panel-primary">
-                    <div class="card">
-                        <div class="row no-gutters">
-                            <div class="col-auto text-center">
-                                <a href="content.php?id=' . $row_search["ID"] . '"><h4 class="card-title">' . $row_search["Titel"] . '</h4>';
-                        if ($row_search['Bild'] == NULL) {
-                            echo '<img src="./img/content_ph.jpg"
-                                    class="img-fluid rounded-2" height="400px" width="400px"alt="">';
-                        } else {
-                            echo '<img class="img-fluid rounded-2" height="400px" width="400px" src="data:image/jpeg;base64,' . base64_encode($row_search['Bild']) . '"/>';
-                        }
-                        echo '
-                            </a></div>
-                            <div class="col">';
-                        echo 'Kategorie:  <a href="search.php?search=category:' . $row_search["Kategoriebezeichnung"] . '">' . $row_search["Kategoriebezeichnung"] . '</a>';
+                        <div class="col-12 col-xl-4 col-lg-6 px-0">
+                                <div class="row no-gutter border m-1">
+                                    <a style="margin: 0 auto;"href="content.php?id=' . $row["ID"] . '">
+                                        <h4 class="col-12 text-center">' . $row["Titel"] . '</h4>
+                                        <div class="col-12 text-center" style="height: 300px;  margin: auto">
+                                            <img style="object-fit: contain;width: 100%;height: 100%;" src="' . $picture . '" class="rounded-2" alt="">
+                                        </div>
+                                    </a>
+                                    <div class="col">';
+                        echo 'Kategorie:  <a href="search.php?search=category:' . $row["Kategoriebezeichnung"] . '">' . $row["Kategoriebezeichnung"] . '</a>';
                         echo '<div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
-                        if ($row_search['Beschreibung'] == NULL) {
+                        if ($row['Beschreibung'] == NULL) {
                             echo '<p class="card-text truncate-max-3lines">Keine Beschreibung vorhanden!</p>';
                         } else {
-                            echo '<p class="card-text truncate-max-3lines">' . $row_search["Beschreibung"] . '</p>';
+                            echo '<p class="card-text truncate-max-3lines">' . $row["Beschreibung"] . '</p>';
                         }
                         echo '               
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>';
+                            </div>';
                     }
                 }
             } else {

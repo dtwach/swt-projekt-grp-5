@@ -98,7 +98,7 @@ if (!isset($_SESSION)) {
         ?>
 
 
-        <div class="row">
+        <div class="row no-gutter">
             <?php
             require 'includes/dbcon.inc.php';
             $stmt = $con->prepare("SELECT c.ID,c.Titel,c.Beschreibung,c.Kategorie,c.Bild,k.Kategoriebezeichnung FROM content AS c
@@ -108,16 +108,15 @@ if (!isset($_SESSION)) {
             $stmt->execute();
             $result = $stmt->get_result();
             while ($row = $result->fetch_array()) {
-                $picture = (is_null($row['Bild'])) ? "./img/content_ph.jpg" :
-                    "data:image/jpeg;base64," . base64_encode($row['Bild']);
+                $picture = (is_null($row['Bild'])) ? "./img/content_ph.jpg" : "data:image/jpeg;base64," . base64_encode($row['Bild']);
 
                 echo '
-                <div class="col-12 col-xl-4 col-lg-6  mb-3 mt-2 border" >
-                        <div class="row no-gutter">
+                <div class="col-12 col-xl-4 col-lg-6 px-0">
+                        <div class="row no-gutter border m-1">
                             <a style="margin: 0 auto;"href="content.php?id=' . $row["ID"] . '">
                                 <h4 class="col-12 text-center">' . $row["Titel"] . '</h4>
                                 <div class="col-12 text-center" style="height: 300px;  margin: auto">
-                                    <img class="h-100" src="' . $picture . '" class="rounded-2" alt="">
+                                    <img style="object-fit: contain;width: 100%;height: 100%;" src="' . $picture . '" class="rounded-2" alt="">
                                 </div>
                             </a>
                             <div class="col">';
