@@ -48,7 +48,7 @@ if (empty($row)) {
 <body>
 
 
-    <div class="container-xl">
+    <div class="container">
         <?php
         require 'includes/dbcon.inc.php';
         $stmt = $con->prepare("SELECT Username FROM user WHERE ID=?;");
@@ -59,7 +59,7 @@ if (empty($row)) {
         echo '<h2>' . $row . '</h2>';
         ?>
     </div>
-    <div class="container-xl profile mb-2">
+    <div class="container profile">
         <div class="pic p-1">
             <?php
             require 'includes/dbcon.inc.php';
@@ -95,7 +95,7 @@ if (empty($row)) {
             </div>
         </div>
 
-        <form action="includes/follow.inc.php" method="POST">
+        <form action="includes/follow.inc.php" method="POST" class="follow">
             <input type="hidden" name="gefolgtid" id="gefolgtid" value="<?php echo $_GET['id'] ?>" />
 
             <?php
@@ -110,18 +110,24 @@ if (empty($row)) {
             $row = $result->fetch_assoc();
             if ($_GET['id'] == $_SESSION['id']) {
                 echo '
-                <a href="pl-2" class="" data-bs-toggle="modal" data-bs-target="#changeImgModal"><button class="btn btn-primary" type="button"><h6 class="mt-1">Bild Ändern</h6></button></a>
-                <a href="" class="" data-bs-toggle="modal" data-bs-target="#changeDescModal"><button class="btn btn-primary" type="button"><h6 class="mt-1">Beschreibung ändern</h6></button></a>
+                <div class="row g-1 g-md-2">
+                    <div class="col-6 col-md-12 col-xxl-auto">
+                        <a href="pl-2" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#changeImgModal"><h6 class="mt-1">Bild ändern</h6></a>
+                    </div> 
+                    <div class="col-6 col-md-12 col-xxl-auto">
+                        <a href="" class="btn btn-primary w-100" data-bs-toggle="modal" data-bs-target="#changeDescModal"><h6 class="mt-1">Beschreibung ändern</h6></a>
+                    </div>                  
+                </div>                 
                 ';
             } else if (!isset($row)) {
                 echo '
-                    <button class="btn btn-primary follow w-100" type="submit" name="follow_submit">
+                    <button class="btn btn-primary w-100" type="submit" name="follow_submit">
                     <h4 class="mb-0">Folge User</h4>
                     </button>
                 ';
             } else {
                 echo '
-                <button class="btn btn-danger follow w-100" type="submit" name="defollow_submit">
+                <button class="btn btn-danger w-100" type="submit" name="defollow_submit">
                 <h4 class="mb-0">Entfolge User</h4>
                 </button>
                 ';
