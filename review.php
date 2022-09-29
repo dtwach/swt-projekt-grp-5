@@ -5,6 +5,22 @@ if (!isset($_SESSION)) {
 if (!isset($_GET['uid']) || !isset($_GET['cid'])) {
     header('Location: /index.php');
 }
+require 'includes/dbcon.inc.php';
+$user_id = htmlspecialchars($_GET['uid']);
+$content_id = htmlspecialchars($_GET['cid']);
+$stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, u.Username, c.Bild as Content_Picture, u.Bild as User_Picture, r.User, r.Content
+        FROM review as r
+        JOIN content as c on c.ID = r.Content 
+        JOIN user as u on r.User = u.ID
+        WHERE r.User=? AND r.Content=?
+        ");
+$stmt->bind_param('ii', $user_id, $content_id);
+$stmt->execute();
+$result = $stmt->get_result();
+$data = $result->fetch_assoc();
+if (!isset($data)) {
+    header('Location: content_overview.php');
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -28,21 +44,6 @@ if (!isset($_GET['uid']) || !isset($_GET['cid'])) {
 
 <body>
     <?php
-
-    require 'includes/dbcon.inc.php';
-    $user_id = htmlspecialchars($_GET['uid']);
-    $content_id = htmlspecialchars($_GET['cid']);
-    $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, u.Username, c.Bild as Content_Picture, u.Bild as User_Picture, r.User, r.Content
-            FROM review as r
-            JOIN content as c on c.ID = r.Content 
-            JOIN user as u on r.User = u.ID
-            WHERE r.User=? AND r.Content=?
-            ");
-    $stmt->bind_param('ii', $user_id, $content_id);
-    $stmt->execute();
-    $result = $stmt->get_result();
-    $data = $result->fetch_assoc();
-
     if (!isset($data)) {
         echo '
             <div class="container-lg p-4">
@@ -78,8 +79,92 @@ if (!isset($_GET['uid']) || !isset($_GET['cid'])) {
                         <h4 class="text-center m-2">Rating ' . intval($data['Bewertung']) . '/10</h4>
                         <p class="mx-4">' . $data['Inhalt'] . '</p>
                     </div>
-                </div>
+                
             ';
+    }
+    ?>
+    <?php
+    if (!isset($_SESSION['id'])) {
+    } else {
+        require 'includes/dbcon.inc.php';
+        $user_id = $_SESSION['id'];
+        $stmt = $con->prepare("SELECT 
+                u.Rolle
+                FROM user AS u
+                WHERE u.ID = ?;");
+        $stmt->bind_param('i', $user_id);
+        $stmt->execute();
+        $result = $stmt->get_result();
+        $data_main = $result->fetch_assoc();
+
+        echo '
+        <a href="" class="p-3 text-center" data-bs-toggle="modal" data-bs-target="#changeReviewModal">Review ändern</a>
+        <a href="" class="p-3 text-center text-danger" data-bs-toggle="modal" data-bs-target="#deleteReviewModal">Review löschen</a>
+        <!-- change review modal -->
+        <div class="modal fade" id="changeReviewModal" aria-labelledby="changeReviewModal" aria-hidden="true">
+            <div class="modal-dialog modal-lg modal-dialog-centered">
+                <!-- Modal Inhalt -->
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="addReviewLabel">Review bearbeiten</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+
+                    <div class="modal-body">
+
+                        <form action="includes/change_review.inc.php" id="form1" method="post" name="form1">
+                            <div class="text-start my-1">
+                            <input type="hidden" name="cid" id="cid" value="' . $_GET['cid'] . '" />
+                            <input type="hidden" name="uid" id="uid" value="' . $_GET['uid'] . '" />
+                                <label class="fw-bold" for="reviewRating">Bewertung</label>
+                                <input type="number" min="1" max="10" class="form-control w-25 px-3" name="reviewRating"
+                                    id="reviewRating" placeholder="1 - 10" name="reviewRating">
+
+                            </div>
+                            <div class="text-start my-1 pt-1">
+                                <label class="fw-bold" for="reviewText">Review</label>
+                                <textarea type="text" class="form-control text-start" name="reviewText" id="reviewText"
+                                    placeholder="Gib dein Review an" name="reviewText" style="height:250px;"></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer gap-2">
+                        <button type="button" class="btn btn-default btn-outline-danger"
+                            data-bs-dismiss="modal">Abbrechen</button>
+                        <button type="submit" class="btn btn-outline-success" form="form1" name="review_submit" data-bs-dismiss="modal">Fertig</button>
+    </div>
+    </div>
+    </div>
+    </div>
+    <!-- delete review modal -->
+    <div class="modal fade" id="deleteReviewModal" aria-labelledby="deleteReviewModal" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <!-- Modal Inhalt -->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="addReviewLabel">Review löschen</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-body">
+
+                    <form action="includes/change_review.inc.php" id="form1" method="post" name="form1">
+                        <div class="text-start my-1">
+                        <input type="hidden" name="cid" id="cid" value="' . $_GET['cid'] . '" />
+                        <input type="hidden" name="uid" id="uid" value="' . $_GET['uid'] . '" />
+                        <h5>Bist du dir Sicher?</h5>
+                    </form>
+                </div>
+                <div class="modal-footer gap-2">
+                    <button type="button" class="btn btn-default btn-outline-danger"
+                        data-bs-dismiss="modal">Abbrechen</button>
+                    <button type="submit" class="btn btn-outline-success" form="form1" name="review_delete" data-bs-dismiss="modal">Fertig</button>
+</div>
+</div>
+</div>
+</div>
+    </div>
+    ';
     }
     ?>
 </body>

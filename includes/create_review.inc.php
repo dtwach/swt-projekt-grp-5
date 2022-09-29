@@ -39,6 +39,7 @@ if (isset($_POST['review_submit'])) {
     }
     compare_id($review_id, $user_id);
 
+    date_default_timezone_set('Europe/Berlin');
     $time = date('Y-m-d H:i:s');
     $stmt = $con->prepare("INSERT INTO review (User, Content, Inhalt, Bewertung, Timestamp) VALUES (?, ?, ?, ?, ?);");
     if (!$stmt) {
