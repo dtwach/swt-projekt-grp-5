@@ -90,7 +90,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                         echo '
                         <div class="col-12 col-xl-4 col-lg-6 px-0">
                                 <div class="row no-gutter border m-1">
-                                    <a style="margin: 0 auto;"href="content.php?id=' . $row["ID"] . '">
+                                    <a style="margin: 0 auto;"href="content.php?id=' . $row["cid"] . '">
                                         <h4 class="col-12 text-center">' . $row["Titel"] . '</h4>
                                         <div class="col-12 text-center" style="height: 300px;  margin: auto">
                                             <img style="object-fit: contain;width: 100%;height: 100%;" src="' . $picture . '" class="rounded-2" alt="">
