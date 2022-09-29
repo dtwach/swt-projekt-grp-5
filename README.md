@@ -12,8 +12,6 @@ you should see the website on localhost:80
 
 and the Database Editor on localhost:8080
 
-Test-User:
+Test-User (all passwds: 123):
 
-name: tester pass:123
-
-name: tester2 pass:123
+Names: Alice, Anna, Bob, Daniel, Max
