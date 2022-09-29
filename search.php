@@ -65,10 +65,8 @@ if (isset($_SERVER['HTTP_REFERER'])) {
     <title>Suche</title>
     <link href="css/style.css" rel="stylesheet">
     <link href="css/content-overview.css" rel="stylesheet">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <script src="js/bootstrap.bundle.min.js">
     </script>
     <?php
     include './navbar.php';
@@ -92,7 +90,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                         echo '
                         <div class="col-12 col-xl-4 col-lg-6 px-0">
                                 <div class="row no-gutter border m-1">
-                                    <a style="margin: 0 auto;"href="content.php?id=' . $row["ID"] . '">
+                                    <a style="margin: 0 auto;"href="content.php?id=' . $row["cid"] . '">
                                         <h4 class="col-12 text-center">' . $row["Titel"] . '</h4>
                                         <div class="col-12 text-center" style="height: 300px;  margin: auto">
                                             <img style="object-fit: contain;width: 100%;height: 100%;" src="' . $picture . '" class="rounded-2" alt="">

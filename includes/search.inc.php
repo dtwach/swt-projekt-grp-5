@@ -9,7 +9,7 @@ function get_search_results($query)
         $query = str_replace("category:", "", $query);
         $query = "%" . htmlspecialchars($query) . "%";
         $stmt = $con->prepare("SELECT 
-        c.ID,c.Titel,c.Beschreibung,c.Kategorie,
+        c.ID as cid,c.Titel,c.Beschreibung,c.Kategorie,
         k.ID,k.Kategoriebezeichnung,c.Bild
          FROM content AS c, kategorie AS k
          WHERE k.Kategoriebezeichnung LIKE ?
@@ -18,7 +18,7 @@ function get_search_results($query)
     } else {
         $query = "%" . htmlspecialchars($query) . "%";
         $stmt = $con->prepare("SELECT 
-        c.ID,c.Titel,c.Beschreibung,c.Kategorie,
+        c.ID as cid,c.Titel,c.Beschreibung,c.Kategorie,
         k.ID,k.Kategoriebezeichnung,c.Bild
          FROM content AS c, kategorie AS k
          WHERE c.Titel LIKE ?
