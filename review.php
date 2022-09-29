@@ -59,16 +59,20 @@ if (!isset($data)) {
                 <div class="container-lg p-4">
                     <h1 class="text-center">Review</h1>
                     <div class="row">
-                        <div class="col-sm-6 d-flex align-items-center mb-3">
-                            <img id="user_picture" name="' . $data['User'] . '" src="' . $user_picture . '" alt="" class="img">
+                        <div class="col-md-4 d-flex align-items-center mb-3">
+                        <div style="height: 250px; margin: auto">
+                        <img style="object-fit: contain;width: 100%;height: 100%;" class="rounded-2" id="user_picture" name="' . $data['User'] . '" src="' . $user_picture . '" alt="">
+                            </div>
                             <span class="m-3">
                                 <p class="mb-1">Von:</p>
                                 <p>' . $data['Username'] . '</p>
                             </span>
                         </div>
-                        <div class="col-sm-6 d-flex align-items-center justify-content-sm-end mb-3">
-                            <img id="content_picture" name="' . $data['Content'] . '" src="' . $content_picture . '"
-                                alt="" class="img">
+                        <div class="col-md-4 d-flex align-items-center justify-content-sm-end mb-3" style="margin-left: auto;">
+                        <div style="height: 250px; margin: auto">
+                        <img style="object-fit: contain;width: 100%;height: 100%;" class="rounded-2" id="content_picture" name="' . $data['Content'] . '" src="' . $content_picture . '"
+                                alt="">
+                                </div>
                             <span class="m-3 order-sm-first">
                                 <p class="mb-1 d-flex justify-content-sm-end">Zu:</p>
                                 <p class="d-flex justify-content-sm-end">' . $data['titel'] . '</p>
