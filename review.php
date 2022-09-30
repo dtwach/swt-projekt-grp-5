@@ -3,7 +3,7 @@ if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_GET['uid']) || !isset($_GET['cid'])) {
-    header('Location: /index.php');
+    header('Location: index.php');
 }
 require 'includes/dbcon.inc.php';
 $user_id = htmlspecialchars($_GET['uid']);

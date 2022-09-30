@@ -216,14 +216,14 @@ if (empty($row)) {
                     <?php
                     require 'includes/dbcon.inc.php';
                     $stmt = $con->prepare("SELECT r.Inhalt, r.Bewertung, c.titel, r.User, r.Content FROM review as r
-                        JOIN content as c on c.ID = r.Content WHERE User=? ORDER BY r.Timestamp LIMIT 2;");
+                        JOIN content as c on c.ID = r.Content WHERE User=? ORDER BY r.Timestamp DESC LIMIT 2;");
                     $stmt->bind_param('i', $_GET["id"]);
                     $stmt->execute();
                     $result = $stmt->get_result();
                     $data = $result->fetch_all();
                     echo '
                     <div class="col-6 text-end">
-                        <a href="/user-review-page.php?id=' . $_GET["id"] . '">Alle Reviews</a>
+                        <a href="user-review-page.php?id=' . $_GET["id"] . '">Alle Reviews</a>
                     </div>';
                     if (!empty($data)) {
                         foreach ($data as $item) {
@@ -322,15 +322,20 @@ if (empty($row)) {
                 <div class="nav nav-tabs nav-fill" role="tablist">
                     <p class="m-2">Watchliste: </p>
 
-                    <button class="nav-link active" id="list-film-tab" data-bs-toggle="tab" data-bs-target="#list-film" aria-selected="true">Filme</button>
+                    <button class="nav-link active" id="list-film-tab" data-bs-toggle="tab" data-bs-target="#list-film"
+                        aria-selected="true">Filme</button>
 
-                    <button class="nav-link" id="list-series-tab" data-bs-toggle="tab" data-bs-target="#list-series" aria-selected="false">Serien</button>
+                    <button class="nav-link" id="list-series-tab" data-bs-toggle="tab" data-bs-target="#list-series"
+                        aria-selected="false">Serien</button>
 
-                    <button class="nav-link" id="list-game-tab" data-bs-toggle="tab" data-bs-target="#list-game" aria-selected="false">Videospiele</button>
+                    <button class="nav-link" id="list-game-tab" data-bs-toggle="tab" data-bs-target="#list-game"
+                        aria-selected="false">Videospiele</button>
 
-                    <button class="nav-link" id="list-music-tab" data-bs-toggle="tab" data-bs-target="#list-music" aria-selected="false">Musik</button>
+                    <button class="nav-link" id="list-music-tab" data-bs-toggle="tab" data-bs-target="#list-music"
+                        aria-selected="false">Musik</button>
 
-                    <button class="nav-link" id="list-book-tab" data-bs-toggle="tab" data-bs-target="#list-book" aria-selected="false">Bücher</button>
+                    <button class="nav-link" id="list-book-tab" data-bs-toggle="tab" data-bs-target="#list-book"
+                        aria-selected="false">Bücher</button>
                 </div>
             </nav>
             <div class="tab-content" id="nav-tabContent">

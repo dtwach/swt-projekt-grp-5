@@ -3,10 +3,10 @@ if (!isset($_SESSION)) {
     session_start();
 }
 if (!isset($_SESSION["id"])) {
-    header('Location: /login.php');
+    header('Location: login.php');
 }
 if (!isset($_GET['id'])) {
-    header('Location: ./content_overview.php');
+    header('Location: content_overview.php');
 }
 ?>
 <!DOCTYPE html>
@@ -211,7 +211,7 @@ if (!isset($_GET['id'])) {
                                             <div class="d-flex ">
                                                 <img src="' . $picture . '"
                                                     alt="Logo" width="24" height="20" class="rounded-4">
-                                                <a href="/profile.php?id=' . $item['User'] . '">
+                                                <a href="profile.php?id=' . $item['User'] . '">
                                                     <h6 class="text-start card-title">' . $item['Username'] . '</h6>
                                                 </a>
                                             </div>
@@ -220,7 +220,7 @@ if (!isset($_GET['id'])) {
             
                                         <div class="col">
                                             <div class="card-block px-2 mx-1" style="max-height: 130px; text-align: justify;">
-                                            <a class="text-decoration-none text-reset" href="/review.php?uid=' . $item['User'] . '&cid=' . $item['Content'] . '">
+                                            <a class="text-decoration-none text-reset" href="review.php?uid=' . $item['User'] . '&cid=' . $item['Content'] . '">
                                                 <p class="card-text truncate-max-5lines">' . $item['Inhalt'] . '</p>
                                                 </a>
                                             </div>

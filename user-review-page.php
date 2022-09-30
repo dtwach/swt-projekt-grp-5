@@ -9,7 +9,7 @@ $stmt->execute();
 $result = $stmt->get_result();
 $row = $result->fetch_array();
 if (empty($row)) {
-    header('Location: /user-review-page.php?id=' . $_SESSION["id"]);
+    header('Location: user-review-page.php?id=' . $_SESSION["id"]);
     exit;
 }
 ?>
@@ -90,7 +90,7 @@ if (empty($row)) {
         
                                         <div class="col">
                                             <div class="card-block px-2 mx-1" style="text-align: justify;">
-                                            <a class="text-decoration-none text-reset" href="/review.php?uid=' . $item['User'] . '&cid=' . $item['Content'] . '">
+                                            <a class="text-decoration-none text-reset" href="review.php?uid=' . $item['User'] . '&cid=' . $item['Content'] . '">
                                                 <p class="card-text">' . $item['Inhalt'] . '</p>
                                                 </a>
                                             </div>

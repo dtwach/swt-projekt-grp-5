@@ -21,7 +21,7 @@ services:
     depends_on:
       - db
     volumes:
-      - ./:/var/www/html/
+      - ./:/var/www/html/test
       - ./custom.ini:/usr/local/etc/php/conf.d/custom.ini
     ports:
       - 80:80

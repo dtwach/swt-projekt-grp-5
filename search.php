@@ -10,11 +10,11 @@ if (isset($_SERVER['HTTP_REFERER'])) {
     //var_dump($redirect);
     if (str_contains($redirect, '/search.php') and !isset($_GET["ms"])) {
         if (empty($_GET["search"])) {
-            header('Location: /search.php?ms=searchempty');
+            header('Location: search.php?ms=searchempty');
             exit();
         }
         if (strlen($_GET["search"]) <= 2) {
-            header('Location: /search.php?ms=searchshort');
+            header('Location: search.php?ms=searchshort');
             exit();
         }
     } else if (str_contains($redirect, '/search.php')) {

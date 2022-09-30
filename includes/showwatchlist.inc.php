@@ -17,7 +17,7 @@ function showWatchlist($kategorie)
     } else {
         while ($item = $result->fetch_assoc()) {
             echo ' <div class="col-4 col-sm-2 text-center">
-                        <a href="/content.php?id=' . $item["Content"] . '"><p>' . $item["Titel"] . '</p></a>
+                        <a href="content.php?id=' . $item["Content"] . '"><p>' . $item["Titel"] . '</p></a>
                     </div>';
         }
     }
