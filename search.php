@@ -96,7 +96,7 @@ if (isset($_SERVER['HTTP_REFERER'])) {
                                             <img style="object-fit: contain;width: 100%;height: 100%;" src="' . $picture . '" class="rounded-2" alt="">
                                         </div>
                                     </a>
-                                    <div class="col">';
+                                    <div class="col" style="height:100px">';
                         echo 'Kategorie:  <a href="search.php?search=category:' . $row["Kategoriebezeichnung"] . '">' . $row["Kategoriebezeichnung"] . '</a>';
                         echo '<div class="card-block px-2 mx-1" style="max-height: 110px; text-align: justify;">';
                         if ($row['Beschreibung'] == NULL) {
