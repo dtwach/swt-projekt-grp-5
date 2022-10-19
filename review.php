@@ -98,10 +98,13 @@ if (!isset($data)) {
         $stmt->execute();
         $result = $stmt->get_result();
         $data_main = $result->fetch_assoc();
-
-        echo '
+        if ($_SESSION["id"] == $_GET["uid"]) {
+            echo '
         <a href="" class="p-3 text-center" data-bs-toggle="modal" data-bs-target="#changeReviewModal">Review ändern</a>
         <a href="" class="p-3 text-center text-danger" data-bs-toggle="modal" data-bs-target="#deleteReviewModal">Review löschen</a>
+        ';
+        }
+        echo '
         <!-- change review modal -->
         <div class="modal fade" id="changeReviewModal" aria-labelledby="changeReviewModal" aria-hidden="true">
             <div class="modal-dialog modal-lg modal-dialog-centered">

@@ -1,0 +1,3 @@
+<Files ~ "(.yml|.ini|.md|.sql)">
+   Require all denied
+</Files>
